@@ -124,7 +124,17 @@ namespace NavigationBar
 
         void ChceckIfAnyCalibrationWasTodayMaken()
         {
-            calibrationsList = kalibracje.ChceckIfWasAnyCalibrationToday();
+            try
+            {
+                calibrationsList = kalibracje.ChceckIfWasAnyCalibrationToday();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("Brak folderu coppy_sodim lub oprogramowania SODIM! Sprawdź czy folder copy_sodim wraz z zawartośćią znajduje sie we wskazanej ścieżce: C:\\copy_sodim","BŁĄD KRYTYCZNY!");
+                Environment.Exit(Environment.ExitCode);
+                Application.Current.Shutdown();
+
+            }
             //if (kalibracje.ChceckIfWasAnyCalibrationToday())
             if(!calibrationsList.Any()&& DateTime.Now.DayOfWeek.ToString() == theDIADay)
             {

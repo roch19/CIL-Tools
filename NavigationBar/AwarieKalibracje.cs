@@ -30,6 +30,7 @@ namespace NavigationBar
             ///////// Lista Kalibracji
             listaInformacji.Clear();
        
+            
             //Lista plików znajdujących się w folderze o podanej ścierzce 
             filesList = (Directory.EnumerateFiles(strSodimFolder + sourceDirectoryCalibrationLog).ToList());
             FileInfo fi;
