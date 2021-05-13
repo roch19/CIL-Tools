@@ -1,0 +1,49 @@
+﻿<Window x:Class="NavigationBar.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NavigationBar"
+        mc:Ignorable="d"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        Topmost="True"
+        AllowsTransparency="True"
+        x:Name="MainWindow2"
+        Title="MainWindow" Height="480" Width="200"
+
+        WindowStartupLocation="Manual">
+
+  <Border Background="Transparent">
+        <StackPanel Margin="0,0,-0.4,0.4">
+            <Grid Height="70">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Button x:Name="VisibilityButton" Background="Red"  Grid.Column="0" Opacity="0.75" Click="VisibilityButton_Click" Height="60" Width="60" Margin="5 0 0 0" FontSize="20">E-CIL</Button>
+                <TextBlock x:Name="DIATextBlock" Background="Red" IsEnabled="True" Visibility="Hidden"  Grid.Column="1" Opacity="0.75" Text="DIA" VerticalAlignment="Center" Padding="15" Height="60" Width="60" Margin="5 0 0 0" FontSize="20"/>
+            </Grid>
+       <StackPanel x:Name="StackPanelWithButtons" Visibility="Visible" Margin="5 0 10 0" Background="#00C0FF" Height="400">
+                <Button x:Name="LoginOutButton" Click="LogInOutButton" Height="30" Width="150" Margin="0 10 0 0">ZALOGUJ</Button>
+                <Button x:Name="CILcardButton" Click="CILcardButton_Click" Height="30" Width="150" Margin="0 10 0 0">CIL CARD</Button>
+                <Button x:Name="WymianaGumButton" Click="WymianaGumButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False">KONTROLA GUMEK</Button> 
+                <Button x:Name="AwarieButton" Click="AwarieButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False">AWARIE</Button>
+                <Button x:Name="KalibracjeButton" Click="KalibracjeButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False" >KALIBRACJE</Button>
+                <Button x:Name="Awaria_StartButton" Click="Awaria_StartButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False">AWARIA START</Button>
+                <Button x:Name="BlokowanieEkranuButton" Click="BlokowanieEkranuButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False">ZABLOKUJ EKRAN</Button>
+                <Button x:Name="OPLButton" Click="OPLButton_Click" Height="30" Width="150" Margin="0 5 0 0">OPL</Button>
+                <Button x:Name="CmdButton" Click="CmdButton_Click" Height="30" Width="150" IsEnabled="False" Margin="0 5 0 0">MENEDŻER ZADAŃ</Button>
+                
+                 
+                <Button x:Name="TurnOffButton" Click="TurnOffButton_Click"  Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False">EXIT</Button>
+             
+            </StackPanel>
+        </StackPanel>
+
+    </Border>
+
+</Window>

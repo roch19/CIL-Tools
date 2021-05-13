@@ -1,0 +1,67 @@
+﻿<Window x:Class="NavigationBar.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NavigationBar"
+        mc:Ignorable="d"
+        ShowInTaskbar="False"
+        Topmost="True"
+        WindowStyle="ToolWindow"
+        WindowStartupLocation="Manual"
+        Title="Logowanie" Height="275" Width="400">
+    <StackPanel Background="#B6B6B6" Height="260" Margin="2,2,2,0" VerticalAlignment="Top">
+        <TextBlock FontSize="15" Background="White" FontWeight="Bold" Margin="10,2,10,0" VerticalAlignment="Center"><Run Text="Okno logowania"/></TextBlock>
+
+        <Grid Height="170">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="184*"/>
+              <ColumnDefinition Width="194*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock FontWeight="Bold" Margin="30,40,13,0" >HASŁO SUPERVISORA</TextBlock>
+                <PasswordBox  x:Name="Haslo" Height="40" PasswordChar="*" Margin="30,5,13,0"   FontSize="20" Background="White" Grid.Column="2"></PasswordBox>
+     
+            </StackPanel>
+            <Grid Grid.Column="1" Margin="5,5,5,5">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+              <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="bt7" Click="Button_Click" Grid.Column="0" Grid.Row="0">7</Button>
+                <Button x:Name="bt8" Click="Button_Click" Grid.Column="1" Grid.Row="0">8</Button>
+                <Button x:Name="bt9" Click="Button_Click" Grid.Column="2" Grid.Row="0">9</Button>
+                <Button x:Name="bt4" Click="Button_Click" Grid.Column="0" Grid.Row="1">4</Button>
+                <Button x:Name="bt5" Click="Button_Click" Grid.Column="1" Grid.Row="1">5</Button>
+                <Button x:Name="bt6" Click="Button_Click" Grid.Column="2" Grid.Row="1">6</Button>
+                <Button x:Name="bt1" Click="Button_Click" Grid.Column="0" Grid.Row="2">1</Button>
+                <Button x:Name="bt2" Click="Button_Click" Grid.Column="1" Grid.Row="2">2</Button>
+                <Button x:Name="bt3" Click="Button_Click" Grid.Column="2" Grid.Row="2">3</Button>
+                <Button x:Name="bt0" Click="Button_Click" Grid.Column="1" Grid.Row="3">0</Button>
+                <Button x:Name="btDEL" Click="btDEL_Click" Grid.Column="2" Grid.Row="3">delete</Button>
+            </Grid>
+          
+        </Grid>
+
+        <Grid Height="50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="95*"/>
+                <ColumnDefinition Width="2*"/>
+
+                <ColumnDefinition Width="97*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="OK_LoginButton" Click="OK_LoginButton_Click" Grid.Column="0"  Height="40" Margin="48,0,37,3" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#0F0">OK</Button>
+            <Button x:Name="Anuluj_LoginButton" Click="Anuluj_LoginButton_Click" Grid.Column="2"  Height="40" Margin="48,0,41,3" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#FF0000">Anuluj</Button>
+        </Grid>
+
+
+    </StackPanel>
+</Window>
