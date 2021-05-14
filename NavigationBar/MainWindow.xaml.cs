@@ -218,7 +218,7 @@ namespace NavigationBar
             var now = DateTime.Now;
             var tomorrow = now.AddDays(1);
             var durationUntilMidnight = tomorrow.Date - now;
-            MessageBox.Show("Czas do resetu greenKalibButtona: " + durationUntilMidnight);
+            //MessageBox.Show("Czas do resetu greenKalibButtona: " + durationUntilMidnight);
 
             System.Timers.Timer aTimer = new System.Timers.Timer();
             aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);

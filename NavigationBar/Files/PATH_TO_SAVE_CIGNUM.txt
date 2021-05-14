@@ -1,0 +1,14 @@
+ścierzka zapisu wymiany gum:
+C:\Users\SODIM\Desktop2222\
+ścierzka zapisu awarii:
+C:\Users\SODIM\Desktop\NEW\
+data ostatniej wymiany gumki:
+7.05.2021
+format gumki:
+KS
+przebieg Nmcig w dniu wymiany:
+684700
+przebieg NumCycle w dniu wymiany:
+70200
+data ostatnio wykonanego CIL'a:
+

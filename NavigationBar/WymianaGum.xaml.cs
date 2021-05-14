@@ -23,16 +23,139 @@ namespace NavigationBar
         public WymianaGum()
         {
             InitializeComponent();
+            getValuesOnStart();
             this.Left = 0;
             this.Top = SystemParameters.PrimaryScreenHeight / 2;
+            GetInfoAboutGum();
         }
         string locationTxtWithLocationOfSavePAth = @"C:\copy_sodim\PATH_TO_SAVE_CIGNUM.txt";
         string pathCopySodim = @"C:\copy_sodim\copy_sodim.vbs";
         string strSodimFolder = "";
         string sodimat_name = "";
         string savePath = "";
+        string aktualnyNumcig = "";
+        string aktualnyNumcycle = "";
         List<string> lines = null;
 
+        void GetInfoAboutGum()
+        {
+            string[] arrLine;
+
+            try
+            {
+                arrLine = File.ReadAllLines(locationTxtWithLocationOfSavePAth); // replacment dla temp data (data+numcig+numcycle)
+                dataOstatniejWymianyGumki.Text = arrLine[5];
+                formatObecniejGumki.Text = arrLine[7];
+                int x = Int32.Parse(aktualnyNumcycle);
+                int y = Int32.Parse(arrLine[11]);
+                iloscCykli.Text = (x-y).ToString();
+                x = Int32.Parse(aktualnyNumcig);
+                y = Int32.Parse(arrLine[9]);
+                iloscZbadanychProbek.Text = (x - y).ToString();
+
+            }
+            catch { }
+
+          
+        }
+
+
+        void getValuesOnStart()
+        {
+            try
+            {
+                lines = File.ReadAllLines(locationTxtWithLocationOfSavePAth).ToList();
+                savePath += lines[1];
+                lines = File.ReadAllLines(pathCopySodim).ToList();
+            }
+            catch { MessageBox.Show("Brak pliku zawierającego ścieżkę zapisu który powinien znajdować się w ścieżce: C:\\copy_sodim\\PATH_TO_SAVE_CIGNUM.txt, dodaj plik do ścieżki", "UWAGA!"); };
+      
+
+            string tmp = lines[1];
+            bool flag = true;
+
+      
+
+            //extract sodimat name
+            for (int i = 0; i < tmp.Length; i++)
+            {
+                if (tmp[i].ToString().Equals("\"") && flag)
+                {
+                    flag = false;
+                }
+                else if (!tmp[i].ToString().Equals("\"") && flag.Equals(false))
+                {
+                    sodimat_name += tmp[i];
+                }
+
+            }
+            Console.WriteLine("Nazwa sodimatu: " + sodimat_name);
+            savePath += sodimat_name + ".txt";
+            tmp = lines[2];
+            flag = true;
+            //extract start sodim folder
+            for (int i = 0; i < tmp.Length; i++)
+            {
+                if (tmp[i].ToString().Equals("\"") && flag)
+                {
+                    flag = false;
+                }
+                else if (!tmp[i].ToString().Equals("\"") && flag.Equals(false))
+                {
+                    strSodimFolder += tmp[i];
+                }
+
+            }
+   
+
+            //get numcig from history
+            string numcigPath = strSodimFolder + "HISTORY\\NUMCIG.TXT";
+
+            lines.Clear();
+            lines = File.ReadAllLines(numcigPath).ToList();
+     
+            string abc = "";
+        
+            string tmp1 = lines[0];
+            int k = 0;
+            
+            while (Char.IsWhiteSpace(tmp1[k]))
+            {
+                k++;
+            }
+
+            while (!Char.IsWhiteSpace(tmp1[k]))
+            {
+                abc += tmp1[k];
+                k++;
+            }
+            aktualnyNumcig = abc;
+
+
+
+            //get numcycle from history
+            string numcyclePath = strSodimFolder + "HISTORY\\NUMCYCLE.TXT";
+            lines.Clear();
+            lines = File.ReadAllLines(numcyclePath).ToList();
+
+            tmp1 = lines[0];
+            k = 0;
+
+            abc = "";
+
+            while (Char.IsWhiteSpace(tmp1[k]))
+            {
+                k++;
+            }
+
+            while (!Char.IsWhiteSpace(tmp1[k]))
+            {
+                abc += tmp1[k];
+                k++;
+            }
+            aktualnyNumcycle = abc;
+
+        }
 
         internal bool wpisWymiany(string format)
         {
@@ -50,6 +173,11 @@ namespace NavigationBar
 
             string tmp = lines[1];
             bool flag = true;
+
+            string[] arrLine = File.ReadAllLines(locationTxtWithLocationOfSavePAth); // replacment dla temp data (data+numcig+numcycle)
+           
+            arrLine[5] = DateTime.Now.ToShortDateString();
+            arrLine[7] = format;
 
             //extract sodimat name
             for (int i = 0; i < tmp.Length; i++)
@@ -83,7 +211,7 @@ namespace NavigationBar
             }
             //Console.WriteLine("Ścierzka startowa Sodimatu: "+strSodimFolder);
 
-            //get numcycle from history
+            //get numcig from history
             string numcigPath = strSodimFolder + "HISTORY\\NUMCIG.TXT";
 
             lines.Clear();
@@ -95,7 +223,7 @@ namespace NavigationBar
             abc += sodimat_name+";";
             string tmp1 = lines[0];
             int k = 0;
-
+            arrLine[9] = "";
             while (Char.IsWhiteSpace(tmp1[k]))
             {
                 k++;
@@ -104,19 +232,18 @@ namespace NavigationBar
             while (!Char.IsWhiteSpace(tmp1[k]))
             {
                 abc += tmp1[k];
+                arrLine[9] += tmp1[k];
                 k++;
             }
 
 
 
-
+            //get numcycle from history
             string numcyclePath = strSodimFolder + "HISTORY\\NUMCYCLE.TXT";
             lines.Clear();
             lines = File.ReadAllLines(numcyclePath).ToList();
-            // Console.WriteLine("Numcycle");
-            // Console.WriteLine(lines[0]);
-            // Console.WriteLine(lines[1]);
 
+            arrLine[11] = "";
             tmp1 = lines[0];
             k = 0;
             abc += ";";
@@ -130,6 +257,7 @@ namespace NavigationBar
             while (!Char.IsWhiteSpace(tmp1[k]))
             {
                 abc += tmp1[k];
+                arrLine[11] += tmp1[k];
                 k++;
             }
 
@@ -138,9 +266,13 @@ namespace NavigationBar
             abc += ";";
             abc += DateTime.Now.ToString();
 
+            //zapisywanie danych tymczasowych (data_wymiany_gumki + numcig + numcycle)
+
 
             try
             {
+                File.WriteAllLines(locationTxtWithLocationOfSavePAth, arrLine);
+
                 StreamWriter writer = new StreamWriter(savePath, true);
                 abc += ";" + format;
                 writer.WriteLine(abc);
