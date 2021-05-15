@@ -52,6 +52,8 @@ namespace NavigationBar
                 x = Int32.Parse(aktualnyNumcig);
                 y = Int32.Parse(arrLine[9]);
                 iloscZbadanychProbek.Text = (x - y).ToString();
+                DateTime dt = Convert.ToDateTime(arrLine[5]);
+                iloscDniBezZmianyGumki.Text = ((DateTime.Now - dt).Days).ToString(); 
 
             }
             catch { }
@@ -197,6 +199,7 @@ namespace NavigationBar
             tmp = lines[2];
             flag = true;
             //extract start sodim folder
+            strSodimFolder = "";
             for (int i = 0; i < tmp.Length; i++)
             {
                 if (tmp[i].ToString().Equals("\"") && flag)
@@ -271,13 +274,14 @@ namespace NavigationBar
 
             try
             {
-                File.WriteAllLines(locationTxtWithLocationOfSavePAth, arrLine);
+                
 
                 StreamWriter writer = new StreamWriter(savePath, true);
                 abc += ";" + format;
                 writer.WriteLine(abc);
                 writer.Dispose();
                 MessageBox.Show("Plik wymiany gumek zapisano w danej ścierzce: " + savePath, "Informacja");
+                File.WriteAllLines(locationTxtWithLocationOfSavePAth, arrLine);
                 return true;
             }
 
@@ -286,33 +290,35 @@ namespace NavigationBar
                 MessageBox.Show("Wykryto błąd. Upewnij się że wskazana ścierzka istnieje", "BŁĄD");
                 return false;
             }
+          
 
 
         }
 
         private void OK_LoginButton_Click(object sender, RoutedEventArgs e)
         {
+            var statment = makeShureWindow();
             if (KsRB.IsChecked == true)
             {
                
                 bool b = wpisWymiany("KS");
-                if (b == true) MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
-                else if (b == false) MessageBox.Show("Coś poszło nie tak! Skontaktuj się z twórcą.", "UWAGA!");
+                if (b == true && statment == true) MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
+              //  else if (b == false) MessageBox.Show("Coś poszło nie tak! Skontaktuj się z twórcą.", "UWAGA!");
                 this.Close();
 
             }
             else if (DsRB.IsChecked == true)
             {
                 bool b = wpisWymiany("DS");
-                if (b == true) MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
-                else if (b == false) MessageBox.Show("Coś poszło nie tak! Skontaktuj się z twórcą.", "UWAGA!");
+                if (b == true && statment == true) MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
+               // else if (b == false) MessageBox.Show("Coś poszło nie tak! Skontaktuj się z twórcą.", "UWAGA!");
                 this.Close();
             }
             else if (SsRB.IsChecked == true)
             {
                 bool b = wpisWymiany("SS");
-                if (b == true) MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
-                else if (b == false) MessageBox.Show("Coś poszło nie tak! Skontaktuj się z twórcą.", "UWAGA!");
+                if (b == true && statment == true) MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
+               // else if (b == false) MessageBox.Show("Coś poszło nie tak! Skontaktuj się z twórcą.", "UWAGA!");
                 this.Close();
             }
 
@@ -320,7 +326,12 @@ namespace NavigationBar
         }
 
   
-      
+        bool makeShureWindow()
+        {
+            var Result = MessageBox.Show("Czy chcesz wymienić gumkę?", "Wymiana Gumki", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (Result == MessageBoxResult.Yes) return true;
+            else return false;
+        }
 
         private void Anuluj_LoginButton_Click(object sender, RoutedEventArgs e)
         {

@@ -23,16 +23,18 @@
                 <TextBlock  x:Name="dataOstatniejWymianyGumki">NULL</TextBlock>
                 <TextBlock  FontSize="8">Format gumki</TextBlock>
               <TextBlock x:Name="formatObecniejGumki">NULL</TextBlock>
+                <TextBlock  FontSize="8">Ilość dni bez wymiany gumki</TextBlock>
+              <TextBlock x:Name="iloscDniBezZmianyGumki">NULL</TextBlock>
             </StackPanel>
           <StackPanel Grid.Column="1">
-                <TextBlock FontSize="8">Ilość zainicjowanych cyklów</TextBlock>
+                <TextBlock FontSize="8">Ilość zainicjowanych cyklów od ostatniej wymiany</TextBlock>
                 <TextBlock x:Name="iloscCykli">NULL</TextBlock>
-            <TextBlock FontSize="8">Ilość zmierzonych próbek</TextBlock>
+                <TextBlock FontSize="8">Ilość zmierzonych próbek  od ostatniej wymiany</TextBlock>
             <TextBlock x:Name="iloscZbadanychProbek">NULL</TextBlock>
             </StackPanel>
         </Grid>
       
-        <TextBlock FontSize="15" Margin="10,10,54,10" ><Run Text="Format założonej gumki"/></TextBlock>
+        <TextBlock FontSize="12" Margin="10,10,54,10" ><Run Text="Sekcja wymiany gumki, wybierz format założonej gumki"/></TextBlock>
   
         <Grid Height="30" Margin="15,0,0,0">
             <Grid.ColumnDefinitions>
