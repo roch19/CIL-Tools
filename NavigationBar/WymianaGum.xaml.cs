@@ -67,7 +67,7 @@ namespace NavigationBar
             try
             {
                 lines = File.ReadAllLines(locationTxtWithLocationOfSavePAth).ToList();
-                savePath += lines[1];
+             
                 lines = File.ReadAllLines(pathCopySodim).ToList();
             }
             catch { MessageBox.Show("Brak pliku zawierającego ścieżkę zapisu który powinien znajdować się w ścieżce: C:\\copy_sodim\\PATH_TO_SAVE_CIGNUM.txt, dodaj plik do ścieżki", "UWAGA!"); };
@@ -92,7 +92,7 @@ namespace NavigationBar
 
             }
             Console.WriteLine("Nazwa sodimatu: " + sodimat_name);
-            savePath += sodimat_name + ".txt";
+    
             tmp = lines[2];
             flag = true;
             //extract start sodim folder
@@ -161,6 +161,7 @@ namespace NavigationBar
 
         internal bool wpisWymiany(string format)
         {
+            savePath = "";
             try
             {
                 lines = File.ReadAllLines(locationTxtWithLocationOfSavePAth).ToList();
@@ -281,7 +282,7 @@ namespace NavigationBar
                 writer.WriteLine(abc);
                 writer.Dispose();
                 MessageBox.Show("Plik wymiany gumek zapisano w danej ścierzce: " + savePath, "Informacja");
-                File.WriteAllLines(locationTxtWithLocationOfSavePAth, arrLine);
+              //  File.WriteAllLines(locationTxtWithLocationOfSavePAth, arrLine);
                 return true;
             }
 

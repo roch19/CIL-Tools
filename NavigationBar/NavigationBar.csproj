@@ -61,6 +61,9 @@
       <DependentUpon>BlockerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DialogResult.cs" />
+    <Compile Include="EdycjaCzasu.xaml.cs">
+      <DependentUpon>EdycjaCzasu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="lines.cs" />
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -78,6 +81,10 @@
     </Compile>
     <Compile Include="WymianaGumek.cs" />
     <Page Include="BlockerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EdycjaCzasu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

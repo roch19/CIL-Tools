@@ -1,0 +1,77 @@
+﻿<Window x:Class="NavigationBar.EdycjaCzasu"
+xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NavigationBar"
+        mc:Ignorable="d"
+        ShowInTaskbar="False"
+        WindowStyle="ToolWindow"
+
+Topmost="True"
+        WindowStartupLocation="Manual"
+        Title="Edytor czasu awarii" Height="360" Width="400">
+    <StackPanel Background="#B6B6B6" Height="320" Margin="2,2,2,0" VerticalAlignment="Top">
+
+
+        <TextBlock HorizontalAlignment="Left" TextDecorations="Underline" FontSize="12" Margin="10,0,10,10" ><Run Text="CZAS START AWARII"/></TextBlock>
+
+        <Grid Height="100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="*"/>
+              <RowDefinition Height="*"/>
+              <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+          <Button x:Name="UP_Start_Date" Click="UP_Start_Date_Click"  Grid.Column="0" Grid.Row="0"  FontSize="20" Width="30" BorderThickness="2" BorderBrush="#530000" Background="#1C97FE" Content="^"/>
+            <Button x:Name="UP_Start_Hours" Click="UP_Start_Hours_Click"  Grid.Column="1" Grid.Row="0"  FontSize="20" Width="30" BorderThickness="2" BorderBrush="#530000" Background="#1C97FE" Content="^"/>
+            <Button x:Name="UP_Start_Minutes" Click="UP_Start_Minutes_Click"  Grid.Column="2" Grid.Row="0"  FontSize="20" Width="30" BorderThickness="2" BorderBrush="#530000" Background="#1C97FE" Content="^"/>
+            <TextBlock x:Name="Start_Data" Margin="5,5,5,5" Background="WhiteSmoke" Grid.Column="0" Grid.Row="1" TextAlignment="Center" FontSize="16" Text="DD/MM/YYYY" />
+            <TextBlock x:Name="Start_Hours" Margin="5,5,5,5" Background="WhiteSmoke" Grid.Column="1" Grid.Row="1" TextAlignment="Center" FontSize="16" Text="HH" />
+            <TextBlock x:Name="Start_Minutes" Margin="5,5,5,5" Background="WhiteSmoke" Grid.Column="2" Grid.Row="1" TextAlignment="Center" FontSize="16" Text="MM" />
+            <Button x:Name="Down_Start_Date" Click="Down_Start_Date_Click"  Grid.Column="0" Grid.Row="2"  FontSize="13" Width="30" BorderThickness="2" BorderBrush="#530000" Background="#1C97FE" Content="V"/>
+            <Button x:Name="Down_Start_Hours" Click="Down_Start_Hours_Click"  Grid.Column="1" Grid.Row="2"  FontSize="13" Width="30" BorderThickness="1.5" BorderBrush="#530000" Background="#1C97FE" Content="V"/>
+            <Button x:Name="Down_Start_Minutes" Click="Down_Start_Minutes_Click"  Grid.Column="2" Grid.Row="02"  FontSize="13" Width="30" BorderThickness="2" BorderBrush="#530000" Background="#1C97FE" Content="V"/>
+        </Grid>
+
+        <TextBlock HorizontalAlignment="Left" TextDecorations="Underline" FontSize="12" Margin="10,0,10,10" ><Run Text="CZAS STOP AWARII"/></TextBlock>
+
+        <Grid Height="100">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="UP_Stop_Date" Click="UP_Stop_Date_Click"  Grid.Column="0" Grid.Row="0"  FontSize="20" Width="30" BorderThickness="2" BorderBrush="#530000" Background="#1C97FE" Content="^"/>
+            <Button x:Name="UP_Stop_Hours" Click="UP_Stop_Hours_Click"  Grid.Column="1" Grid.Row="0"  FontSize="20" Width="30" BorderThickness="2" BorderBrush="#530000" Background="#1C97FE" Content="^"/>
+            <Button x:Name="UP_Stop_Minutes" Click="UP_Stop_Minutes_Click"  Grid.Column="2" Grid.Row="0"  FontSize="20" Width="30" BorderThickness="2" BorderBrush="#530000" Background="#1C97FE" Content="^"/>
+            <TextBlock x:Name="Stop_Data" Margin="5,5,5,5" Background="WhiteSmoke" Grid.Column="0" Grid.Row="1" TextAlignment="Center" FontSize="16" Text="DD/MM/YYYY" />
+            <TextBlock x:Name="Stop_Hours" Margin="5,5,5,5" Background="WhiteSmoke" Grid.Column="1" Grid.Row="1" TextAlignment="Center" FontSize="16" Text="HH" />
+            <TextBlock x:Name="Stop_Minutes" Margin="5,5,5,5" Background="WhiteSmoke" Grid.Column="2" Grid.Row="1" TextAlignment="Center" FontSize="16" Text="MM" />
+            <Button x:Name="Down_Stop_Date" Click="Down_Stop_Date_Click" Grid.Column="0" Grid.Row="2"  FontSize="13" Width="30" BorderThickness="2" BorderBrush="#530000" Background="#1C97FE" Content="V"/>
+            <Button x:Name="Down_Stop_Hours" Click="Down_Stop_Hours_Click"  Grid.Column="1" Grid.Row="2"  FontSize="13" Width="30" BorderThickness="1.5" BorderBrush="#530000" Background="#1C97FE" Content="V"/>
+            <Button x:Name="Down_Stop_Minutes" Click="Down_Stop_Minutes_Click"  Grid.Column="2" Grid.Row="02"  FontSize="13" Width="30" BorderThickness="2" BorderBrush="#530000" Background="#1C97FE" Content="V"/>
+        </Grid>
+
+
+        <Grid Height="52" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="OK_LoginButton" Click="OK_LoginButton_Click"  Grid.Column="0"  Height="40" Margin="10,0,10,0" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#0F0" Content="OK"/>
+            <Button x:Name="Anuluj_LoginButton" Click="Anuluj_LoginButton_Click"  Grid.Column="2"  Height="40" Margin="10,0,10,0" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#FF0000" Content="Anuluj"/>
+        </Grid>
+
+
+    </StackPanel>
+</Window>

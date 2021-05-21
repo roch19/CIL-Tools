@@ -35,14 +35,7 @@ namespace NavigationBar
         string sodimat_name = "";
 
 
-        private void OK_LoginButton_Click(object sender, RoutedEventArgs e)
-        {
-            bool b = wpisWymiany();
-            if (b == true) MessageBox.Show("Plik awarii zapisano w danej ścierzce: "+ savePath , "Informacja");
-            else if (b == false) MessageBox.Show("Coś poszło nie tak! Skontaktuj się z twórcą.", "UWAGA!");
-            this.Close();
-
-        }
+    
 
         private void Anuluj_LoginButton_Click(object sender, RoutedEventArgs e)
         {
@@ -394,6 +387,7 @@ namespace NavigationBar
 
 
             else MessageBox.Show("Musisz wybrać typ awarii!");
+
             try
             {
                 StreamWriter writer = new StreamWriter(savePath, true);
@@ -406,11 +400,6 @@ namespace NavigationBar
                 MessageBox.Show("Wykryto błąd. Upewnij się że wskazana ścierzka istnieje", "BŁĄD");
                 return false;
             }
-
-
-
-
-
         }
 
 
@@ -512,14 +501,42 @@ namespace NavigationBar
             }
         }
 
-        private void Edytuj_CzasStart_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void EdytujCzasButton_Click(object sender, RoutedEventArgs e)
         {
+            List<DateTime> dtList = new List<DateTime>();
+            EdycjaCzasu ec = new EdycjaCzasu();
+            ec.IntData(timeStart, timeStop);
+             ec.ShowDialog();
+            dtList = ec.throwDataToWpisAwarii();
+            try {
+            timeStart = dtList[0];
+            timeStop = dtList[1];
 
+                var timeSumarum = (timeStop - timeStart).TotalSeconds;
+                var summaryTime = timeSumarum.ToString();
+                TimeSpan t = TimeSpan.FromSeconds(timeSumarum);
+                string summary = string.Format("{0:D2}h:{1:D2}m:{2:D2}s",
+                            t.Hours,
+                            t.Minutes,
+                            t.Seconds);
+                Dispatcher.Invoke(new Action(() => { startAwariaTextBlock.Text = timeStart.ToString(); ; }));
+                Dispatcher.Invoke(new Action(() => { stopAwariaTextBlock.Text = timeStop.ToString(); ; }));
+                Dispatcher.Invoke(new Action(() => { czasTrwaniaAwariiTextBlock.Text = summary; ; }));
+
+            }
+            catch (Exception eqweq) {; }
+        }
+
+        private void OK_LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            if(ModułComboBox.SelectedIndex <= -1 ) MessageBox.Show("Musisz wybrać moduł! " + savePath, "Uwaga!"); 
+            else if(ModułComboBox.SelectedIndex > -1)
+            {
+                bool b = wpisWymiany();
+                if (b == true) MessageBox.Show("Plik awarii zapisano w danej ścierzce: " + savePath, "Informacja");
+                else if (b == false) MessageBox.Show("Błąd podczas zapisywania awarii!", "UWAGA!");
+                this.Close();
+            }
         }
     }
 }

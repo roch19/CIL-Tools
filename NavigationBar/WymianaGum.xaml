@@ -13,6 +13,7 @@
   
   <StackPanel Background="#B6B6B6" Height="300" Margin="2,2,2,0" VerticalAlignment="Top">
 
+    <TextBlock HorizontalAlignment="Center" TextDecorations="Underline" FontSize="12" Margin="10,0,10,0" ><Run Text=" STATYSTYKI"/></TextBlock>
         <Grid Margin="10,10,10,10">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="*"/>
@@ -20,22 +21,22 @@
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
                 <TextBlock FontSize="8">Data ostatniej wymiany gumki</TextBlock>
-                <TextBlock  x:Name="dataOstatniejWymianyGumki">NULL</TextBlock>
+                <TextBlock HorizontalAlignment="Left" Width="100"  Background="WhiteSmoke" x:Name="dataOstatniejWymianyGumki">NULL</TextBlock>
                 <TextBlock  FontSize="8">Format gumki</TextBlock>
-              <TextBlock x:Name="formatObecniejGumki">NULL</TextBlock>
+                <TextBlock  HorizontalAlignment="Left" Width="100"  Background="WhiteSmoke" x:Name="formatObecniejGumki">NULL</TextBlock>
                 <TextBlock  FontSize="8">Ilość dni bez wymiany gumki</TextBlock>
-              <TextBlock x:Name="iloscDniBezZmianyGumki">NULL</TextBlock>
+                <TextBlock  HorizontalAlignment="Left" Width="100"  Background="WhiteSmoke" x:Name="iloscDniBezZmianyGumki">NULL</TextBlock>
             </StackPanel>
           <StackPanel Grid.Column="1">
                 <TextBlock FontSize="8">Ilość zainicjowanych cyklów od ostatniej wymiany</TextBlock>
-                <TextBlock x:Name="iloscCykli">NULL</TextBlock>
+                <TextBlock  HorizontalAlignment="Left"   Width="100" Background="WhiteSmoke" x:Name="iloscCykli">NULL</TextBlock>
                 <TextBlock FontSize="8">Ilość zmierzonych próbek  od ostatniej wymiany</TextBlock>
-            <TextBlock x:Name="iloscZbadanychProbek">NULL</TextBlock>
+                <TextBlock HorizontalAlignment="Left" Width="100" Background="WhiteSmoke" x:Name="iloscZbadanychProbek">NULL</TextBlock>
             </StackPanel>
         </Grid>
       
-        <TextBlock FontSize="12" Margin="10,10,54,10" ><Run Text="Sekcja wymiany gumki, wybierz format założonej gumki"/></TextBlock>
-  
+        <TextBlock HorizontalAlignment="Center" TextDecorations="Underline" FontSize="12" Margin="10,0,10,0" ><Run Text="SEKCJA WYMIANY GUMKI"/></TextBlock>
+    <TextBlock FontSize="12" Margin="10,10,10,10" ><Run Text="Wybierz format nowo założonej gumki"/></TextBlock>
         <Grid Height="30" Margin="15,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
