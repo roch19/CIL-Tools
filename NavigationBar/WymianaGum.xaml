@@ -9,9 +9,9 @@
         WindowStyle="ToolWindow"
         Topmost="True"
         WindowStartupLocation="Manual"
-        Title="Sprawdzenie gumek" Height="300" Width="400">
+        Title="Sprawdzenie gumek" Height="340" Width="400">
   
-  <StackPanel Background="#B6B6B6" Height="300" Margin="2,2,2,0" VerticalAlignment="Top">
+  <StackPanel Background="#B6B6B6" Height="340" Margin="2,2,2,0" VerticalAlignment="Top">
 
     <TextBlock HorizontalAlignment="Center" TextDecorations="Underline" FontSize="12" Margin="10,0,10,0" ><Run Text=" STATYSTYKI"/></TextBlock>
         <Grid Margin="10,10,10,10">
@@ -36,8 +36,10 @@
         </Grid>
       
         <TextBlock HorizontalAlignment="Center" TextDecorations="Underline" FontSize="12" Margin="10,0,10,0" ><Run Text="SEKCJA WYMIANY GUMKI"/></TextBlock>
-    <TextBlock FontSize="12" Margin="10,10,10,10" ><Run Text="Wybierz format nowo założonej gumki"/></TextBlock>
-        <Grid Height="30" Margin="15,0,0,0">
+        <TextBlock  TextDecorations="Underline" FontSize="12" Margin="10,10,0,0" ><Run Text="Wybierz format nowo założonej gumki"/></TextBlock>
+        
+      
+            <Grid Height="20" Margin="10,5,0,5" x:Name="gumRadioButtonGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
 
@@ -48,16 +50,32 @@
             <RadioButton x:Name="DsRB" FontSize="14" Grid.Column="1"  GroupName="guma">Demi Slim</RadioButton>
             <RadioButton x:Name="SsRB" FontSize="14" Grid.Column="2"  GroupName="guma">Super Slim</RadioButton>
         </Grid>
+      
+      
+            <TextBlock TextDecorations="Underline" FontSize="12" Margin="10,10,0,0" ><Run Text="Powód wymiany gumki"/></TextBlock>
 
-        <Grid Height="77" >
+
+        <Grid Height="20" Margin="10,5,0,5" x:Name="reasonRadioButtonGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <RadioButton x:Name="uszk" FontSize="14" Grid.Column="0"  GroupName="reson">Uszkodzona</RadioButton>
+            <RadioButton x:Name="zuz" FontSize="14" Grid.Column="1"  GroupName="reson">Zużyta</RadioButton>
+            <RadioButton x:Name="czas" FontSize="14" Grid.Column="2"  GroupName="reson">Termin ważności</RadioButton>
+        </Grid>
+      
+        <Grid Height="70" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="95*"/>
                 <ColumnDefinition Width="2*"/>
 
                 <ColumnDefinition Width="97*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="OK_LoginButton" Click="OK_LoginButton_Click"  Grid.Column="0"  Height="40" Margin="28,0,57,37" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#0F0" Content="OK"/>
-            <Button x:Name="Anuluj_LoginButton" Click="Anuluj_LoginButton_Click"  Grid.Column="2"  Height="40" Margin="31,0,58,37" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#FF0000" Content="Anuluj"/>
+            <Button x:Name="OK_LoginButton" Click="OK_LoginButton_Click"  Grid.Column="0"  Height="40" Margin="28,0,57,0" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#0F0" Content="OK"/>
+            <Button x:Name="Anuluj_LoginButton" Click="Anuluj_LoginButton_Click"  Grid.Column="2"  Height="40" Margin="31,0,58,0" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#FF0000" Content="Anuluj"/>
         </Grid>
 
 

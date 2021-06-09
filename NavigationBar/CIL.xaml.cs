@@ -9,25 +9,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 
 namespace NavigationBar
 {
     /// <summary>
-    /// Logika interakcji dla klasy WymianaGum.xaml
+    /// Logika interakcji dla klasy CIL.xaml
     /// </summary>
-    public partial class WymianaGum : Window
+    public partial class CIL : Window
     {
-        public WymianaGum()
+        public CIL()
         {
             InitializeComponent();
-            getValuesOnStart();
-            this.Left = 0;
-            this.Top = SystemParameters.PrimaryScreenHeight / 2;
-            GetInfoAboutGum();
+            getValues();
+            getInfoOnTable();
         }
+
         string locationTxtWithLocationOfSavePAth = @"C:\copy_sodim\PATH_TO_SAVE_CIGNUM.txt";
         string pathCopySodim = @"C:\copy_sodim\copy_sodim.vbs";
         string strSodimFolder = "";
@@ -35,48 +33,56 @@ namespace NavigationBar
         string savePath = "";
         string aktualnyNumcig = "";
         string aktualnyNumcycle = "";
+        string iloscWykonanychBadanExportArch = "";
         List<string> lines = null;
 
-        void GetInfoAboutGum()
+        void getInfoOnTable()
         {
-            string[] arrLine;
+                string[] arrLine;
 
-            try
-            {
-                arrLine = File.ReadAllLines(locationTxtWithLocationOfSavePAth); // replacment dla temp data (data+numcig+numcycle)
-                dataOstatniejWymianyGumki.Text = arrLine[5];
-                formatObecniejGumki.Text = arrLine[7];
-                int x = Int32.Parse(aktualnyNumcycle);
-                int y = Int32.Parse(arrLine[11]);
-                iloscCykli.Text = (x-y).ToString();
-                x = Int32.Parse(aktualnyNumcig);
-                y = Int32.Parse(arrLine[9]);
-                iloscZbadanychProbek.Text = (x - y).ToString();
-                DateTime dt = Convert.ToDateTime(arrLine[5]);
-                iloscDniBezZmianyGumki.Text = ((DateTime.Now - dt).Days).ToString(); 
+                try
+                {
+                    arrLine = File.ReadAllLines(locationTxtWithLocationOfSavePAth); // replacment dla temp data (data+numcig+numcycle)
+                    dataOstatniegoCila.Text = arrLine[13];
+                    DateTime dt = Convert.ToDateTime(arrLine[13]);
+                    iloscDniOdCila.Text = ((DateTime.Now - dt).Days).ToString();
 
-            }
-            catch { }
+                    int iloscZmiezonychProbek = Convert.ToInt32(arrLine[15]);
+                    int temp = Int32.Parse(aktualnyNumcig);
+                    iloscZmierzonychProbekOdOstatniegoCILA.Text = (temp - iloscZmiezonychProbek).ToString();
 
-          
+                    //zainicjowane badania od sotatniego cila
+                    int iloscZainicjowanychBadan = Convert.ToInt32(arrLine[17]);
+                    temp = Int32.Parse(aktualnyNumcycle);
+                    iloscCykli.Text = (temp - iloscZainicjowanychBadan).ToString();
+
+                    ////wykonane badania od ostatniego cila
+                    //int iloscWykonanychBadanOdCILA = Convert.ToInt32(arrLine[21]);
+                    //temp = Int32.Parse(iloscWykonanychBadanExportArch);
+                    //iloscWykonanychBadan.Text = (temp - iloscWykonanychBadanOdCILA).ToString();
+
+                    ////[ilosc zainicjowanych badań - wykonanych] 
+                    //var x = Int32.Parse(iloscCykli.Text);
+                    //var y = Int32.Parse(iloscWykonanychBadan.Text);
+                    //iloscPrzerwanychBadan.Text = (x-y).ToString();
+                }
+                catch { }
         }
 
-
-        void getValuesOnStart()
+        void getValues()
         {
             try
             {
                 lines = File.ReadAllLines(locationTxtWithLocationOfSavePAth).ToList();
-             
                 lines = File.ReadAllLines(pathCopySodim).ToList();
             }
             catch { MessageBox.Show("Brak pliku zawierającego ścieżkę zapisu który powinien znajdować się w ścieżce: C:\\copy_sodim\\PATH_TO_SAVE_CIGNUM.txt, dodaj plik do ścieżki", "UWAGA!"); };
-      
+
 
             string tmp = lines[1];
             bool flag = true;
 
-      
+
 
             //extract sodimat name
             for (int i = 0; i < tmp.Length; i++)
@@ -92,7 +98,7 @@ namespace NavigationBar
 
             }
             Console.WriteLine("Nazwa sodimatu: " + sodimat_name);
-    
+
             tmp = lines[2];
             flag = true;
             //extract start sodim folder
@@ -108,19 +114,19 @@ namespace NavigationBar
                 }
 
             }
-   
+
 
             //get numcig from history
             string numcigPath = strSodimFolder + "HISTORY\\NUMCIG.TXT";
 
             lines.Clear();
             lines = File.ReadAllLines(numcigPath).ToList();
-     
+
             string abc = "";
-        
+
             string tmp1 = lines[0];
             int k = 0;
-            
+
             while (Char.IsWhiteSpace(tmp1[k]))
             {
                 k++;
@@ -133,7 +139,8 @@ namespace NavigationBar
             }
             aktualnyNumcig = abc;
 
-
+            //            int requestCount = filePath.EnumerateFiles()
+            //.Count(file => file.LastWriteTime < maxDate && file.LastWriteTime >= minDate);
 
             //get numcycle from history
             string numcyclePath = strSodimFolder + "HISTORY\\NUMCYCLE.TXT";
@@ -159,30 +166,29 @@ namespace NavigationBar
 
         }
 
-        internal bool wpisWymiany(string format, string reason)
+
+        internal bool wpisCila()
         {
             savePath = "";
             try
             {
                 lines = File.ReadAllLines(locationTxtWithLocationOfSavePAth).ToList();
-                savePath += lines[1];
+                savePath += lines[21];
                 lines = File.ReadAllLines(pathCopySodim).ToList();
             }
             catch { MessageBox.Show("Brak pliku zawierającego ścieżkę zapisu który powinien znajdować się w ścieżce: C:\\copy_sodim\\PATH_TO_SAVE_CIGNUM.txt, dodaj plik do ścieżki", "UWAGA!"); return false; };
             //Const Sodimat_name 
-          //  Console.WriteLine(lines[1]);
+            //  Console.WriteLine(lines[1]);
             //Const strSodimFolder
-          //  Console.WriteLine(lines[2]);
-
+            //  Console.WriteLine(lines[2]);
+            sodimat_name = "";
             string tmp = lines[1];
             bool flag = true;
 
             string[] arrLine = File.ReadAllLines(locationTxtWithLocationOfSavePAth); // replacment dla temp data (data+numcig+numcycle)
-           
-            arrLine[5] = DateTime.Now.ToShortDateString();
-            arrLine[7] = format;
 
-            sodimat_name = "";
+            arrLine[13] = DateTime.Now.ToShortDateString();
+
             //extract sodimat name
             for (int i = 0; i < tmp.Length; i++)
             {
@@ -197,7 +203,7 @@ namespace NavigationBar
 
             }
             Console.WriteLine("Nazwa sodimatu: " + sodimat_name);
-            savePath += sodimat_name + ".txt";
+            savePath += sodimat_name +"_CIL"+ ".txt";
             tmp = lines[2];
             flag = true;
             //extract start sodim folder
@@ -225,10 +231,10 @@ namespace NavigationBar
             // Console.WriteLine(lines[0]);
             // Console.WriteLine(lines[1]);
             string abc = "";
-            abc += sodimat_name+";";
+            abc += sodimat_name + ";";
             string tmp1 = lines[0];
             int k = 0;
-            arrLine[9] = "";
+            arrLine[15] = "";
             while (Char.IsWhiteSpace(tmp1[k]))
             {
                 k++;
@@ -237,7 +243,7 @@ namespace NavigationBar
             while (!Char.IsWhiteSpace(tmp1[k]))
             {
                 abc += tmp1[k];
-                arrLine[9] += tmp1[k];
+                arrLine[15] += tmp1[k];
                 k++;
             }
 
@@ -248,11 +254,10 @@ namespace NavigationBar
             lines.Clear();
             lines = File.ReadAllLines(numcyclePath).ToList();
 
-            arrLine[11] = "";
+            arrLine[17] = "";
             tmp1 = lines[0];
             k = 0;
             abc += ";";
-
 
             while (Char.IsWhiteSpace(tmp1[k]))
             {
@@ -262,7 +267,7 @@ namespace NavigationBar
             while (!Char.IsWhiteSpace(tmp1[k]))
             {
                 abc += tmp1[k];
-                arrLine[11] += tmp1[k];
+                arrLine[17] += tmp1[k];
                 k++;
             }
 
@@ -273,16 +278,11 @@ namespace NavigationBar
 
             //zapisywanie danych tymczasowych (data_wymiany_gumki + numcig + numcycle)
 
-
             try
             {
-                
-
                 StreamWriter writer = new StreamWriter(savePath, true);
-                abc += ";" + format +";"+ reason;
                 writer.WriteLine(abc);
                 writer.Dispose();
-             
                 File.WriteAllLines(locationTxtWithLocationOfSavePAth, arrLine);
                 return true;
             }
@@ -292,107 +292,39 @@ namespace NavigationBar
                 MessageBox.Show("Wykryto błąd. Upewnij się że wskazana ścierzka istnieje", "BŁĄD");
                 return false;
             }
-          
-
 
         }
 
-        private void OK_LoginButton_Click(object sender, RoutedEventArgs e)
-        {
-            var statment = makeShureWindow();
-            //if (gumRadioButtonStackPanel.Children.OfType<RadioButton>().Any(rb => rb.IsChecked == true) == true)
-            //{
-            //    MessageBox.Show("Określiłeś format gumki!");
-            //}
-            //else if (gumRadioButtonStackPanel.Children.OfType<RadioButton>().All(rb => rb.IsChecked == false))
-            //{
-            //    MessageBox.Show("Nie określiłeś formatu gumki!");
-            //}
-            RadioButton gumCheckedButton = null;
-            RadioButton reasonCheckedButton = null;
 
-            try
-            {
-                gumCheckedButton = gumRadioButtonGrid.Children.OfType<RadioButton>().First(r => r.IsChecked == true);
-                reasonCheckedButton = reasonRadioButtonGrid.Children.OfType<RadioButton>().First(r => r.IsChecked == true);
-
-                if (statment == true)
-                {
-                    bool b = wpisWymiany(gumCheckedButton.Content.ToString(), reasonCheckedButton.Content.ToString());
-                    if (b == true)
-                    {
-                        MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
-                        this.Close();
-                        GC.Collect();
-                    }
-
-                    else MessageBox.Show("Błąd podczas zapisu ", "Uwaga!");
-                }
-
-            }
-
-            catch
-            {
-                MessageBox.Show("Należy wybrać rodzaj gumki oraz powód wymiany!", "Bład wprowadzania danych!");
-            }
-
-
-           
-
-            //if (KsRB.IsChecked == true)
-            //{
-            //    if (statment == true)
-            //    {
-            //        bool b = wpisWymiany("KS");
-            //        if (b == true)
-            //        {
-            //            MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
-            //            this.Close();
-            //            GC.Collect();
-            //        }
-
-            //        else MessageBox.Show("Błąd podczas zapisu ", "Uwaga!");
-            //    }
-            //}
-            //else if (DsRB.IsChecked == true)
-            //{
-            //    bool b = wpisWymiany("DS");
-            //    if (b == true)
-            //    {
-            //        MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
-            //        this.Close();
-            //        GC.Collect();
-            //    }
-
-            //    else MessageBox.Show("Błąd podczas zapisu ", "Uwaga!");
-            //}
-            //else if (SsRB.IsChecked == true)
-            //{
-            //    bool b = wpisWymiany("SS");
-            //    if (b == true)
-            //    {
-            //        MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
-            //        this.Close();
-            //        GC.Collect();
-            //    }
-
-            //    else MessageBox.Show("Błąd podczas zapisu ", "Uwaga!");
-            //}
-
-            //else MessageBox.Show("Musisz określić format gumki!");
-        }
-
-  
         bool makeShureWindow()
         {
-            var Result = MessageBox.Show("Czy chcesz wymienić gumkę?", "Wymiana Gumki", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            var Result = MessageBox.Show("Czy chcesz wykonać wpis CIL?", "Wpis CIL", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (Result == MessageBoxResult.Yes) return true;
             else return false;
         }
 
-        private void Anuluj_LoginButton_Click(object sender, RoutedEventArgs e)
+
+        private void WpisCIL_Click(object sender, RoutedEventArgs e)
         {
+            var statment = makeShureWindow();
+            if (statment == true)
+            {
+                bool b = wpisCila();
+                if (b == true) 
+                {
+                    MessageBox.Show("Plik wykonania CILA zapisano w danej ścierzce: " + savePath, "Informacja");
+                    GC.Collect();
+                    this.Close();
+                }
+                else MessageBox.Show("Błąd podczas zapisu ", "Uwaga!");
+            }
+        }
+
+        private void Anuluj_Click(object sender, RoutedEventArgs e)
+        {
+            GC.Collect();
             this.Close();
         }
     }
 }
+

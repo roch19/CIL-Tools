@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -60,6 +63,9 @@
     <Compile Include="BlockerWindow.xaml.cs">
       <DependentUpon>BlockerWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CIL.xaml.cs">
+      <DependentUpon>CIL.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DialogResult.cs" />
     <Compile Include="EdycjaCzasu.xaml.cs">
       <DependentUpon>EdycjaCzasu.xaml</DependentUpon>
@@ -67,6 +73,9 @@
     <Compile Include="lines.cs" />
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PDFChooser.xaml.cs">
+      <DependentUpon>PDFChooser.xaml</DependentUpon>
     </Compile>
     <Compile Include="SpisAwarii.xaml.cs">
       <DependentUpon>SpisAwarii.xaml</DependentUpon>
@@ -81,6 +90,10 @@
     </Compile>
     <Compile Include="WymianaGumek.cs" />
     <Page Include="BlockerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CIL.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -105,6 +118,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PDFChooser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SpisAwarii.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

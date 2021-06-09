@@ -147,9 +147,16 @@ namespace NavigationBar
 
         private void OK_LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            dtList.Add(startDT);
-            dtList.Add(stopDT);
-            this.Close();
+            if (startDT > stopDT)
+            {
+                MessageBox.Show("Błąd daty!", "BŁĄD!");
+            }
+            else if (stopDT > startDT)
+            {
+                dtList.Add(startDT);
+                dtList.Add(stopDT);
+                this.Close();
+            }
         }
 
         internal List<DateTime> throwDataToWpisAwarii()

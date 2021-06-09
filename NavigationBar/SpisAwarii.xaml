@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Background="#F7F7F7"
         ShowInTaskbar="False"
-        WindowStyle="None"
+        WindowStyle="ToolWindow"
         ResizeMode="NoResize"
         Topmost="True"
         WindowStartupLocation="Manual"
-        AllowsTransparency="True"
+        AllowsTransparency="False"
         Title="SpisAwarii" Height="380" Width="650">
 
   <StackPanel Background="#B6B6B6">

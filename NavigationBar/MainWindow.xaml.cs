@@ -284,7 +284,7 @@ namespace NavigationBar
                 Dispatcher.Invoke(new Action(() => { TurnOffButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { BlokowanieEkranuButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { CmdButton.IsEnabled = false; ; }));
- 
+                Dispatcher.Invoke(new Action(() => { CILcardButton.IsEnabled = false; ; }));
                 //Dispatcher.Invoke(new Action(() => { LogoutRemoteDesktopButton.IsEnabled = false; ; }));
                 zalogowany = false;
             }
@@ -304,8 +304,9 @@ namespace NavigationBar
                 Dispatcher.Invoke(new Action(() => { TurnOffButton.IsEnabled = true; ; }));
                 Dispatcher.Invoke(new Action(() => { BlokowanieEkranuButton.IsEnabled = true; ; }));
                 Dispatcher.Invoke(new Action(() => { CmdButton.IsEnabled = true; ; }));
-             //    Dispatcher.Invoke(new Action(() => { LogoutRemoteDesktopButton.IsEnabled = true; ; }));
-               
+                Dispatcher.Invoke(new Action(() => { CILcardButton.IsEnabled = true; ; }));
+                //    Dispatcher.Invoke(new Action(() => { LogoutRemoteDesktopButton.IsEnabled = true; ; }));
+
                 zalogowany = true;
             }
        
@@ -321,8 +322,8 @@ namespace NavigationBar
                 Dispatcher.Invoke(new Action(() => { TurnOffButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { BlokowanieEkranuButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { CmdButton.IsEnabled = false; ; }));
-        
-               // Dispatcher.Invoke(new Action(() => { LogoutRemoteDesktopButton.IsEnabled = false; ; }));
+                Dispatcher.Invoke(new Action(() => { CILcardButton.IsEnabled = false; ; }));
+                // Dispatcher.Invoke(new Action(() => { LogoutRemoteDesktopButton.IsEnabled = false; ; }));
                 zalogowany = false;
             }
         }
@@ -397,16 +398,18 @@ namespace NavigationBar
 
         private void OPLButton_Click(object sender, RoutedEventArgs e)
         {
-       
-            MessageBox.Show("Na razie nic do pokazania :)");
+
+            PDFChooser pDFChooser = new PDFChooser();
+            pDFChooser.ShowDialog();
+            GC.Collect();
         }
 
 
         private void CILcardButton_Click(object sender, RoutedEventArgs e)
         {
-            GC.Collect();
-            MessageBox.Show("Na razie nic do pokazania :)");
-           
+            CIL cil = new CIL();
+            cil.ShowDialog();
+            GC.Collect();           
         }
 
         private void WymianaGumButton_Click(object sender, RoutedEventArgs e)
@@ -465,9 +468,9 @@ namespace NavigationBar
             // enter username: QAUser01 
             // sim.Keyboard.TextEntry("QAUser01
             // press Tab key 
-          //  sim.Keyboard.KeyPress((WindowsInput.Native.VirtualKeyCode)Key.B);
+            //sim.Keyboard.KeyPress((WindowsInput.Native.VirtualKeyCode)Key.B);
             // Enter Password 
-         //   sim.Keyboard.TextEntry("acb@123");
+            //sim.Keyboard.TextEntry("acb@123");
             // submit enter 
             //sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
             //Robot robot
