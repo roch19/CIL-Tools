@@ -28,32 +28,37 @@ namespace NavigationBar
             getPaths();
 
             ///////// Lista Kalibracji
-            listaInformacji.Clear();
-       
-            
+            //listaInformacji.Clear();
+
+         
             //Lista plików znajdujących się w folderze o podanej ścierzce 
-            filesList = (Directory.EnumerateFiles(strSodimFolder + sourceDirectoryCalibrationLog).ToList());
+            filesList = (Directory.EnumerateFiles(strSodimFolder + sourceDirectoryCalibrationLog).ToList()); // 
             FileInfo fi;
             filesList.Reverse();
 
-            var now = DateTime.Now;
-            var yesterday = now.AddDays(-1);
-            var durationUntilMidnight = yesterday.Date - now;
-   
-            foreach (string currentFile in filesList)
+            //var now = DateTime.Now;
+            //var yesterday = now.AddDays(-1);
+            //var durationUntilMidnight = yesterday.Date - now;
+
+            try
             {
-                fi = new FileInfo(currentFile);
-                if (fi.LastAccessTime.Date == DateTime.Now.Date) //get files where create TIme is less than 14 days
+             
+                foreach (string currentFile in filesList)
                 {
-                    calibs.Add(fi.Name.ToString());
-                   // return true;
+                    fi = new FileInfo(currentFile);
+                    if (fi.LastAccessTime.Date == DateTime.Now.Date) //get files where create TIme is equal today
+                    //if (fi.CreationTime.Date == DateTime.Now.Date) //get files where create TIme is equal today
+                    {
+                        calibs.Add(fi.Name.ToString());
+                    }
                 }
+                GC.Collect();
+                return calibs;
             }
-            // return false;
-            GC.Collect();
-            return calibs;
-
-
+            catch (Exception e)
+            {
+                
+            }
         }
 
         internal List<string> ListaKalibracji()

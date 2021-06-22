@@ -26,7 +26,7 @@ namespace NavigationBar
     /// Logika interakcji dla klasy MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {
+    {   //Thuersday , Monday
         string theDIADay = "Monday"; //dzień w którym kalibrowana jest średnica
         AwarieKalibracje kalibracje = new AwarieKalibracje();
         public bool ifCllicked = false;
@@ -35,7 +35,10 @@ namespace NavigationBar
         public string logoutRemoteDekstopPath = @"C:\ProgramData\Microsoft\Windows\Strat Menu\Programs\Accessories\RemoteDesktop\";
         public bool ifWXP = false;
         bool awariaButtonStatus = false;
+        bool statusPD = false;
+        bool statusDIA = false;
         private string watchedFolder = "";
+        System.Timers.Timer aTimer;
         DateTime startAwaria;
         List<string> calibrationsList = new List<string>();
 
@@ -45,10 +48,10 @@ namespace NavigationBar
         {
             InitializeComponent();
             this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
-            ChceckIfAnyCalibrationWasTodayMaken();
+           // ChceckIfAnyCalibrationWasTodayMaken();
             MainWindow2_Loaded();
             timeToReset();
-            App_Deactivated_LostFocus();
+            //App_Deactivated_LostFocus();
             this.Focus();
             ShittyFunctionToChceckIfAppIsOnTopOnWinows7();
         }
@@ -58,7 +61,7 @@ namespace NavigationBar
             string operatingSystem = System.Environment.OSVersion.ToString();
             if (operatingSystem.Contains("6.1"))
             {
-                MessageBox.Show("To windows 7!");
+              //  MessageBox.Show("To windows 7!");
 
                 Thread myThread = new Thread(() =>
                 {
@@ -82,91 +85,94 @@ namespace NavigationBar
             }
         }
 
-        public delegate void WindowLostFocusEventHandler(object source, EventArgs args);
+        //public delegate void WindowLostFocusEventHandler(object source, EventArgs args);
 
-        public event WindowLostFocusEventHandler LostFocus;
+        //public event WindowLostFocusEventHandler LostFocus;
 
-        void App_Deactivated_LostFocus()
-        {
-
-            Dispatcher.Invoke(new Action(() => { this.Focus(); ; }));
-
-            OnFousLosted();
-        }
-
-        protected virtual void OnFousLosted()
-        {
-            LostFocus?.Invoke(this, EventArgs.Empty);
-        }
-
-        //bool isapplicationactive;
-        //private void App_Deactivated(object sender, EventHandler e)
+        //void App_Deactivated_LostFocus()
         //{
-        //    // application deactivated
-        //    this.isapplicationactive = false;
+
         //    Dispatcher.Invoke(new Action(() => { this.Focus(); ; }));
+
+        //    OnFousLosted();
+        //}
+
+        //protected virtual void OnFousLosted()
+        //{
+        //    LostFocus?.Invoke(this, EventArgs.Empty);
+        //}
+
+        //private void Widow_LostFocus(object sender, EventArgs e)
+        //{
+        //    MainWindow window = (MainWindow)sender;
+        //    window.Topmost = true;
+        //    window.Focus();
         //}
 
 
-        private void Widow_LostFocus(object sender, EventArgs e)
-        {
-            MainWindow window = (MainWindow)sender;
-            window.Topmost = true;
-            window.Focus();
-        }
-
-        private void abc()
-        {
-            Console.WriteLine("ABC");
-        }
-       
-        //Po uruchomieniu programu sprawdza czy była robiona kalibraca w danym dniu
-
+        //Po uruchomieniu programu sprawdza czy była robiona kalibraca w dniu dzisiejszym
         void ChceckIfAnyCalibrationWasTodayMaken()
         {
             try
             {
+                //MessageBox.Show("ABC");q
+                GC.Collect();
                 calibrationsList = kalibracje.ChceckIfWasAnyCalibrationToday();
+
+
+                if (!calibrationsList.Any() && DateTime.Now.DayOfWeek.ToString() == theDIADay) // jeżeli nie ma żadnej kalibracji i jest dzień średnicy
+                {
+                    MessageBox.Show("JESTEM 1!");
+                    Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Visible; ; }));
+                    Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Red; ; }));
+                }
+                else if (calibrationsList.Any() && DateTime.Now.DayOfWeek.ToString() == theDIADay) // Sunday.. Jeżeli jest dzień śednicy i jest i jest wpis kalibracji
+                {
+                    MessageBox.Show("JESTEM 2!");
+                    Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Visible; ; }));
+
+                    foreach (var item in calibrationsList)
+                    {
+                        if (item.Contains("PD"))
+                        {
+
+                            Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
+                            //statusPD = true;
+                        }
+                        else if (item.Contains("DIA"))
+                        {
+                            Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Green; ; }));
+                            statusDIA = true;
+                        }
+                    }
+                }
+                else if (calibrationsList.Any() && DateTime.Now.DayOfWeek.ToString() != theDIADay) // Sunday
+                {
+                    MessageBox.Show("JESTEM 3! "+calibrationsList[0].ToString());
+                   
+                    
+               
+                    foreach (var item in calibrationsList)
+                    {
+                        MessageBox.Show(item.ToString() + " W jestem 3");
+                        if (item.Contains("PD"))
+                        {
+                            MessageBox.Show("ITEM z Jestem 3 :" + item.ToString());
+                            statusPD = true;
+                            Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
+                        }
+                    }
+                }
             }
             catch(Exception e)
             {
                 MessageBox.Show("Brak folderu coppy_sodim lub oprogramowania SODIM! Sprawdź czy folder copy_sodim wraz z zawartośćią znajduje sie we wskazanej ścieżce: C:\\copy_sodim","BŁĄD KRYTYCZNY!");
                 Environment.Exit(Environment.ExitCode);
                 Application.Current.Shutdown();
-
             }
+
             //if (kalibracje.ChceckIfWasAnyCalibrationToday())
-            if(!calibrationsList.Any()&& DateTime.Now.DayOfWeek.ToString() == theDIADay)
-            {
-                Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Visible; ; }));
-                Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Red; ; }));
-            }
-            else if (calibrationsList.Any()&& DateTime.Now.DayOfWeek.ToString() == theDIADay) // Sunday
-            {
-                Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Visible; ; }));
-
-                foreach (var item in calibrationsList)
-                {
-                    if (item.Contains("PD"))
-                    {
-                        Dispatcher.Invoke(new Action(() => { VisibilityButton.Background = Brushes.Green; ; }));
-                    }
-                    else if(item.Contains("DIA"))
-                    {
-                        Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Green; ; }));
-                    }
-                }
-            }
-            else if (calibrationsList.Any() && DateTime.Now.DayOfWeek.ToString() != theDIADay) // Sunday
-            {
-                foreach (var item in calibrationsList)
-                {
-                    if (item.Contains("PD"))
-                    {
-                        Dispatcher.Invoke(new Action(() => { VisibilityButton.Background = Brushes.Green; ; }));
-                    }
-                }
-            }
+            
         }
 
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
@@ -193,39 +199,57 @@ namespace NavigationBar
             //fsw.Deleted += OnChanged;
             //fsw.Renamed += OnRenamed;
 
-            
-
             fsw.EnableRaisingEvents = true;
-    
         }
+
 
 
         // Define the event handlers.
         private void OnChanged(object source, FileSystemEventArgs e)
         {
-            //if(DateTime.Now.DayOfWeek.ToString() == theDIADay)
-            //{
-            //    Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Green; ; }));
-            //}
-            //Dispatcher.Invoke(new Action(() => { VisibilityButton.Background = Brushes.Green; ; }));
-            ChceckIfAnyCalibrationWasTodayMaken();
-            timeToReset();
+         //   if (statusPD == false)
+          //  {
+                if (e.FullPath.ToString().Contains("PD"))
+                {
+                   // MessageBox.Show("ITEM z Jestem 3 :" + item.ToString());
+                  //  statusPD = true;
+                    Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
+                }
+                    //MessageBox.Show("Jestem on changed PD!");
+                    //ChceckIfAnyCalibrationWasTodayMaken();
+         //   }
+         //   else if(statusDIA == false)
+            else if (e.FullPath.ToString().Contains("DIA"))
+            {
+                if (DateTime.Now.DayOfWeek.ToString() == theDIADay)
+                {
+                    Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Green; ; }));
+                    //statusDIA = true;
+                    //MessageBox.Show("Jestem on changed DIA!");
+                    //ChceckIfAnyCalibrationWasTodayMaken();
+                }
+            } 
         }
 
 
         void timeToReset()
         {
-            var now = DateTime.Now;
-            var tomorrow = now.AddDays(1);
-            var durationUntilMidnight = tomorrow.Date - now;
-            //MessageBox.Show("Czas do resetu greenKalibButtona: " + durationUntilMidnight);
-
-            System.Timers.Timer aTimer = new System.Timers.Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            aTimer.Interval = durationUntilMidnight.TotalMilliseconds;
-            aTimer.Enabled = true;
+            var now = DateTime.Now;   // pobieranie daty dzisiejszej (data + godzina)
+            var remaining = TimeSpan.FromHours(24) - now.TimeOfDay; // czas do następnego dnia, tzn. ile pozostało do końca obecnego
+            
             aTimer = null;
             GC.Collect();
+            aTimer = new System.Timers.Timer();
+            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            aTimer.Interval = remaining.TotalMilliseconds;
+            aTimer.Enabled = true;
+           
+   
+            GC.Collect();
+            // MessageBox.Show("Czas do restartu: " + remaining.TotalMinutes);
+            // MessageBox.Show("Time to reset: " + durationUntilMidnight.TotalMilliseconds + " :XX: " + durationUntilMidnight.Hours);
+            // aTimer = null;
+            // GC.Collect();
 
         }
 
@@ -235,17 +259,28 @@ namespace NavigationBar
             {
                 Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Visible; ; }));
                 Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Red; ; }));
+              //  statusPD = false;
+               // statusDIA = false;
 
             }
             else if (DateTime.Now.DayOfWeek.ToString() != theDIADay)
             {
                 Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Hidden ; ; }));
+               // statusPD = false;
+               // statusDIA = false;
+
             }
 
-            Dispatcher.Invoke(new Action(() => { VisibilityButton.Background = Brushes.Red; ; }));
+            Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Red; ; }));
+
         }
 
         private void VisibilityButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeVisibilityBar();
+        }
+
+        void ChangeVisibilityBar()
         {
             if (ifCllicked)
             {
@@ -276,6 +311,7 @@ namespace NavigationBar
             }
             else
             {
+                ChangeVisibilityBar();
                 Dispatcher.Invoke(new Action(() => { LoginOutButton.Content = "Zaloguj"; ; }));
                 Dispatcher.Invoke(new Action(() => { AwarieButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { KalibracjeButton.IsEnabled = false; ; }));

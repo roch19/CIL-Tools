@@ -16,31 +16,41 @@
 
         WindowStartupLocation="Manual">
 
-  <Border Background="Transparent">
+    <Border Background="Transparent">
         <StackPanel Margin="0,0,-0.4,0.4">
             <Grid Height="70">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-              </Grid.ColumnDefinitions>
-              <Button x:Name="VisibilityButton" Background="Red"  Grid.Column="0" Opacity="0.75" Click="VisibilityButton_Click" Height="60" Width="60" Margin="5 0 0 0" FontSize="20">E-CIL</Button>
-                <TextBlock x:Name="DIATextBlock" Background="Red" IsEnabled="True" Visibility="Hidden"  Grid.Column="1" Opacity="0.75" Text="DIA" VerticalAlignment="Center" Padding="15" Height="60" Width="60" Margin="5 0 0 0" FontSize="20"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="VisibilityButton"   Grid.Column="1" Opacity="0.75" Click="VisibilityButton_Click" Height="60" Width="60" Margin="62.8,5,10,5" FontSize="20" Grid.ColumnSpan="2">
+                    <StackPanel>
+                        <Image Source="/Images/arrow3.png" />
+                    </StackPanel>
+                </Button>
+
+                <TextBlock x:Name="PDTextBlock" Background="Red" IsEnabled="True" Visibility="Visible" Opacity="0.75" Text="PD"  Padding="4" Height="28"  Width="30" Margin="27.8,5,8.6,35" FontSize="17" FontWeight="Bold" Grid.Column="1"/>
+                <TextBlock x:Name="DIATextBlock" Background="Red" IsEnabled="True" Visibility="Hidden" Opacity="0.75" Text="DIA"  Padding="0" Height="28"  Width="30" Margin="27.8,37,8.6,5" FontSize="17" FontWeight="Bold" Grid.Column="1"/>
+
             </Grid>
-       <StackPanel x:Name="StackPanelWithButtons" Visibility="Hidden" Margin="5 0 10 0" Background="#00C0FF" Height="400">
-                <Button x:Name="LoginOutButton" Click="LogInOutButton" Height="30" Width="150" Margin="0 10 0 0">ZALOGUJ</Button>
-                <Button x:Name="CILcardButton" Click="CILcardButton_Click" Height="30" Width="150" Margin="0 10 0 0" IsEnabled="False">CIL</Button>
-                <Button x:Name="WymianaGumButton" Click="WymianaGumButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False">KONTROLA GUMEK</Button> 
-                <Button x:Name="AwarieButton" Click="AwarieButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False">AWARIE</Button>
-                <Button x:Name="KalibracjeButton" Click="KalibracjeButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False" >KALIBRACJE</Button>
-                <Button x:Name="Awaria_StartButton" Click="Awaria_StartButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False">AWARIA START</Button>
-                <Button x:Name="BlokowanieEkranuButton" Click="BlokowanieEkranuButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False">ZABLOKUJ EKRAN</Button>
-                <Button x:Name="OPLButton" Click="OPLButton_Click" Height="30" Width="150" Margin="0 5 0 0">OPL</Button>
-                <Button x:Name="CmdButton" Click="CmdButton_Click" Height="30" Width="150" IsEnabled="False" Margin="0 5 0 0">MENEDŻER ZADAŃ</Button>
-                
-                 
-                <Button x:Name="TurnOffButton" Click="TurnOffButton_Click"  Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False">EXIT</Button>
-             
+            <StackPanel x:Name="StackPanelWithButtons" Visibility="Hidden" Margin="5 0 10 0" Background="#00C0FF" Height="400">
+
+                <TextBox  Background="Silver"   IsEnabled="True" Visibility="Visible"  Text="E-CIL"  FontStretch="Condensed"  Padding="0" Height="28"  Width="50" FontSize="17" FontWeight="Bold" />
+
+                <Button x:Name="LoginOutButton" Click="LogInOutButton" Height="30" Width="150" Margin="0 10 0 0" Content="ZALOGUJ"/>
+                <Button x:Name="CILcardButton" Click="CILcardButton_Click" Height="30" Width="150" Margin="0 10 0 0" IsEnabled="False" Content="CIL"/>
+                <Button x:Name="WymianaGumButton" Click="WymianaGumButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False" Content="KONTROLA GUMEK"/>
+                <Button x:Name="AwarieButton" Click="AwarieButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False" Content="AWARIE"/>
+                <Button x:Name="KalibracjeButton" Click="KalibracjeButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False" Content="KALIBRACJE" />
+                <Button x:Name="Awaria_StartButton" Click="Awaria_StartButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False" Content="AWARIA START"/>
+                <Button x:Name="BlokowanieEkranuButton" Click="BlokowanieEkranuButton_Click" Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False" Content="ZABLOKUJ EKRAN"/>
+                <Button x:Name="OPLButton" Click="OPLButton_Click" Height="30" Width="150" Margin="0 5 0 0" Content="OPL"/>
+                <Button x:Name="CmdButton" Click="CmdButton_Click" Height="30" Width="150" IsEnabled="False" Margin="0 5 0 0" Content="MENEDŻER ZADAŃ"/>
+
+
+                <Button x:Name="TurnOffButton" Click="TurnOffButton_Click"  Height="30" Width="150" Margin="0 5 0 0" IsEnabled="False" Content="ZAMKNIJ PROGRAM"/>
+
             </StackPanel>
         </StackPanel>
 

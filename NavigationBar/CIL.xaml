@@ -8,6 +8,7 @@
         ShowInTaskbar="False"
         WindowStyle="ToolWindow"
         Topmost="True"
+        ResizeMode="NoResize"
         WindowStartupLocation="Manual"
         Title="CIL" Height="200" Width="400">
 
