@@ -83,7 +83,6 @@ namespace NavigationBar
             calibrationsList = File.ReadAllLines(locationTxtWithLocationOfSavePAth).ToList();
             shutDownProgramFilePath = calibrationsList[26];
             shutDownProgramContent = calibrationsList[28];
-            MessageBox.Show(shutDownProgramContent);
             calibrationsList.Clear();
             GC.Collect();
         }
@@ -123,16 +122,16 @@ namespace NavigationBar
 
         private void OnChanged2(object source, FileSystemEventArgs e)
         {
-            calibrationsList = File.ReadAllLines(e.FullPath.ToString()).ToList();
-            if (calibrationsList.Any())
-            {
-                var tmp = calibrationsList[0].ToString();
-                if (tmp == shutDownProgramContent)
+            //calibrationsList = File.ReadAllLines(e.FullPath.ToString()).ToList();
+            //if (calibrationsList.Any())
+            //{
+            //    var tmp = calibrationsList[0].ToString();
+                if (e.FullPath.ToString().Contains(shutDownProgramContent))
                 {
                     Environment.Exit(Environment.ExitCode);
                     Application.Current.Shutdown();
                 }
-            }
+            
             calibrationsList.Clear();
         }
 
