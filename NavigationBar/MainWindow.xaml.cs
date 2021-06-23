@@ -32,11 +32,14 @@ namespace NavigationBar
         public bool ifCllicked = false;
         public bool zalogowany = false;
         public string remoteDesktopPath = @"\\10.177.11.130\Sodimats\Remote Desktop List\";
-        public string logoutRemoteDekstopPath = @"C:\ProgramData\Microsoft\Windows\Strat Menu\Programs\Accessories\RemoteDesktop\";
+        string locationTxtWithLocationOfSavePAth = @"C:\copy_sodim\PATH_TO_SAVE_CIGNUM.txt";
+        public string shutDownProgramFilePath = "";
+        private string shutDownProgramContent = "";
         public bool ifWXP = false;
         bool awariaButtonStatus = false;
         bool statusPD = false;
         bool statusDIA = false;
+        
         private string watchedFolder = "";
         System.Timers.Timer aTimer;
         DateTime startAwaria;
@@ -48,9 +51,11 @@ namespace NavigationBar
         {
             InitializeComponent();
             this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
+            GetPathOfAutoDestructFolder();
             MainWindow2_Loaded();
             ChceckIfAnyCalibrationWasTodayMaken();
-           
+            SearchForExecutionFileToShutDownProgram();
+            
             timeToReset();
             //App_Deactivated_LostFocus();
             this.Focus();
@@ -62,8 +67,6 @@ namespace NavigationBar
             string operatingSystem = System.Environment.OSVersion.ToString();
             if (operatingSystem.Contains("6.1"))
             {
-              //  MessageBox.Show("To windows 7!");
-
                 Thread myThread = new Thread(() =>
                 {
                     fun();
@@ -74,7 +77,17 @@ namespace NavigationBar
             }
             else if (operatingSystem.Contains("5.1")) ifWXP = true;
           }
-        
+
+        private void GetPathOfAutoDestructFolder()
+        {
+            calibrationsList = File.ReadAllLines(locationTxtWithLocationOfSavePAth).ToList();
+            shutDownProgramFilePath = calibrationsList[26];
+            shutDownProgramContent = calibrationsList[28];
+            MessageBox.Show(shutDownProgramContent);
+            calibrationsList.Clear();
+            GC.Collect();
+        }
+
         public void fun()
         {
             while (true)
@@ -86,18 +99,49 @@ namespace NavigationBar
             }
         }
 
-      
+        [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
+        private void SearchForExecutionFileToShutDownProgram()
+        {
+
+            watchedFolder = shutDownProgramFilePath;
+
+            FileSystemWatcher fsw = new FileSystemWatcher(watchedFolder);
+
+            fsw.NotifyFilter = NotifyFilters.LastAccess
+                                 | NotifyFilters.LastWrite
+                                 | NotifyFilters.FileName
+                                 | NotifyFilters.DirectoryName;
+
+
+            //fsw.Changed += OnChanged;
+            fsw.Created += OnChanged2;
+            //fsw.Deleted += OnChanged;
+            //fsw.Renamed += OnRenamed;
+
+            fsw.EnableRaisingEvents = true;
+        }
+
+        private void OnChanged2(object source, FileSystemEventArgs e)
+        {
+            calibrationsList = File.ReadAllLines(e.FullPath.ToString()).ToList();
+            if (calibrationsList.Any())
+            {
+                var tmp = calibrationsList[0].ToString();
+                if (tmp == shutDownProgramContent)
+                {
+                    Environment.Exit(Environment.ExitCode);
+                    Application.Current.Shutdown();
+                }
+            }
+            calibrationsList.Clear();
+        }
+
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
         private void MainWindow2_Loaded()
         {
 
-            //string watchedFolder = System.IO.Path.GetFileName("C:\\SODIM\\Sodim Instrumentation\\Sodimax-line-lab V4\\HISTORY.ARCH\\");
-            //string watchedFolder = System.IO.Path.Combine(Environment.GetEnvironmentVariable("USERPROFILE"), "Pictures");
-            
             watchedFolder = kalibracje.getPaths();
 
-            // TODO: get file name from copy sodim
-            // TODO: set timer from time when the 
             FileSystemWatcher fsw = new FileSystemWatcher(watchedFolder);
 
             fsw.NotifyFilter = NotifyFilters.LastAccess
@@ -115,14 +159,38 @@ namespace NavigationBar
         }
 
         //Po uruchomieniu programu sprawdza czy była robiona kalibraca w dniu dzisiejszym
+      
+
+        // Define the event handlers.
+        private void OnChanged(object source, FileSystemEventArgs e)
+        {
+                if (e.FullPath.ToString().Contains("PD"))
+                {
+                    if(statusPD == false)
+                    {
+                        statusPD = true;
+                        Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
+                    }
+                }
+                  
+            else if (e.FullPath.ToString().Contains("DIA"))
+            {
+                if (DateTime.Now.DayOfWeek.ToString() == theDIADay && statusDIA == false)
+                {
+                    statusDIA = true;
+                    Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Green; ; }));
+                }
+            } 
+        }
+
         void ChceckIfAnyCalibrationWasTodayMaken()
         {
             try
             {
-                //MessageBox.Show("ABC");q
+
                 GC.Collect();
                 calibrationsList = kalibracje.ChceckIfWasAnyCalibrationToday();
-
+                
 
                 if (!calibrationsList.Any() && DateTime.Now.DayOfWeek.ToString() == theDIADay) // jeżeli nie ma żadnej kalibracji i jest dzień średnicy
                 {
@@ -149,7 +217,7 @@ namespace NavigationBar
                 else if (calibrationsList.Any() && DateTime.Now.DayOfWeek.ToString() != theDIADay) // Sunday
                 {
                     foreach (var item in calibrationsList)
-                    {                   
+                    {
                         if (item.Contains("PD"))
                         {
                             statusPD = true;
@@ -167,31 +235,6 @@ namespace NavigationBar
             }
 
         }
-
-
-        // Define the event handlers.
-        private void OnChanged(object source, FileSystemEventArgs e)
-        {
-            //MessageBox.Show("OnChanged działa!");
-                if (e.FullPath.ToString().Contains("PD"))
-                {
-                    if(statusPD == false)
-                    {
-                        statusPD = true;
-                        Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
-                    }
-                }
-                  
-            else if (e.FullPath.ToString().Contains("DIA"))
-            {
-                if (DateTime.Now.DayOfWeek.ToString() == theDIADay && statusDIA == false)
-                {
-                    statusDIA = true;
-                    Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Green; ; }));
-                }
-            } 
-        }
-
 
         void timeToReset()
         {
@@ -446,48 +489,6 @@ namespace NavigationBar
              {
                  MessageBox.Show(string.Format("{0} Directory does not exist!", remoteDesktopPath));
             }
-        }
-
-        private void LogoutRemoteDesktopButton_Click(object sender, RoutedEventArgs e)
-        {
-            //InputSimulator sim = new InputSimulator();
-            // enter username: QAUser01 
-            // sim.Keyboard.TextEntry("QAUser01
-            // press Tab key 
-            //sim.Keyboard.KeyPress((WindowsInput.Native.VirtualKeyCode)Key.B);
-            // Enter Password 
-            //sim.Keyboard.TextEntry("acb@123");
-            // submit enter 
-            //sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
-            //Robot robot
-            //AccessKeyPressedEventArgs k = Key.LWin;
-            //Process.Start("rundll32.exe", "^{ESC}");
-            //  string file="";
-            //  //LogoutRemoteDesktop7.bat
-            //  //LogoutRemoteDesktopXP.bat
-            //  //
-            //  string operatingSystem = System.Environment.OSVersion.ToString();
-            //  if (operatingSystem.Contains("5.1"))
-            //  {
-            // //     file = "LogoutRemoteDesktopXP.bat";
-            //  }
-            //  else if (operatingSystem.Contains("6.1"))
-            //  {
-            //   //   file = "LogoutRemoteDesktop7.bat";
-            //  }
-            //  else 
-            //  {
-            //      MessageBox.Show(string.Format("{0} Brak obsługi tego systemu! Proszę skontaktuj się z Adamem Osewskim aby zrobił na ten system wersję RemoteDesktop Logout. Pozdrawiam Maciej.", "Wersja systemu:"+operatingSystem));
-            //  }
-
-            //  if (Directory.Exists(remoteDesktopPath))
-            //  {
-            ////      Process.Start(remoteDesktopPath+file);
-            //  }
-            //  else
-            //  {
-            //      MessageBox.Show(string.Format("{0} Directory does not exist!", remoteDesktopPath));
-            //  }
         }
     }
 }

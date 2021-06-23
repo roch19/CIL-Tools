@@ -1,14 +1,29 @@
 ścierzka zapisu wymiany gum:
-C:\Users\SODIM\Desktop2222\
+C:\Users\Maciek\Desktop\gumki\
 ścierzka zapisu awarii:
-C:\Users\SODIM\Desktop\NEW\
+C:\Users\Maciek\Desktop\awarie\
 data ostatniej wymiany gumki:
-7.05.2021
+1.05.2021
 format gumki:
 KS
 przebieg Nmcig w dniu wymiany:
-684700
+681700
 przebieg NumCycle w dniu wymiany:
-70200
+70100
 data ostatnio wykonanego CIL'a:
+07.03.2021
+Ilość zmierzonych próbek:
+682002
+Ilość zainicjowanych badań:
+70189
+ilość wykonanych badań:
 
+ścierzka zapisu CILA:
+C:\Users\Maciek\Desktop\cile\
+ścierzka instrukcji PDF:
+C:\Users\Maciek\Desktop\PDFfolder\
+
+ścierzka autodestruct programu:
+C:\Users\Maciek\Desktop\PDFfolder\
+treść pliku aby program wykonał autodestruct:
+przystalJanToPan123192392914815858128312
