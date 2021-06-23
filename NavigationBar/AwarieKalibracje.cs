@@ -57,7 +57,8 @@ namespace NavigationBar
             }
             catch (Exception e)
             {
-                
+                calibs.Add("pusto");
+                return calibs;
             }
         }
 

@@ -48,8 +48,9 @@ namespace NavigationBar
         {
             InitializeComponent();
             this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
-           // ChceckIfAnyCalibrationWasTodayMaken();
             MainWindow2_Loaded();
+            ChceckIfAnyCalibrationWasTodayMaken();
+           
             timeToReset();
             //App_Deactivated_LostFocus();
             this.Focus();
@@ -85,96 +86,7 @@ namespace NavigationBar
             }
         }
 
-        //public delegate void WindowLostFocusEventHandler(object source, EventArgs args);
-
-        //public event WindowLostFocusEventHandler LostFocus;
-
-        //void App_Deactivated_LostFocus()
-        //{
-
-        //    Dispatcher.Invoke(new Action(() => { this.Focus(); ; }));
-
-        //    OnFousLosted();
-        //}
-
-        //protected virtual void OnFousLosted()
-        //{
-        //    LostFocus?.Invoke(this, EventArgs.Empty);
-        //}
-
-        //private void Widow_LostFocus(object sender, EventArgs e)
-        //{
-        //    MainWindow window = (MainWindow)sender;
-        //    window.Topmost = true;
-        //    window.Focus();
-        //}
-
-
-        //Po uruchomieniu programu sprawdza czy była robiona kalibraca w dniu dzisiejszym
-        void ChceckIfAnyCalibrationWasTodayMaken()
-        {
-            try
-            {
-                //MessageBox.Show("ABC");q
-                GC.Collect();
-                calibrationsList = kalibracje.ChceckIfWasAnyCalibrationToday();
-
-
-                if (!calibrationsList.Any() && DateTime.Now.DayOfWeek.ToString() == theDIADay) // jeżeli nie ma żadnej kalibracji i jest dzień średnicy
-                {
-                    MessageBox.Show("JESTEM 1!");
-                    Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Visible; ; }));
-                    Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Red; ; }));
-                }
-                else if (calibrationsList.Any() && DateTime.Now.DayOfWeek.ToString() == theDIADay) // Sunday.. Jeżeli jest dzień śednicy i jest i jest wpis kalibracji
-                {
-                    MessageBox.Show("JESTEM 2!");
-                    Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Visible; ; }));
-
-                    foreach (var item in calibrationsList)
-                    {
-                        if (item.Contains("PD"))
-                        {
-
-                            Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
-                            //statusPD = true;
-                        }
-                        else if (item.Contains("DIA"))
-                        {
-                            Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Green; ; }));
-                            statusDIA = true;
-                        }
-                    }
-                }
-                else if (calibrationsList.Any() && DateTime.Now.DayOfWeek.ToString() != theDIADay) // Sunday
-                {
-                    MessageBox.Show("JESTEM 3! "+calibrationsList[0].ToString());
-                   
-                    
-               
-                    foreach (var item in calibrationsList)
-                    {
-                        MessageBox.Show(item.ToString() + " W jestem 3");
-                        if (item.Contains("PD"))
-                        {
-                            MessageBox.Show("ITEM z Jestem 3 :" + item.ToString());
-                            statusPD = true;
-                            Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
-                        }
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show("Brak folderu coppy_sodim lub oprogramowania SODIM! Sprawdź czy folder copy_sodim wraz z zawartośćią znajduje sie we wskazanej ścieżce: C:\\copy_sodim","BŁĄD KRYTYCZNY!");
-                Environment.Exit(Environment.ExitCode);
-                Application.Current.Shutdown();
-            }
-
-            //if (kalibracje.ChceckIfWasAnyCalibrationToday())
-            
-        }
-
+      
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
         private void MainWindow2_Loaded()
         {
@@ -202,31 +114,80 @@ namespace NavigationBar
             fsw.EnableRaisingEvents = true;
         }
 
+        //Po uruchomieniu programu sprawdza czy była robiona kalibraca w dniu dzisiejszym
+        void ChceckIfAnyCalibrationWasTodayMaken()
+        {
+            try
+            {
+                //MessageBox.Show("ABC");q
+                GC.Collect();
+                calibrationsList = kalibracje.ChceckIfWasAnyCalibrationToday();
+
+
+                if (!calibrationsList.Any() && DateTime.Now.DayOfWeek.ToString() == theDIADay) // jeżeli nie ma żadnej kalibracji i jest dzień średnicy
+                {
+                    Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Visible; ; }));
+                    Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Red; ; }));
+                }
+                else if (calibrationsList.Any() && DateTime.Now.DayOfWeek.ToString() == theDIADay) // Sunday.. Jeżeli jest dzień śednicy i jest i jest wpis kalibracji
+                {
+                    Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Visible; ; }));
+
+                    foreach (var item in calibrationsList)
+                    {
+                        if (item.Contains("PD"))
+                        {
+                            Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
+                        }
+                        else if (item.Contains("DIA"))
+                        {
+                            Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Green; ; }));
+                            statusDIA = true;
+                        }
+                    }
+                }
+                else if (calibrationsList.Any() && DateTime.Now.DayOfWeek.ToString() != theDIADay) // Sunday
+                {
+                    foreach (var item in calibrationsList)
+                    {                   
+                        if (item.Contains("PD"))
+                        {
+                            statusPD = true;
+                            Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
+                        }
+                    }
+                }
+                GC.Collect();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Brak folderu coppy_sodim lub oprogramowania SODIM! Sprawdź czy folder copy_sodim wraz z zawartośćią znajduje sie we wskazanej ścieżce: C:\\copy_sodim", "BŁĄD KRYTYCZNY!");
+                Environment.Exit(Environment.ExitCode);
+                Application.Current.Shutdown();
+            }
+
+        }
 
 
         // Define the event handlers.
         private void OnChanged(object source, FileSystemEventArgs e)
         {
-         //   if (statusPD == false)
-          //  {
+            //MessageBox.Show("OnChanged działa!");
                 if (e.FullPath.ToString().Contains("PD"))
                 {
-                   // MessageBox.Show("ITEM z Jestem 3 :" + item.ToString());
-                  //  statusPD = true;
-                    Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
+                    if(statusPD == false)
+                    {
+                        statusPD = true;
+                        Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
+                    }
                 }
-                    //MessageBox.Show("Jestem on changed PD!");
-                    //ChceckIfAnyCalibrationWasTodayMaken();
-         //   }
-         //   else if(statusDIA == false)
+                  
             else if (e.FullPath.ToString().Contains("DIA"))
             {
-                if (DateTime.Now.DayOfWeek.ToString() == theDIADay)
+                if (DateTime.Now.DayOfWeek.ToString() == theDIADay && statusDIA == false)
                 {
+                    statusDIA = true;
                     Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Green; ; }));
-                    //statusDIA = true;
-                    //MessageBox.Show("Jestem on changed DIA!");
-                    //ChceckIfAnyCalibrationWasTodayMaken();
                 }
             } 
         }
@@ -243,32 +204,21 @@ namespace NavigationBar
             aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             aTimer.Interval = remaining.TotalMilliseconds;
             aTimer.Enabled = true;
-           
-   
             GC.Collect();
-            // MessageBox.Show("Czas do restartu: " + remaining.TotalMinutes);
-            // MessageBox.Show("Time to reset: " + durationUntilMidnight.TotalMilliseconds + " :XX: " + durationUntilMidnight.Hours);
-            // aTimer = null;
-            // GC.Collect();
-
         }
 
         private void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
+            statusPD = false;
+            statusDIA = false;
             if (DateTime.Now.DayOfWeek.ToString() == theDIADay)
             {
                 Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Visible; ; }));
                 Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Red; ; }));
-              //  statusPD = false;
-               // statusDIA = false;
-
             }
             else if (DateTime.Now.DayOfWeek.ToString() != theDIADay)
             {
                 Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Hidden ; ; }));
-               // statusPD = false;
-               // statusDIA = false;
-
             }
 
             Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Red; ; }));
