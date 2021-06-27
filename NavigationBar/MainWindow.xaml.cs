@@ -18,7 +18,7 @@ using System.Security.Permissions;
 using System.Timers;
 using System.Diagnostics;
 using System.Threading;
-using WindowsInput;
+
 
 namespace NavigationBar
 {
@@ -44,7 +44,7 @@ namespace NavigationBar
         System.Timers.Timer aTimer;
         DateTime startAwaria;
         List<string> calibrationsList = new List<string>();
-
+  
         public object DataTime { get; private set; }
 
         public MainWindow()
@@ -56,10 +56,10 @@ namespace NavigationBar
             ChceckIfAnyCalibrationWasTodayMaken();
             SearchForExecutionFileToShutDownProgram();
             
-            timeToReset();
             //App_Deactivated_LostFocus();
             this.Focus();
             ShittyFunctionToChceckIfAppIsOnTopOnWinows7();
+            MidnightNotifier.DayChanged += (s, e) => { OnTimedEvent(); };
         }
 
         public void ShittyFunctionToChceckIfAppIsOnTopOnWinows7()
@@ -122,10 +122,6 @@ namespace NavigationBar
 
         private void OnChanged2(object source, FileSystemEventArgs e)
         {
-            //calibrationsList = File.ReadAllLines(e.FullPath.ToString()).ToList();
-            //if (calibrationsList.Any())
-            //{
-            //    var tmp = calibrationsList[0].ToString();
                 if (e.FullPath.ToString().Contains(shutDownProgramContent))
                 {
                     Environment.Exit(Environment.ExitCode);
@@ -235,21 +231,22 @@ namespace NavigationBar
 
         }
 
-        void timeToReset()
-        {
-            var now = DateTime.Now;   // pobieranie daty dzisiejszej (data + godzina)
-            var remaining = TimeSpan.FromHours(24) - now.TimeOfDay; // czas do następnego dnia, tzn. ile pozostało do końca obecnego
+        //void timeToReset()
+        //{
+        //    var now = DateTime.Now;   // pobieranie daty dzisiejszej (data + godzina)
+        //    var remaining = TimeSpan.FromHours(24) - now.TimeOfDay; // czas do następnego dnia, tzn. ile pozostało do końca obecnego
+        //    MessageBox.Show(remaining.ToString("hh\\:mm\\:ss\\.fff"));
+        //    GC.Collect();
+        //    aTimer = new System.Timers.Timer();
+        //    aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+        //    aTimer.Interval = remaining.TotalMilliseconds;
+        //    aTimer.AutoReset = true;
+        //    aTimer.Enabled = true;
             
-            aTimer = null;
-            GC.Collect();
-            aTimer = new System.Timers.Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            aTimer.Interval = remaining.TotalMilliseconds;
-            aTimer.Enabled = true;
-            GC.Collect();
-        }
+        //    GC.Collect();
+        //}
 
-        private void OnTimedEvent(object sender, ElapsedEventArgs e)
+        private void OnTimedEvent()
         {
             statusPD = false;
             statusDIA = false;
@@ -257,13 +254,15 @@ namespace NavigationBar
             {
                 Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Visible; ; }));
                 Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Red; ; }));
+               
             }
             else if (DateTime.Now.DayOfWeek.ToString() != theDIADay)
             {
                 Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Hidden ; ; }));
+                
             }
 
-            Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Red; ; }));
+            Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Red; ; }));          
 
         }
 

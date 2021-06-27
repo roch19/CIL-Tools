@@ -12,23 +12,33 @@
         Topmost="True"
         WindowStartupLocation="Manual"
         AllowsTransparency="False"
-        Title="Instrukcje" Height="380" Width="400">
+        Title="Instrukcje" Height="380" Width="524.967">
 
     <StackPanel Background="#B6B6B6">
-        <Grid>
+
+      <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock x:Name="titleTextBox" FontSize="20" Background="White" FontWeight="Bold" Margin="30,2,0,0" VerticalAlignment="Center"><Run Text="Instrukcje"/></TextBlock>
             <Button x:Name="CloseButton" Click="CloseButton_Click" Grid.Column="2"  Height="40" Width="60" Margin="10" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#FF0000">Close</Button>
-
         </Grid>
-        <ScrollViewer  Background="White" 
-                      Height="300" Width="390" >
-            <StackPanel x:Name="stackPanelContainer" Height="Auto" Margin="10, 0, 10, 10" Background="#FFFFFF" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                     ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-        </ScrollViewer>
+
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+            <ScrollViewer  Grid.Column="1" Background="White" Height="300" Width="390" >
+              <StackPanel x:Name="stackPanelContainer" Height="Auto" Margin="10, 0, 10, 10" Background="#FFFFFF" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+            </ScrollViewer>
+        <StackPanel x:Name="stackPanelFoldersContainer" Height="Auto" Margin="10, 0, 10, 10"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+        </Grid>
+
+        
 
     </StackPanel>
 
