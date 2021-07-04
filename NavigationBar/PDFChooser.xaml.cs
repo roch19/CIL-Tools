@@ -45,35 +45,24 @@ namespace NavigationBar
                 foreach (var item in pathList)
                 {
                     Button btn = new Button();
-
                     btn.Height = 50;
-
                     btn.Width = 100;
-
                     btn.Name = "item";
                     DirectoryInfo di = new DirectoryInfo(item);
                     string path = di.Name;
-                   
                     btn.Content = path;
                     //btn.Content = item;
                     Thickness margin = btn.Margin;
                     margin.Top = 8;
                     btn.Margin = margin;
-
                     btn.FontSize = 10;
-
                     btn.Background = new SolidColorBrush(Colors.Azure);
-
                     btn.Foreground = new SolidColorBrush(Colors.Black);
-
                     stackPanelFoldersContainer.Children.Add(btn);
-
                     btn.Click +=  OpenFolder;
-
                 }
             }
             catch { MessageBox.Show("Wykryto błąd! Upewnij się że ścieżka lokalizacji insturkcji jest prawidłowa!", "Błąd!");
-              
             }
 
             
@@ -86,7 +75,7 @@ namespace NavigationBar
 
         void changeColorFolders()
         {
-            var buttons = stackPanelContainer.Children.Cast<Button>().ToList();
+            var buttons = stackPanelContainer.Children.OfType<Button>().ToList();
             foreach (var item in buttons)
             {
                 item.Background = new SolidColorBrush(Colors.Azure);
@@ -95,15 +84,15 @@ namespace NavigationBar
 
         private void OpenFolder(object sender, RoutedEventArgs e)
         {
+
             var button = (Button)sender;
             changeColorFolders();
-            button.Background = new SolidColorBrush(Colors.Blue);
-
+            //button.Background = new SolidColorBrush(Colors.Blue);
+            titleTextBox.Text = button.Content.ToString();
             var folderPath = pdfFilesPath + button.Content.ToString() + "\\";
             pathList = null;
             stackPanelContainer.Children.Clear();
             GC.Collect();
-
             activatedFolder = button.Content.ToString();
 
             try
@@ -112,35 +101,24 @@ namespace NavigationBar
                 foreach (var item in pathList)
                 {
                     Button btn = new Button();
-
                     btn.Height = 50;
-
                     btn.Width = 100;
-
                     btn.Name = "item";
-
                     btn.Content = System.IO.Path.GetFileName(item);
                     //btn.Content = item;
                     Thickness margin = btn.Margin;
                     margin.Top = 8;
                     btn.Margin = margin;
-
                     btn.FontSize = 16;
-
                     btn.Background = new SolidColorBrush(Colors.Orange);
-
                     btn.Foreground = new SolidColorBrush(Colors.Black);
-                    
                     stackPanelContainer.Children.Add(btn);
-
                     btn.Click += RunPDF;
-
                 }
             }
             catch
             {
                 MessageBox.Show("Wykryto błąd! Upewnij się że ścieżka lokalizacji insturkcji jest prawidłowa!", "Błąd!");
-
             }
         }
 
