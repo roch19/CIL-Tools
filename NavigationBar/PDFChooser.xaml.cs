@@ -55,7 +55,8 @@ namespace NavigationBar
                     Thickness margin = btn.Margin;
                     margin.Top = 8;
                     btn.Margin = margin;
-                    btn.FontSize = 10;
+                    btn.FontSize = 14;
+                 
                     btn.Background = new SolidColorBrush(Colors.Azure);
                     btn.Foreground = new SolidColorBrush(Colors.Black);
                     stackPanelFoldersContainer.Children.Add(btn);
@@ -102,7 +103,7 @@ namespace NavigationBar
                 {
                     Button btn = new Button();
                     btn.Height = 50;
-                    btn.Width = 100;
+                    btn.Width = 300;
                     btn.Name = "item";
                     btn.Content = System.IO.Path.GetFileName(item);
                     //btn.Content = item;
@@ -110,7 +111,7 @@ namespace NavigationBar
                     margin.Top = 8;
                     btn.Margin = margin;
                     btn.FontSize = 16;
-                    btn.Background = new SolidColorBrush(Colors.Orange);
+                    btn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#16A596"));
                     btn.Foreground = new SolidColorBrush(Colors.Black);
                     stackPanelContainer.Children.Add(btn);
                     btn.Click += RunPDF;

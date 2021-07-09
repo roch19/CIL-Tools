@@ -533,8 +533,7 @@ namespace NavigationBar
             else if(ModułComboBox.SelectedIndex > -1)
             {
                 bool b = wpisWymiany();
-                if (b == true) MessageBox.Show("Plik awarii zapisano w danej ścierzce: " + savePath, "Informacja");
-                else if (b == false) MessageBox.Show("Błąd podczas zapisywania awarii!", "UWAGA!");
+                if (b == false) MessageBox.Show("Błąd podczas zapisywania awarii!", "UWAGA!");
                 this.Close();
             }
         }
