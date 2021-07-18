@@ -35,6 +35,7 @@ namespace NavigationBar
         string savePath = "";
         string aktualnyNumcig = "";
         string aktualnyNumcycle = "";
+        DateTime editTime;
         List<string> lines = null;
 
         void GetInfoAboutGum()
@@ -43,6 +44,8 @@ namespace NavigationBar
 
             try
             {
+                editTime = DateTime.Now;
+                changeDateLabel.Content = DateTime.Now.ToShortDateString();
                 arrLine = File.ReadAllLines(locationTxtWithLocationOfSavePAth); // replacment dla temp data (data+numcig+numcycle)
                 dataOstatniejWymianyGumki.Text = arrLine[5];
                 formatObecniejGumki.Text = arrLine[7];
@@ -390,9 +393,42 @@ namespace NavigationBar
             else return false;
         }
 
+        private void CheckBoxChanged(object sender, RoutedEventArgs e)
+        {
+            if(backDateOption.IsEnabled == false) Dispatcher.Invoke(new Action(() => { backDateOption.IsEnabled = true; ; }));
+            else if (backDateOption.IsEnabled == true) Dispatcher.Invoke(new Action(() => { backDateOption.IsEnabled = false; ; }));
+        }
+
         private void Anuluj_LoginButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void subtractDay_Click(object sender, RoutedEventArgs e)
+        {
+            editTime = editTime.AddDays(-1);
+            Dispatcher.Invoke(new Action(() => { changeDateLabel.Content = editTime.ToString("dd/MM/yyyy"); ; }));
+            int result = DateTime.Compare(editTime, DateTime.Now);
+
+            if (result < 0 )
+            {
+                Dispatcher.Invoke(new Action(() => { addDay.IsEnabled = true; ; }));
+            }
+            
+        }
+   
+        private void addDay_Click(object sender, RoutedEventArgs e)
+        {
+            editTime = editTime.AddDays(1);
+            Dispatcher.Invoke(new Action(() => { changeDateLabel.Content = editTime.ToString("dd/MM/yyyy"); ; }));
+
+            int result = DateTime.Compare(editTime.AddDays(1), DateTime.Now);
+
+            if (result > 0)
+            {
+                Dispatcher.Invoke(new Action(() => { addDay.IsEnabled = false; ; }));
+            }
+
         }
     }
 }
