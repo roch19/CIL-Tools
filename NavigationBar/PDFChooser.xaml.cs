@@ -19,10 +19,10 @@ namespace NavigationBar
     /// </summary>
     public partial class PDFChooser : Window
     {
-        public PDFChooser()
+        public PDFChooser(string type)
         {
             InitializeComponent();
-            GetVlues();
+            GetVlues(type);
 
         }
 
@@ -32,13 +32,18 @@ namespace NavigationBar
         string pdfFilesPath = "";
         string activatedFolder = "";
 
-        private void GetVlues()
+        private void GetVlues(String type)
         {
-
             try
             {
                 pathList = File.ReadAllLines(locationTxtWithLocationOfSavePAth).ToList();
-                pdfFilesPath += pathList[23];
+                if (type.Equals("pdf")) pdfFilesPath += pathList[23];
+                else if (type.Equals("remote"))
+                {
+                    pdfFilesPath += pathList[31];
+                    titleTextBox.Text = "Remote Desktop";
+
+                }
                 pathList = null;
 
                 pathList = Directory.EnumerateDirectories(pdfFilesPath).ToList();
@@ -90,6 +95,20 @@ namespace NavigationBar
             changeColorFolders();
             //button.Background = new SolidColorBrush(Colors.Blue);
             titleTextBox.Text = button.Content.ToString();
+            if (button.Content.ToString().Equals("TUUL"))
+            {
+                Login login = new Login();
+                GC.Collect();
+                login.ShowDialog();
+                //login = null;
+                //GC.Collect();
+                //this.Close();
+                if (login.loginStatus() == true)
+                {
+
+                }
+                else this.Close();
+            }
             var folderPath = pdfFilesPath + button.Content.ToString() + "\\";
             pathList = null;
             stackPanelContainer.Children.Clear();
@@ -116,17 +135,20 @@ namespace NavigationBar
                     stackPanelContainer.Children.Add(btn);
                     btn.Click += RunPDF;
                 }
+        
             }
             catch
             {
                 MessageBox.Show("Wykryto błąd! Upewnij się że ścieżka lokalizacji insturkcji jest prawidłowa!", "Błąd!");
             }
+
+
         }
 
         private void RunPDF(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
-            MessageBox.Show(pdfFilesPath + button.Content.ToString());
+            //MessageBox.Show(pdfFilesPath + button.Content.ToString());
             System.Diagnostics.Process.Start(pdfFilesPath +"\\" + activatedFolder + "\\" + button.Content.ToString());
             GC.Collect();
             this.Close();

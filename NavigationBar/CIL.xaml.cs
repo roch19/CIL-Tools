@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 
+
 namespace NavigationBar
 {
     /// <summary>
@@ -33,6 +34,7 @@ namespace NavigationBar
         string savePath = "";
         string aktualnyNumcig = "";
         string aktualnyNumcycle = "";
+        DateTime editTime;
         string iloscWykonanychBadanExportArch = "";
         List<string> lines = null;
 
@@ -42,7 +44,8 @@ namespace NavigationBar
 
                 try
                 {
-                    arrLine = File.ReadAllLines(locationTxtWithLocationOfSavePAth); // replacment dla temp data (data+numcig+numcycle)
+                editTime = DateTime.Now;
+                arrLine = File.ReadAllLines(locationTxtWithLocationOfSavePAth); // replacment dla temp data (data+numcig+numcycle)
                     dataOstatniegoCila.Text = arrLine[13];
                     DateTime dt = Convert.ToDateTime(arrLine[13]);
                     iloscDniOdCila.Text = ((DateTime.Now - dt).Days).ToString();
@@ -51,8 +54,10 @@ namespace NavigationBar
                     int temp = Int32.Parse(aktualnyNumcig);
                     iloscZmierzonychProbekOdOstatniegoCILA.Text = (temp - iloscZmiezonychProbek).ToString();
 
+                   changeDateLabel.Content = DateTime.Now.ToShortDateString(); 
+
                     //zainicjowane badania od sotatniego cila
-                    int iloscZainicjowanychBadan = Convert.ToInt32(arrLine[17]);
+                int iloscZainicjowanychBadan = Convert.ToInt32(arrLine[17]);
                     temp = Int32.Parse(aktualnyNumcycle);
                     iloscCykli.Text = (temp - iloscZainicjowanychBadan).ToString();
 
@@ -187,7 +192,14 @@ namespace NavigationBar
 
             string[] arrLine = File.ReadAllLines(locationTxtWithLocationOfSavePAth); // replacment dla temp data (data+numcig+numcycle)
 
-            arrLine[13] = DateTime.Now.ToShortDateString();
+            if (checkBoxStatus.IsChecked == true)
+            {
+                arrLine[13] = changeDateLabel.Content.ToString();
+            }
+            else
+            {
+                arrLine[13] = DateTime.Now.ToShortDateString();
+            }
 
             //extract sodimat name
             for (int i = 0; i < tmp.Length; i++)
@@ -274,7 +286,16 @@ namespace NavigationBar
             //Console.WriteLine("ilość cykli: "+abc);
 
             abc += ";";
-            abc += DateTime.Now.ToString();
+
+            if (checkBoxStatus.IsChecked == true)
+            {
+                abc += changeDateLabel.Content.ToString();
+            }
+            else
+            {
+                abc += DateTime.Now.ToString();
+            }
+
 
             //zapisywanie danych tymczasowych (data_wymiany_gumki + numcig + numcycle)
 
@@ -312,7 +333,7 @@ namespace NavigationBar
                 bool b = wpisCila();
                 if (b == true) 
                 {
-                    MessageBox.Show("Plik wykonania CILA zapisano w danej ścierzce: " + savePath, "Informacja");
+                  //  MessageBox.Show("Plik wykonania CILA zapisano w danej ścierzce: " + savePath, "Informacja");
                     GC.Collect();
                     this.Close();
                 }
@@ -324,6 +345,39 @@ namespace NavigationBar
         {
             GC.Collect();
             this.Close();
+        }
+
+        private void CheckBoxChanged(object sender, RoutedEventArgs e)
+        {
+            if (backDateOption.IsEnabled == false) Dispatcher.Invoke(new Action(() => { backDateOption.IsEnabled = true; ; }));
+            else if (backDateOption.IsEnabled == true) Dispatcher.Invoke(new Action(() => { backDateOption.IsEnabled = false; ; }));
+        }
+
+        private void subtractDay_Click(object sender, RoutedEventArgs e)
+        {
+            editTime = editTime.AddDays(-1);
+            Dispatcher.Invoke(new Action(() => { changeDateLabel.Content = editTime.ToString("dd/MM/yyyy"); ; }));
+            int result = DateTime.Compare(editTime, DateTime.Now);
+
+            if (result < 0)
+            {
+                Dispatcher.Invoke(new Action(() => { addDay.IsEnabled = true; ; }));
+            }
+
+        }
+
+        private void addDay_Click(object sender, RoutedEventArgs e)
+        {
+            editTime = editTime.AddDays(1);
+            Dispatcher.Invoke(new Action(() => { changeDateLabel.Content = editTime.ToString("dd/MM/yyyy"); ; }));
+
+            int result = DateTime.Compare(editTime.AddDays(1), DateTime.Now);
+
+            if (result > 0)
+            {
+                Dispatcher.Invoke(new Action(() => { addDay.IsEnabled = false; ; }));
+            }
+
         }
     }
 }

@@ -182,7 +182,15 @@ namespace NavigationBar
 
             string[] arrLine = File.ReadAllLines(locationTxtWithLocationOfSavePAth); // replacment dla temp data (data+numcig+numcycle)
            
-            arrLine[5] = DateTime.Now.ToShortDateString();
+            if(checkBoxStatus.IsChecked == true)
+            {
+                arrLine[5] = changeDateLabel.Content.ToString();
+            }
+            else
+            {
+                arrLine[5] = DateTime.Now.ToShortDateString();
+            }
+             
             arrLine[7] = format;
 
             sodimat_name = "";
@@ -272,7 +280,15 @@ namespace NavigationBar
             //Console.WriteLine("ilość cykli: "+abc);
 
             abc += ";";
-            abc += DateTime.Now.ToString();
+            if (checkBoxStatus.IsChecked == true)
+            {
+                abc += changeDateLabel.Content.ToString();
+            }
+            else
+            {
+                abc += DateTime.Now.ToString();
+            }
+       
 
             //zapisywanie danych tymczasowych (data_wymiany_gumki + numcig + numcycle)
 
@@ -324,7 +340,7 @@ namespace NavigationBar
                     bool b = wpisWymiany(gumCheckedButton.Content.ToString(), reasonCheckedButton.Content.ToString());
                     if (b == true)
                     {
-                        MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
+                       // MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
                         this.Close();
                         GC.Collect();
                     }

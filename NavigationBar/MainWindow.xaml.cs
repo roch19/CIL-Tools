@@ -312,6 +312,8 @@ namespace NavigationBar
                 Dispatcher.Invoke(new Action(() => { BlokowanieEkranuButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { CmdButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { CILcardButton.IsEnabled = false; ; }));
+                Dispatcher.Invoke(new Action(() => { RemoteDesktopButton.IsEnabled = false; ; }));
+                Dispatcher.Invoke(new Action(() => { CILcardViewButton.IsEnabled = false; ; }));
                 //Dispatcher.Invoke(new Action(() => { LogoutRemoteDesktopButton.IsEnabled = false; ; }));
                 zalogowany = false;
             }
@@ -332,6 +334,8 @@ namespace NavigationBar
                 Dispatcher.Invoke(new Action(() => { BlokowanieEkranuButton.IsEnabled = true; ; }));
                 Dispatcher.Invoke(new Action(() => { CmdButton.IsEnabled = true; ; }));
                 Dispatcher.Invoke(new Action(() => { CILcardButton.IsEnabled = true; ; }));
+                Dispatcher.Invoke(new Action(() => { RemoteDesktopButton.IsEnabled = true; ; }));
+                Dispatcher.Invoke(new Action(() => { CILcardViewButton.IsEnabled = true; ; }));
                 //    Dispatcher.Invoke(new Action(() => { LogoutRemoteDesktopButton.IsEnabled = true; ; }));
 
                 zalogowany = true;
@@ -350,6 +354,8 @@ namespace NavigationBar
                 Dispatcher.Invoke(new Action(() => { BlokowanieEkranuButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { CmdButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { CILcardButton.IsEnabled = false; ; }));
+                Dispatcher.Invoke(new Action(() => { RemoteDesktopButton.IsEnabled = false; ; }));
+                Dispatcher.Invoke(new Action(() => { CILcardViewButton.IsEnabled = false; ; }));
                 // Dispatcher.Invoke(new Action(() => { LogoutRemoteDesktopButton.IsEnabled = false; ; }));
                 zalogowany = false;
             }
@@ -426,7 +432,7 @@ namespace NavigationBar
         private void OPLButton_Click(object sender, RoutedEventArgs e)
         {
 
-            PDFChooser pDFChooser = new PDFChooser();
+            PDFChooser pDFChooser = new PDFChooser("pdf");
             pDFChooser.ShowDialog();
             GC.Collect();
         }
@@ -487,6 +493,21 @@ namespace NavigationBar
              {
                  MessageBox.Show(string.Format("{0} Directory does not exist!", remoteDesktopPath));
             }
+        }
+
+        private void CILcardViewButton_Click(object sender, RoutedEventArgs e)
+        {
+            CILCard cc = new CILCard();
+            cc.ShowDialog();
+            cc = null;
+            GC.Collect();
+        }
+
+        private void RemoteDesktopButton_Click(object sender, RoutedEventArgs e)
+        {
+            PDFChooser pDFChooser = new PDFChooser("remote");
+            pDFChooser.ShowDialog();
+            GC.Collect();
         }
     }
 }

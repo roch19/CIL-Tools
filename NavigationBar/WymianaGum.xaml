@@ -68,7 +68,7 @@
             <RadioButton x:Name="czas" FontSize="14" Grid.Column="2"  GroupName="reson">Termin ważności</RadioButton>
         </Grid>
 
-        <CheckBox  Checked="CheckBoxChanged" Unchecked="CheckBoxChanged" Margin="10,5,0,0" >Wpis ze wsteczną datą</CheckBox>
+        <CheckBox x:Name="checkBoxStatus" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged" Margin="10,5,0,0" >Wykonaj wpis ze wsteczną datą</CheckBox>
         <Grid Height="24" Margin="10,5,190,0" x:Name="backDateOption" IsEnabled="False">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="48*"/>

@@ -12,17 +12,19 @@
         Topmost="True"
         WindowStartupLocation="Manual"
         AllowsTransparency="False"
-        Title="Instrukcje" Height="380" Width="524.967">
+        Title="Instrukcje" Height="380" Width="568.967">
 
     <StackPanel Background="#B6B6B6">
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="109*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="302*"/>
+                <ColumnDefinition Width="141*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="titleTextBox" FontSize="20" Background="#F1F3F8" FontWeight="Bold" Margin="129,16,84,17" VerticalAlignment="Center"><Run Text="Instrukcje"/></TextBlock>
-            <Button x:Name="CloseButton" Click="CloseButton_Click" Grid.Column="2"  Height="40" Width="60" Margin="10" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#FF0000">Close</Button>
+            <TextBlock x:Name="titleTextBox" FontSize="20" Background="#F1F3F8" FontWeight="Bold" Margin="31.8,17,61.6,16" VerticalAlignment="Center" Grid.Column="2"><Run Text="Instrukcje"/></TextBlock>
+            <Button x:Name="CloseButton" Click="CloseButton_Click" Grid.Column="3"  Height="40" Width="60" Margin="57.4,4,23.4,16" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#FF0000">Close</Button>
         </Grid>
 
         <Grid>
@@ -30,12 +32,15 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
-            <ScrollViewer Background="White" Height="300" Width="390" Grid.ColumnSpan="2" Margin="129,-10,0,10" >
-                <StackPanel x:Name="stackPanelContainer" Height="287" Background="#FFFFFF" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                          ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+
+
+            <ScrollViewer   VerticalScrollBarVisibility="Auto" Background="White" Height="287" Width="390" Grid.ColumnSpan="2" Margin="129,-10,0,10" >
+                <StackPanel x:Name="stackPanelContainer" VerticalAlignment="Top" HorizontalAlignment="Center" />
             </ScrollViewer>
-            <StackPanel x:Name="stackPanelFoldersContainer" Height="Auto" Margin="10, 0, 10, 10"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto"  Height="287" Width="140" Grid.ColumnSpan="1">
+                <StackPanel x:Name="stackPanelFoldersContainer" Margin="10, 0, 10, 10"/>
+            </ScrollViewer>
         </Grid>
 
 

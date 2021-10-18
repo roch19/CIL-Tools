@@ -210,60 +210,15 @@ namespace NavigationBar
         internal List<string> ListaAwarii()
         {
             relaseTheMemory();
-            // lines = File.readalllines(pathcopysodim).tolist();
-            //string tmp = lines[1];
-            // bool flag = true;
-
-            //extract sodimat name
-            //for (int i = 0; i < tmp.length; i++)
-            //{
-            //    if (tmp[i].tostring().equals("\"") && flag)
-            //    {
-            //        flag = false;
-            //    }
-            //    else if (!tmp[i].tostring().equals("\"") && flag.equals(false))
-            //    {
-            //        sodimat_name += tmp[i];
-            //    }
-
-            //}
-            //   console.writeline("nazwa sodimatu: " + sodimat_name);
-            //savepath += sodimat_name + ".txt";
-            //    tmp = lines[2];
-            //   flag = true;
-
-
-            //extract start sodim folder
-            //for (int i = 0; i < tmp.length; i++)
-            //{
-            //    if (tmp[i].tostring().equals("\"") && flag)
-            //    {
-            //        flag = false;
-            //    }
-            //    else if (!tmp[i].tostring().equals("\"") && flag.equals(false))
-            //    {
-            //        strsodimfolder += tmp[i];
-            //    }
-
-            //}
-
-            ////get numcycle from history
-            //string numcigpath = strsodimfolder + "history\\numcig.txt";
-
-            //get multiple errors from errorlog.arch 
+           
 
             getPaths();
 
             // GET Calibration list 
             //Lista plików znajdujących się w folderze o podanej ścierzce 
             filesList = (Directory.EnumerateFiles(strSodimFolder + sourceDirectoryCalibrationLog).ToList());
+            filesList.Reverse();
             FileInfo fi;
-           
-
-
-
-
-            Console.WriteLine("-----------------------!!!!! AWARIE !!!!----------------------------");
 
             listaInformacji.Clear();
             // GET Error list 

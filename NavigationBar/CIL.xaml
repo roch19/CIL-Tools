@@ -10,9 +10,9 @@
         Topmost="True"
         ResizeMode="NoResize"
         WindowStartupLocation="Manual"
-        Title="CIL" Height="200" Width="400">
+        Title="CIL" Height="232" Width="400">
 
-    <StackPanel Background="#B6B6B6" Height="190" Margin="2,2,2,0" VerticalAlignment="Top">
+    <StackPanel Background="#B6B6B6" Height="198" Margin="2,2,1.6,0" VerticalAlignment="Top">
 
         <TextBlock HorizontalAlignment="Center" TextDecorations="Underline" FontSize="12" Margin="10,0,10,0" ><Run Text=" STATYSTYKI"/></TextBlock>
         <Grid Margin="10,10,10,0">
@@ -25,7 +25,7 @@
                 <TextBlock Margin="0,0,0,5" HorizontalAlignment="Left" Width="100"  Background="WhiteSmoke" x:Name="dataOstatniegoCila">NULL</TextBlock>
                 <TextBlock  FontSize="9">Ilość dni od ostatniego CIL'a</TextBlock>
                 <TextBlock  Margin="0,0,0,5"  HorizontalAlignment="Left" Width="100"  Background="WhiteSmoke" x:Name="iloscDniOdCila">NULL</TextBlock>
-            
+
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <TextBlock FontSize="9">Ilość zainicjowanych badań</TextBlock>
@@ -34,13 +34,26 @@
                 <TextBlock  HorizontalAlignment="Left" Width="100"  Background="WhiteSmoke" x:Name="iloscZmierzonychProbekOdOstatniegoCILA">NULL</TextBlock>
             </StackPanel>
         </Grid>
+        <CheckBox x:Name="checkBoxStatus" Checked="CheckBoxChanged" Unchecked="CheckBoxChanged" Margin="10,5,0,0" >Wykonaj wpis ze wsteczną datą</CheckBox>
 
+        <Grid Height="24" Margin="10,5,190,0" x:Name="backDateOption" IsEnabled="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="48*"/>
+                <ColumnDefinition Width="95"/>
+                <ColumnDefinition Width="47*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="subtractDay" Click="subtractDay_Click" FontSize="18"  Grid.Column="0"   Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Content="-" Margin="4,0,5,0"></Button>
+            <Label x:Name="changeDateLabel" Grid.Column="1" HorizontalAlignment="Center">DD/MM/YYYY</Label>
+            <Button x:Name="addDay" IsEnabled="False" Click="addDay_Click" FontSize="18"  Grid.Column="2"   Width="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=ActualHeight}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Content="+" Margin="4,0,5,0"></Button>
+
+        </Grid>
         <Grid Margin="0,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="95*"/>
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="97*"/>
             </Grid.ColumnDefinitions>
+
             <Button x:Name="WpisCIL" Click="WpisCIL_Click"  Grid.Column="0"  Height="40" Margin="28,0,50,37" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#0F0" Content="CIL"/>
             <Button x:Name="Anuluj" Click="Anuluj_Click"  Grid.Column="2"  Height="40" Margin="31,0,50,37" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#FF0000" Content="Anuluj"/>
         </Grid>

@@ -69,10 +69,14 @@
     <Compile Include="CIL.xaml.cs">
       <DependentUpon>CIL.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CILCard.xaml.cs">
+      <DependentUpon>CILCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DialogResult.cs" />
     <Compile Include="EdycjaCzasu.xaml.cs">
       <DependentUpon>EdycjaCzasu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SodimModules.cs" />
     <Compile Include="lines.cs" />
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
@@ -81,6 +85,9 @@
     <Compile Include="PDFChooser.xaml.cs">
       <DependentUpon>PDFChooser.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RaportCIL.cs" />
+    <Compile Include="RaportWymianaGum.cs" />
+    <Compile Include="Raport_IlośćPrzerwanychBadan.cs" />
     <Compile Include="SpisAwarii.xaml.cs">
       <DependentUpon>SpisAwarii.xaml</DependentUpon>
     </Compile>
@@ -98,6 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CIL.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CILCard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -191,5 +202,6 @@
   <ItemGroup>
     <Resource Include="MicrosoftTeams-image.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
