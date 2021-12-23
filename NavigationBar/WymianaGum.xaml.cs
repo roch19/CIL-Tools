@@ -28,6 +28,7 @@ namespace NavigationBar
             this.Top = SystemParameters.PrimaryScreenHeight / 2;
             GetInfoAboutGum();
         }
+
         string locationTxtWithLocationOfSavePAth = @"C:\copy_sodim\PATH_TO_SAVE_CIGNUM.txt";
         string pathCopySodim = @"C:\copy_sodim\copy_sodim.vbs";
         string strSodimFolder = "";

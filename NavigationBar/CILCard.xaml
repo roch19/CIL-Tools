@@ -5,9 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NavigationBar"
         mc:Ignorable="d"
-        WindowStyle="None"
+     WindowStyle="ToolWindow"
         ResizeMode="NoResize"
         Topmost="True"
+        x:Name="mainWindow"
         Height="768" Width="1024"
         Title="CILCard">
     <StackPanel>
@@ -53,6 +54,12 @@
             <TextBlock Grid.Column="1">Data:</TextBlock>
             <Button Grid.Column="2">na pierod</Button>
         </Grid>
+
+        <Grid x:Name="mainGridPanel" ShowGridLines="True" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1024" Height="Auto" >
+            
+        </Grid>
+        
+        
 
     </StackPanel>
 </Window>
