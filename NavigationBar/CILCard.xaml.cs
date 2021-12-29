@@ -107,7 +107,31 @@ namespace NavigationBar
 
             ColumnDefinition colDef1 = new ColumnDefinition();
             ColumnDefinition colDef2 = new ColumnDefinition();
-        
+            //Border border = new Border()
+            //{
+            //    BorderThickness = new Thickness()
+            //    {
+            //        Bottom = 1,
+            //        Left = 1,
+            //        Right = 1,
+            //        Top = 1
+            //    },
+            //    BorderBrush = new SolidColorBrush(Colors.Black)
+            //};
+            //Border border2 = new Border()
+            //{
+            //    BorderThickness = new Thickness()
+            //    {
+            //        Bottom = 1,
+            //        Left = 1,
+            //        Right = 1,
+            //        Top = 1
+            //    },
+            //    BorderBrush = new SolidColorBrush(Colors.Black)
+            //};
+      
+
+            ///*** Dodawanie wierszy tytułowych 
             mainGridPanel.ColumnDefinitions.Add(colDef1);
             mainGridPanel.ColumnDefinitions.Add(colDef2);
          
@@ -138,20 +162,43 @@ namespace NavigationBar
             Grid.SetRow(tb2, 0);
             Grid.SetColumn(tb2, 1);
 
+            //Grid.SetColumn(border, 0);
+            //Grid.SetRow(border, 0);
+
+            //Grid.SetColumn(border2, 0);
+            //Grid.SetRow(border2, 1);
+
             mainGridPanel.Children.Add(tb1);
             mainGridPanel.Children.Add(tb2);
+            //mainGridPanel.Children.Add(border2);
+            //mainGridPanel.Children.Add(border);
 
             int i = 1;
 
+            // Dodawanie komórek z definicjami wykonywanych czynności 
             foreach (var item in templates)
             {
                 TextBlock tb3 = new TextBlock();
                 TextBlock tb4 = new TextBlock();
                 RowDefinition gridRow3 = new RowDefinition();
                 RowDefinition gridRow4 = new RowDefinition();
+                //border = new Border()
+                //{
+                //    BorderThickness = new Thickness()
+                //    {
+                //        Bottom = 1,
+                //        Left = 1,
+                //        Right = 1,
+                //        Top = 1
+                //    },
+                //    BorderBrush = new SolidColorBrush(Colors.Black)
+                //};
 
+
+           
                 gridRow3.Height = new GridLength(30);
                 gridRow4.Height = new GridLength(30);
+                
                 mainGridPanel.RowDefinitions.Add(gridRow3);
                 mainGridPanel.RowDefinitions.Add(gridRow4);
 
@@ -176,15 +223,22 @@ namespace NavigationBar
                 Grid.SetRow(tb4, i);
                 Grid.SetColumn(tb4, 1);
 
+                //Grid.SetColumn(border, i);
+                //Grid.SetRow(border, 0);
+
+                //Grid.SetColumn(border, i);
+                //Grid.SetRow(border, 1);
+
                 //btn.Background = new SolidColorBrush(Colors.Azure);
                 //btn.Foreground = new SolidColorBrush(Colors.Black);
                 /* stackPanelContainer.Children.Add(btn)*/
-
                 mainGridPanel.Children.Add(tb3);
                 mainGridPanel.Children.Add(tb4);
+                
                 i++;
             }
 
+            // Tworzenie komórek dat
             int days = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
             MessageBox.Show("Ilość dni" + days);
             for (int j = 0; j < days; j++)
@@ -199,7 +253,9 @@ namespace NavigationBar
                 tb12.TextAlignment = TextAlignment.Center;
                 tb12.FontWeight = FontWeights.Bold;
                 tb12.Text = (j + 1).ToString();
-        
+
+
+         
                 mainGridPanel.ColumnDefinitions.Add(columnDefinition);
                 mainGridPanel.Children.Add(tb12);
             }

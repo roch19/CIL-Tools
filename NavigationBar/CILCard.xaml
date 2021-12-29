@@ -51,15 +51,22 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0">Cofka</Button>
-            <TextBlock Grid.Column="1">Data:</TextBlock>
+            <TextBlock Grid.Column="1">Data: Miesiąc - ROK </TextBlock>
             <Button Grid.Column="2">na pierod</Button>
         </Grid>
 
+        <Border BorderThickness="2" BorderBrush="Black">
         <Grid x:Name="mainGridPanel" ShowGridLines="True" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1024" Height="Auto" >
-            
-        </Grid>
-        
-        
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="163*"/>
+                    <ColumnDefinition Width="132*"/>
+                    <ColumnDefinition Width="125*"/>
+                    <ColumnDefinition Width="604*"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </Border>
+
+
 
     </StackPanel>
 </Window>
