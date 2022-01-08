@@ -76,6 +76,9 @@
     <Compile Include="EdycjaCzasu.xaml.cs">
       <DependentUpon>EdycjaCzasu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NowyWpisKartyCIL.xaml.cs">
+      <DependentUpon>NowyWpisKartyCIL.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SodimModules.cs" />
     <Compile Include="lines.cs" />
     <Compile Include="Login.xaml.cs">
@@ -133,6 +136,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NowyWpisKartyCIL.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PDFChooser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -202,6 +209,26 @@
   <ItemGroup>
     <Resource Include="MicrosoftTeams-image.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\tło czynności cil.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\tło karty cil bar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\awatar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Rectangle 2.png" />
+    <Resource Include="Images\Rectangle 4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\backAv.png" />
+    <Resource Include="Images\backNotAv.png" />
+    <Resource Include="Images\forwAv.png" />
+    <Resource Include="Images\forwNotAv.png" />
+    <Resource Include="Images\logo.png" />
+    <Resource Include="Images\newEdit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

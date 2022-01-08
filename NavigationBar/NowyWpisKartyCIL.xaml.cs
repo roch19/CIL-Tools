@@ -1,10 +1,10 @@
-﻿using NavigationBar.KartaCIL;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+
 using System.Data;
 using System.IO;
-using System.Linq;
+
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,25 +18,23 @@ using System.Xml.Linq;
 
 
 
-
 namespace NavigationBar
 {
     /// <summary>
-    /// Logika interakcji dla klasy CILCard.xaml
+    /// Logika interakcji dla klasy NowyWpisKartyCIL.xaml
     /// </summary>
-    public partial class CILCard : Window
+    public partial class NowyWpisKartyCIL : Window
     {
-        public CILCard()
+        public NowyWpisKartyCIL()
         {
             InitializeComponent();
             GetModulesInfo();
         }
 
-        
         string[] arrLine;
         string TMPlocationModule = "C:\\copy_sodim\\hollow.txt";
         string XMLCILTemplatePath = "C:\\Users\\Maciek\\Desktop\\E-Cil\\CIL_Template.xml";
-      
+
         public class Kalibracje
         {
             public int PD { get; set; }
@@ -85,7 +83,7 @@ namespace NavigationBar
             //}
             // LINQ 
             //aWhere(x => x.Elements().Last().Value == "HOLLOW")
-            
+
             var xdoc = XDocument.Load(XMLCILTemplatePath);
             var templates = xdoc.Root.Descendants("czynnosc")  // trzeba załadować w listę obiektów 
                 .Select(x => new Czynnosc(int.Parse(x.Attribute("id").Value),
@@ -93,7 +91,7 @@ namespace NavigationBar
                 x.Element("duty").Value,
                 int.Parse(x.Element("interwal").Value)));
 
-     
+
 
             ColumnDefinition colDef1 = new ColumnDefinition();
             ColumnDefinition colDef2 = new ColumnDefinition();
@@ -105,7 +103,7 @@ namespace NavigationBar
             colDef2.Width = new GridLength(150);
             mainGridPanel.ColumnDefinitions.Add(colDef1);
             mainGridPanel.ColumnDefinitions.Add(colDef2);
-         
+
 
             TextBlock tb1 = new TextBlock();
             TextBlock tb2 = new TextBlock();
@@ -153,11 +151,11 @@ namespace NavigationBar
                 TextBlock tb4 = new TextBlock();
                 RowDefinition gridRow3 = new RowDefinition();
                 RowDefinition gridRow4 = new RowDefinition();
-           
+
                 gridRow3.Height = new GridLength(30);
-                
+
                 gridRow4.Height = new GridLength(30);
-                
+
                 mainGridPanel.RowDefinitions.Add(gridRow3);
                 mainGridPanel.RowDefinitions.Add(gridRow4);
 
@@ -188,7 +186,7 @@ namespace NavigationBar
                         break;
                 }
 
-                
+
                 tb4.Background = Brushes.WhiteSmoke;
 
                 tb3.TextAlignment = TextAlignment.Center;
@@ -217,14 +215,14 @@ namespace NavigationBar
                 /* stackPanelContainer.Children.Add(btn)*/
                 mainGridPanel.Children.Add(tb3);
                 mainGridPanel.Children.Add(tb4);
-                
+
                 i++;
             }
 
             // Tworzenie komórek dat
             int days = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
             int j;
-           // MessageBox.Show("Ilość dni" + days);
+            // MessageBox.Show("Ilość dni" + days);
             for (j = 0; j < days; j++)
             {
 
@@ -243,13 +241,13 @@ namespace NavigationBar
                 mainGridPanel.ColumnDefinitions.Add(columnDefinition);
                 mainGridPanel.Children.Add(tb12);
             }
-            int templatesNumb = templates.Count()+1;
+            int templatesNumb = templates.Count() + 1;
             j = j + 3;
-            for (int a =0; a < j; a++)
+            for (int a = 0; a < j; a++)
             {
-                for (int y=0 ; y < templatesNumb; y++)
+                for (int y = 0; y < templatesNumb; y++)
                 {
-                   Border border = new Border()
+                    Border border = new Border()
                     {
                         BorderThickness = new Thickness()
                         {
@@ -268,24 +266,13 @@ namespace NavigationBar
                     Grid.SetRow(border, y);
                     Grid.SetColumn(tb3, a);
                     Grid.SetRow(tb3, y);
-                  //  mainGridPanel.Children.Add(tb3);
+                    //  mainGridPanel.Children.Add(tb3);
                     mainGridPanel.Children.Add(border);
 
                 }
             }
-
-
-
-
-
-
-        }
-
-        private void newDataPutButton_Click(object sender, RoutedEventArgs e)
-        {
-            NowyWpisKartyCIL nowyWpis = new NowyWpisKartyCIL();
-            nowyWpis.ShowDialog();
-            GC.Collect();
         }
     }
 }
+
+

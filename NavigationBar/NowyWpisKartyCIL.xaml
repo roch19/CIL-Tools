@@ -1,0 +1,65 @@
+﻿<Window x:Class="NavigationBar.NowyWpisKartyCIL"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NavigationBar"
+        mc:Ignorable="d"
+         Topmost="True"
+        Title="NowyWpisKartyCIL" Height="450" Width="800">
+    <StackPanel>
+        <StackPanel.Background>
+            <ImageBrush ImageSource="/Images/tło czynności cil.png" />
+        </StackPanel.Background>
+
+        <TextBlock Margin="50,0,50,0" FontWeight="Bold" FontSize="20">Czynność</TextBlock>
+        <Border BorderThickness="2" BorderBrush="Black" Height="3" Margin="50,0,50,0"/>
+        <Grid Margin="50,0,50,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" BorderBrush="Transparent" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#09cfcf" >Dzienna</Button>
+            <Button Grid.Column="1" BorderBrush="Transparent" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#09cfcf" >Tygodniowa</Button>
+            <Button Grid.Column="2" BorderBrush="Transparent" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#09cfcf" >2 Tygodniowa</Button>
+            <Button Grid.Column="3" BorderBrush="Transparent" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#09cfcf" >Miesięczna</Button>
+            <Button Grid.Column="4" BorderBrush="Transparent" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#09cfcf" >Roczna</Button>
+        </Grid>
+
+        <Grid Margin="50,20,50,0" x:Name="mainCzynnoscPanel" ShowGridLines="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="700" Height="30" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock  Grid.Column="0" Background="Transparent" FontSize="20" FontWeight="Bold" >Moduł</TextBlock>
+            <TextBlock  Grid.Column="1" Background="Transparent" FontSize="20" FontWeight="Bold" >Czynność</TextBlock>
+            <TextBlock  Grid.Column="2" Background="Transparent" FontSize="20" FontWeight="Bold" >Nie wykonano</TextBlock>
+            <TextBlock  Grid.Column="3" Background="Transparent" FontSize="20" FontWeight="Bold" >Wykonano</TextBlock>
+            <TextBlock  Grid.Column="4" Background="Transparent" FontSize="20" FontWeight="Bold" >Wymieniona</TextBlock>
+           
+        </Grid>
+        <Border BorderThickness="2" BorderBrush="Black">
+            <Grid x:Name="mainGridPanel" ShowGridLines="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1024" Height="Auto" >
+                <Grid.ColumnDefinitions>
+
+                </Grid.ColumnDefinitions>
+            </Grid>
+        </Border>
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,0">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Background="Red"  FontWeight="Bold"  FontSize="20" Content="Anuluj" Margin="0,0,20,0" Width="100" Height="50"/>
+            <Button Grid.Column="1" Content="Zapisz" Background="Green" FontWeight="Bold" FontSize="20" Margin="0,0,20,0" Width="100" Height="50"/>
+        </Grid>
+
+    </StackPanel>
+</Window>
