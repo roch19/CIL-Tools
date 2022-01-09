@@ -22,43 +22,31 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" BorderBrush="Transparent" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#09cfcf" >Dzienna</Button>
-            <Button Grid.Column="1" BorderBrush="Transparent" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#09cfcf" >Tygodniowa</Button>
-            <Button Grid.Column="2" BorderBrush="Transparent" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#09cfcf" >2 Tygodniowa</Button>
-            <Button Grid.Column="3" BorderBrush="Transparent" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#09cfcf" >Miesięczna</Button>
-            <Button Grid.Column="4" BorderBrush="Transparent" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#09cfcf" >Roczna</Button>
+            <Button Grid.Column="0" BorderBrush="Transparent" Click="ChangeDutyViewButton"  Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#09cfcf" Content="Dzienna" x:Name="dziennaButton"/>
+            <Button Grid.Column="1" BorderBrush="Transparent" Click="ChangeDutyViewButton" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#037A7A" Content="Tygodniowa" x:Name="tygodniowaButton"/>
+            <Button Grid.Column="2" BorderBrush="Transparent" Click="ChangeDutyViewButton" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#037A7A" Content="2 Tygodniowa" x:Name="dwaTygodniowaButton"/>
+            <Button Grid.Column="3" BorderBrush="Transparent" Click="ChangeDutyViewButton" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#037A7A" Content="Miesięczna" x:Name="miesiecznaButton"/>
+            <Button Grid.Column="4" BorderBrush="Transparent" Click="ChangeDutyViewButton" Background="Transparent" FontSize="20" FontWeight="Bold"  Foreground="#037A7A" Content="Roczna" x:Name="rocznaButton"/>
         </Grid>
 
-        <Grid Margin="50,20,50,0" x:Name="mainCzynnoscPanel" ShowGridLines="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="700" Height="30" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
 
-            <TextBlock  Grid.Column="0" Background="Transparent" FontSize="20" FontWeight="Bold" >Moduł</TextBlock>
-            <TextBlock  Grid.Column="1" Background="Transparent" FontSize="20" FontWeight="Bold" >Czynność</TextBlock>
-            <TextBlock  Grid.Column="2" Background="Transparent" FontSize="20" FontWeight="Bold" >Nie wykonano</TextBlock>
-            <TextBlock  Grid.Column="3" Background="Transparent" FontSize="20" FontWeight="Bold" >Wykonano</TextBlock>
-            <TextBlock  Grid.Column="4" Background="Transparent" FontSize="20" FontWeight="Bold" >Wymieniona</TextBlock>
-           
-        </Grid>
-        <Border BorderThickness="2" BorderBrush="Black">
-            <Grid x:Name="mainGridPanel" ShowGridLines="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1024" Height="Auto" >
-                <Grid.ColumnDefinitions>
 
-                </Grid.ColumnDefinitions>
-            </Grid>
+        <Border BorderThickness="2" BorderBrush="Black" Margin="50,0,49.6,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Background="Transparent" Height="286" Margin="0.4,0,-0.2,0"  >
+                <Grid x:Name="mainGridPanel" ShowGridLines="False" HorizontalAlignment="Left" Margin="50,30,49.6,0" VerticalAlignment="Top" >
+                    <Grid.ColumnDefinitions>
+
+                    </Grid.ColumnDefinitions>
+                </Grid>
+            </ScrollViewer>
         </Border>
         <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,0">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Background="Red"  FontWeight="Bold"  FontSize="20" Content="Anuluj" Margin="0,0,20,0" Width="100" Height="50"/>
-            <Button Grid.Column="1" Content="Zapisz" Background="Green" FontWeight="Bold" FontSize="20" Margin="0,0,20,0" Width="100" Height="50"/>
+            <Button Grid.Column="0" Background="Red"  FontWeight="Bold"  FontSize="30" Content="Anuluj" Margin="0,0,20,0" Width="100" Height="50"/>
+            <Button Grid.Column="1" Content="Zapisz" Background="Green" FontWeight="Bold" FontSize="30" Margin="0,0,20,0" Width="100" Height="50" Click="Button_Click"/>
         </Grid>
 
     </StackPanel>

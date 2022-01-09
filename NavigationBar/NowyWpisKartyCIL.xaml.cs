@@ -28,7 +28,7 @@ namespace NavigationBar
         public NowyWpisKartyCIL()
         {
             InitializeComponent();
-            GetModulesInfo();
+            GetModulesInfo(1);
         }
 
         string[] arrLine;
@@ -69,20 +69,10 @@ namespace NavigationBar
             }
         }
 
-        public void GetModulesInfo()
-        {
 
-            //DataSet ds = new DataSet();
-            //ds.ReadXml(XMLCILTemplatePath);
-            //foreach(DataRow dr in ds.Tables["czynnosc"].Rows)
-            //{
-            //    for (int i = 0; i < dr.ItemArray.Length; i++)
-            //    {
-            //        MessageBox.Show(dr[i].ToString());
-            //    }
-            //}
-            // LINQ 
-            //aWhere(x => x.Elements().Last().Value == "HOLLOW")
+        public List<Czynnosc> czynnosc = new List<Czynnosc>();
+        public void GetModulesInfo(int interwal)
+        {
 
             var xdoc = XDocument.Load(XMLCILTemplatePath);
             var templates = xdoc.Root.Descendants("czynnosc")  // trzeba załadować w listę obiektów 
@@ -91,45 +81,77 @@ namespace NavigationBar
                 x.Element("duty").Value,
                 int.Parse(x.Element("interwal").Value)));
 
+            czynnosc.Clear();
 
+            mainGridPanel.RowDefinitions.Clear();
+            mainGridPanel.Children.Clear();
+            mainGridPanel.ColumnDefinitions.Clear();
+            GC.Collect();
 
             ColumnDefinition colDef1 = new ColumnDefinition();
             ColumnDefinition colDef2 = new ColumnDefinition();
-
-            ///*** Dodawanie wierszy tytułowych 
-            ///
+            ColumnDefinition colDef3 = new ColumnDefinition();
+            ColumnDefinition colDef4 = new ColumnDefinition();
 
             colDef1.Width = new GridLength(80);
-            colDef2.Width = new GridLength(150);
+            colDef2.Width = new GridLength(120);
+            colDef3.Width = new GridLength(160);
+            colDef4.Width = new GridLength(160);
+
             mainGridPanel.ColumnDefinitions.Add(colDef1);
             mainGridPanel.ColumnDefinitions.Add(colDef2);
+            mainGridPanel.ColumnDefinitions.Add(colDef3);
+            mainGridPanel.ColumnDefinitions.Add(colDef4);
 
 
             TextBlock tb1 = new TextBlock();
             TextBlock tb2 = new TextBlock();
+            TextBlock tb3 = new TextBlock();
+            TextBlock tb4 = new TextBlock();
             tb1.Text = "Moduł";
             tb2.Text = "Czynność";
+            tb3.Text = "Sprawdzono, stan OK";
+            tb4.Text = "Wymiana, regulacja";
 
-            tb1.Background = Brushes.Gray;
-            tb2.Background = Brushes.Gray;
+
+            tb1.Background = Brushes.Transparent;
+            tb2.Background = Brushes.Transparent;
+            tb3.Background = Brushes.Transparent;
+            tb4.Background = Brushes.Transparent;
 
             tb1.FontSize = 15;
             tb2.FontSize = 15;
+            tb3.FontSize = 15;
+            tb4.FontSize = 15;
 
+            tb1.FontWeight = FontWeights.Bold;
             tb2.FontWeight = FontWeights.Bold;
-            tb2.FontWeight = FontWeights.Bold;
+            tb3.FontWeight = FontWeights.Bold;
+            tb4.FontWeight = FontWeights.Bold;
 
+            tb1.TextAlignment = TextAlignment.Center;
+            tb2.TextAlignment = TextAlignment.Center;
+            tb3.TextAlignment = TextAlignment.Center;
+            tb4.TextAlignment = TextAlignment.Center;
 
             RowDefinition gridRow1 = new RowDefinition();
             RowDefinition gridRow2 = new RowDefinition();
+
             mainGridPanel.RowDefinitions.Add(gridRow1);
             mainGridPanel.RowDefinitions.Add(gridRow2);
+
 
             Grid.SetRow(tb1, 0);
             Grid.SetColumn(tb1, 0);
 
             Grid.SetRow(tb2, 0);
             Grid.SetColumn(tb2, 1);
+
+            Grid.SetRow(tb3, 0);
+            Grid.SetColumn(tb3, 2);
+
+             Grid.SetRow(tb4, 0);
+            Grid.SetColumn(tb4, 3);
 
             //Grid.SetColumn(border, 0);
             //Grid.SetRow(border, 0);
@@ -139,113 +161,92 @@ namespace NavigationBar
 
             mainGridPanel.Children.Add(tb1);
             mainGridPanel.Children.Add(tb2);
-            //mainGridPanel.Children.Add(border2);
-            //mainGridPanel.Children.Add(border);
+            mainGridPanel.Children.Add(tb3);
+            mainGridPanel.Children.Add(tb4);
+
 
             int i = 1;
 
             // Dodawanie komórek z definicjami wykonywanych czynności 
             foreach (var item in templates)
             {
-                TextBlock tb3 = new TextBlock();
-                TextBlock tb4 = new TextBlock();
-                RowDefinition gridRow3 = new RowDefinition();
-                RowDefinition gridRow4 = new RowDefinition();
-
-                gridRow3.Height = new GridLength(30);
-
-                gridRow4.Height = new GridLength(30);
-
-                mainGridPanel.RowDefinitions.Add(gridRow3);
-                mainGridPanel.RowDefinitions.Add(gridRow4);
-
-                tb3.Text = item.module;
-                tb4.Text = item.duty;
-
-                switch (item.module.ToString())
+                if (item.interwal == interwal || interwal==0)
                 {
-                    case "PD":
-                        tb3.Background = Brushes.Green;
-                        break;
+                    tb3 = new TextBlock();
+                    tb4 = new TextBlock();
+                    RowDefinition gridRow3 = new RowDefinition();
+                    RowDefinition gridRow4 = new RowDefinition();
 
-                    case "HAR":
-                        tb3.Background = Brushes.Red;
-                        break;
-                    case "ALL":
-                        tb3.Background = Brushes.Gray;
-                        break;
-                    case "WG":
-                        tb3.Background = Brushes.Orange;
-                        break;
-                    case "DIA":
-                        tb3.Background = Brushes.Yellow;
-                        break;
+                    gridRow3.Height = new GridLength(30);
+                    gridRow4.Height = new GridLength(30);
 
-                    default:
-                        tb3.Background = Brushes.Aqua;
-                        break;
+                    mainGridPanel.RowDefinitions.Add(gridRow3);
+                    mainGridPanel.RowDefinitions.Add(gridRow4);
+
+                    tb3.Text = item.module;
+                    tb4.Text = item.duty;
+
+                    switch (item.module.ToString())
+                    {
+                        case "PD":
+                            tb3.Background = Brushes.Green;
+                            break;
+
+                        case "HAR":
+                            tb3.Background = Brushes.Red;
+                            break;
+                        case "ALL":
+                            tb3.Background = Brushes.Transparent;
+                            break;
+                        case "WG":
+                            tb3.Background = Brushes.Orange;
+                            break;
+                        case "DIA":
+                            tb3.Background = Brushes.Yellow;
+                            break;
+
+                        default:
+                            tb3.Background = Brushes.Aqua;
+                            break;
+                    }
+
+
+                    tb4.Background = Brushes.Transparent;
+
+                    tb3.TextAlignment = TextAlignment.Center;
+                    tb4.TextAlignment = TextAlignment.Center;
+                    tb4.TextWrapping = TextWrapping.Wrap;
+                    tb3.FontSize = 10;
+                    tb4.FontSize = 10;
+
+                    tb3.FontWeight = FontWeights.Bold;
+                    tb4.FontWeight = FontWeights.Bold;
+
+                    czynnosc.Add(item);
+
+                    Grid.SetRow(tb3, i);
+                    Grid.SetColumn(tb3, 0);
+
+                    Grid.SetRow(tb4, i);
+                    Grid.SetColumn(tb4, 1);
+
+                    mainGridPanel.Children.Add(tb3);
+                    mainGridPanel.Children.Add(tb4);
+
+                    i++;
                 }
-
-
-                tb4.Background = Brushes.WhiteSmoke;
-
-                tb3.TextAlignment = TextAlignment.Center;
-                tb4.TextAlignment = TextAlignment.Center;
-                tb4.TextWrapping = TextWrapping.Wrap;
-                tb3.FontSize = 10;
-                tb4.FontSize = 10;
-
-                tb3.FontWeight = FontWeights.Bold;
-                tb4.FontWeight = FontWeights.Bold;
-
-                Grid.SetRow(tb3, i);
-                Grid.SetColumn(tb3, 0);
-
-                Grid.SetRow(tb4, i);
-                Grid.SetColumn(tb4, 1);
-
-                //Grid.SetColumn(border, i);
-                //Grid.SetRow(border, 0);
-
-                //Grid.SetColumn(border, i);
-                //Grid.SetRow(border, 1);
-
-                //btn.Background = new SolidColorBrush(Colors.Azure);
-                //btn.Foreground = new SolidColorBrush(Colors.Black);
-                /* stackPanelContainer.Children.Add(btn)*/
-                mainGridPanel.Children.Add(tb3);
-                mainGridPanel.Children.Add(tb4);
-
-                i++;
+               
             }
 
-            // Tworzenie komórek dat
-            int days = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
-            int j;
-            // MessageBox.Show("Ilość dni" + days);
-            for (j = 0; j < days; j++)
-            {
-
-                TextBlock tb12 = new TextBlock();
-                ColumnDefinition columnDefinition = new ColumnDefinition();
-
-                columnDefinition.Width = new GridLength(20);
-                Grid.SetRow(tb12, 0);
-                Grid.SetColumn(tb12, j + 2);
-                tb12.TextAlignment = TextAlignment.Center;
-                tb12.FontWeight = FontWeights.Bold;
-                tb12.Text = (j + 1).ToString();
 
 
-
-                mainGridPanel.ColumnDefinitions.Add(columnDefinition);
-                mainGridPanel.Children.Add(tb12);
-            }
-            int templatesNumb = templates.Count() + 1;
-            j = j + 3;
+            // Rysowanie siatki
+            int j=4;
+     
+        
             for (int a = 0; a < j; a++)
             {
-                for (int y = 0; y < templatesNumb; y++)
+                for (int y = 0; y < i; y++)
                 {
                     Border border = new Border()
                     {
@@ -258,18 +259,125 @@ namespace NavigationBar
                         },
                         BorderBrush = new SolidColorBrush(Colors.Black)
                     };
-                    TextBlock tb3 = new TextBlock();
-                    tb3.Text = "V";
-                    tb3.FontWeight = FontWeights.Bold;
-                    tb3.Background = Brushes.Gray;
+          
                     Grid.SetColumn(border, a);
                     Grid.SetRow(border, y);
-                    Grid.SetColumn(tb3, a);
-                    Grid.SetRow(tb3, y);
-                    //  mainGridPanel.Children.Add(tb3);
+                
                     mainGridPanel.Children.Add(border);
-
                 }
+            }
+
+            j = 4;
+
+                for (int y = 1; y < i; y++)
+                {
+
+                RadioButton rb1 = new RadioButton();
+                RadioButton rb2 = new RadioButton();
+
+                rb1.GroupName =  y.ToString() ;
+                rb2.GroupName =  y.ToString() ;
+
+                rb1.Name = "A";
+                rb2.Name = "B";
+
+                rb1.VerticalAlignment = VerticalAlignment.Center;
+                rb2.VerticalAlignment = VerticalAlignment.Center;
+
+                rb1.HorizontalAlignment = HorizontalAlignment.Center;
+                rb2.HorizontalAlignment = HorizontalAlignment.Center;
+
+                
+
+                //rb1.Content = " \n ";
+
+                Grid.SetColumn(rb1, 2);
+                Grid.SetRow(rb1, y);
+
+                Grid.SetColumn(rb2, 3);
+                Grid.SetRow(rb2, y);
+
+                mainGridPanel.Children.Add(rb1);
+                mainGridPanel.Children.Add(rb2);
+                }
+            
+
+
+
+        }
+
+        private void ChangeDutyViewButton(object sender, RoutedEventArgs e)
+        {
+            SolidColorBrush hide = new SolidColorBrush(Color.FromRgb(3, 122, 122));
+            SolidColorBrush top = new SolidColorBrush(Color.FromRgb(9, 207, 207));
+          
+            try
+            {
+                var button = (Button)sender;
+                switch (button.Content.ToString())
+                {
+                    case "Dzienna":
+                        miesiecznaButton.Foreground = hide;
+                        tygodniowaButton.Foreground = hide;
+                        dwaTygodniowaButton.Foreground = hide;
+                        rocznaButton.Foreground = hide;
+                        dziennaButton.Foreground = top;
+                        GetModulesInfo(1);
+                        break;
+
+                    case "Tygodniowa":
+                        miesiecznaButton.Foreground = hide;
+                        tygodniowaButton.Foreground = top;
+                        dwaTygodniowaButton.Foreground = hide;
+                        rocznaButton.Foreground = hide;
+                        dziennaButton.Foreground = hide;
+                        GetModulesInfo(7);
+                        break;
+                    case "2 Tygodniowa":
+                        miesiecznaButton.Foreground = hide;
+                        tygodniowaButton.Foreground = hide;
+                        dwaTygodniowaButton.Foreground = top;
+                        rocznaButton.Foreground = hide;
+                        dziennaButton.Foreground = hide;
+                        GetModulesInfo(14);
+                        break;
+                    case "Miesięczna":
+                        miesiecznaButton.Foreground = top;
+                        tygodniowaButton.Foreground = hide;
+                        dwaTygodniowaButton.Foreground = hide;
+                        rocznaButton.Foreground = hide;
+                        dziennaButton.Foreground = hide;
+                        GetModulesInfo(30);
+                        break;
+                    case "Roczna":
+                        miesiecznaButton.Foreground = hide;
+                        tygodniowaButton.Foreground = hide;
+                        dwaTygodniowaButton.Foreground = hide;
+                        rocznaButton.Foreground = top;
+                        dziennaButton.Foreground = hide;
+                        GetModulesInfo(0);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            catch { MessageBox.Show("Wykryto bład podczas próby wykonywania operacji."); }         
+
+            }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var list = this.mainGridPanel.Children.OfType<RadioButton>().Where(x => x.IsChecked == true);
+            RadioButton rb = new RadioButton();
+
+            foreach (var item in list)
+            {
+
+                // group name -> y -> nr wiersza w kolumnie
+                rb = item;
+                var a = czynnosc.ElementAt(int.Parse(rb.GroupName)-1);
+                MessageBox.Show("Zaznaczono"+ a.duty.ToString()+"Z kolumny: "+rb.Name.ToString());
             }
         }
     }

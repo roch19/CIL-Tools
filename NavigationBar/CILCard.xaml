@@ -104,7 +104,7 @@
 
 
         <Border BorderThickness="2" BorderBrush="Black">
-            <Grid x:Name="mainGridPanel" ShowGridLines="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1024" Height="Auto" >
+            <Grid x:Name="mainGridPanel" ShowGridLines="False" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,50,50,50" Width="1024" Height="Auto" >
                 <Grid.ColumnDefinitions>
 
                 </Grid.ColumnDefinitions>
