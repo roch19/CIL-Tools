@@ -55,7 +55,7 @@ namespace NavigationBar
             MainWindow2_Loaded();
             ChceckIfAnyCalibrationWasTodayMaken();
             SearchForExecutionFileToShutDownProgram();
-            
+    
             //App_Deactivated_LostFocus();
             this.Focus();
             ShittyFunctionToChceckIfAppIsOnTopOnWinows7();

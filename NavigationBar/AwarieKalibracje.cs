@@ -167,6 +167,7 @@ namespace NavigationBar
 
             string tmp = lines[1];
             bool flag = true;
+            sodimat_name = "";
 
             //extract sodimat name
             for (int i = 0; i < tmp.Length; i++)
@@ -181,7 +182,9 @@ namespace NavigationBar
                 }
 
             }
-            Console.WriteLine("Nazwa sodimatu: " + sodimat_name);
+            
+            ZmienneGlobalne.numer_sodimatu = sodimat_name;
+            //Console.WriteLine("Nazwa sodimatu: " + sodimat_name);
             savePath += sodimat_name + ".txt";
             tmp = lines[2];
             flag = true;

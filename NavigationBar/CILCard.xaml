@@ -58,7 +58,7 @@
                                 <ImageBrush ImageSource="/Images/awatar.png"/>
                             </Border.Background>
                         </Border>
-                        <TextBlock  Margin="5" FontSize=" 16" Text="PAWEŁ" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <TextBlock  Margin="5" FontSize=" 16" Text="TUUL" FontWeight="Bold" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Grid>
             </Grid>

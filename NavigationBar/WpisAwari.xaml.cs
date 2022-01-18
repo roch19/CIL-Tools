@@ -84,7 +84,8 @@ namespace NavigationBar
                 }
 
             }
-            Console.WriteLine("Nazwa sodimatu: " + sodimat_name);
+            //  Console.WriteLine("Nazwa sodimatu: " + sodimat_name);
+            ZmienneGlobalne.numer_sodimatu = sodimat_name;
             savePath += sodimat_name + ".txt";
             Dispatcher.Invoke(new Action(() => { numerUrzadzeniaTextBox.Text = sodimat_name; ; }));
             tmp = null;

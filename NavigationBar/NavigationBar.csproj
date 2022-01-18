@@ -103,6 +103,7 @@
       <DependentUpon>WymianaGum.xaml</DependentUpon>
     </Compile>
     <Compile Include="WymianaGumek.cs" />
+    <Compile Include="ZmienneGlobalne.cs" />
     <Page Include="BlockerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

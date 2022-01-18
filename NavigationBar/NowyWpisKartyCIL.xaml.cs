@@ -15,8 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
-
-
+using System.Xml.Serialization;
 
 namespace NavigationBar
 {
@@ -31,9 +30,14 @@ namespace NavigationBar
             GetModulesInfo(1);
         }
 
+      
+
         string[] arrLine;
         string TMPlocationModule = "C:\\copy_sodim\\hollow.txt";
         string XMLCILTemplatePath = "C:\\Users\\Maciek\\Desktop\\E-Cil\\CIL_Template.xml";
+        string templatePath = "C:\\copy_sodim\\";
+        string nameOfXMLFile = ZmienneGlobalne.numer_sodimatu.ToString() + "_wpisKartyCIL_" + System.DateTime.Now.Year.ToString()+".r.xml";
+
 
         public class Kalibracje
         {
@@ -69,8 +73,27 @@ namespace NavigationBar
             }
         }
 
+        
+        public class ListaWpisow
+        {
+            
+            public string data { get; set; } 
+            public string module { get; set; }
+            public string duty { get; set; }
+            public string status { get; set; }
+
+            //public WpisCzynnosci(string _data, string _module, string _duty, string _status)
+            //{
+            //    data = _data;
+            //    module = _module;
+            //    duty = _duty;
+            //    status = _status;
+            //}
+        }
+
 
         public List<Czynnosc> czynnosc = new List<Czynnosc>();
+        public List<Czynnosc> toSave = new List<Czynnosc>();
         public void GetModulesInfo(int interwal)
         {
 
@@ -92,47 +115,56 @@ namespace NavigationBar
             ColumnDefinition colDef2 = new ColumnDefinition();
             ColumnDefinition colDef3 = new ColumnDefinition();
             ColumnDefinition colDef4 = new ColumnDefinition();
+            ColumnDefinition colDef5 = new ColumnDefinition();
 
             colDef1.Width = new GridLength(80);
             colDef2.Width = new GridLength(120);
-            colDef3.Width = new GridLength(160);
-            colDef4.Width = new GridLength(160);
+            colDef3.Width = new GridLength(120);
+            colDef4.Width = new GridLength(120);
+            colDef5.Width = new GridLength(120);
 
             mainGridPanel.ColumnDefinitions.Add(colDef1);
             mainGridPanel.ColumnDefinitions.Add(colDef2);
             mainGridPanel.ColumnDefinitions.Add(colDef3);
             mainGridPanel.ColumnDefinitions.Add(colDef4);
+            mainGridPanel.ColumnDefinitions.Add(colDef5);
 
 
             TextBlock tb1 = new TextBlock();
             TextBlock tb2 = new TextBlock();
             TextBlock tb3 = new TextBlock();
             TextBlock tb4 = new TextBlock();
+            TextBlock tb5 = new TextBlock();
             tb1.Text = "Moduł";
             tb2.Text = "Czynność";
-            tb3.Text = "Sprawdzono, stan OK";
-            tb4.Text = "Wymiana, regulacja";
+            tb3.Text = "Sprawdzono,\n stan OK";
+            tb4.Text = "Wymiana,\n regulacja";
+            tb5.Text = "Brak czynności";
 
 
             tb1.Background = Brushes.Transparent;
             tb2.Background = Brushes.Transparent;
             tb3.Background = Brushes.Transparent;
             tb4.Background = Brushes.Transparent;
+            tb5.Background = Brushes.Transparent;
 
             tb1.FontSize = 15;
             tb2.FontSize = 15;
             tb3.FontSize = 15;
             tb4.FontSize = 15;
+            tb5.FontSize = 15;
 
             tb1.FontWeight = FontWeights.Bold;
             tb2.FontWeight = FontWeights.Bold;
             tb3.FontWeight = FontWeights.Bold;
             tb4.FontWeight = FontWeights.Bold;
+            tb5.FontWeight = FontWeights.Bold;
 
             tb1.TextAlignment = TextAlignment.Center;
             tb2.TextAlignment = TextAlignment.Center;
             tb3.TextAlignment = TextAlignment.Center;
             tb4.TextAlignment = TextAlignment.Center;
+            tb5.TextAlignment = TextAlignment.Center;
 
             RowDefinition gridRow1 = new RowDefinition();
             RowDefinition gridRow2 = new RowDefinition();
@@ -150,8 +182,11 @@ namespace NavigationBar
             Grid.SetRow(tb3, 0);
             Grid.SetColumn(tb3, 2);
 
-             Grid.SetRow(tb4, 0);
+            Grid.SetRow(tb4, 0);
             Grid.SetColumn(tb4, 3);
+
+            Grid.SetRow(tb5, 0);
+            Grid.SetColumn(tb5, 4);
 
             //Grid.SetColumn(border, 0);
             //Grid.SetRow(border, 0);
@@ -163,6 +198,7 @@ namespace NavigationBar
             mainGridPanel.Children.Add(tb2);
             mainGridPanel.Children.Add(tb3);
             mainGridPanel.Children.Add(tb4);
+            mainGridPanel.Children.Add(tb5);
 
 
             int i = 1;
@@ -241,7 +277,7 @@ namespace NavigationBar
 
 
             // Rysowanie siatki
-            int j=4;
+            int j=5;
      
         
             for (int a = 0; a < j; a++)
@@ -274,20 +310,25 @@ namespace NavigationBar
 
                 RadioButton rb1 = new RadioButton();
                 RadioButton rb2 = new RadioButton();
+                RadioButton rb3 = new RadioButton();
 
                 rb1.GroupName =  y.ToString() ;
                 rb2.GroupName =  y.ToString() ;
+                rb3.GroupName =  y.ToString();
 
                 rb1.Name = "A";
                 rb2.Name = "B";
+                rb3.Name = "C";
 
                 rb1.VerticalAlignment = VerticalAlignment.Center;
                 rb2.VerticalAlignment = VerticalAlignment.Center;
+                rb3.VerticalAlignment = VerticalAlignment.Center;
 
                 rb1.HorizontalAlignment = HorizontalAlignment.Center;
                 rb2.HorizontalAlignment = HorizontalAlignment.Center;
+                rb3.HorizontalAlignment = HorizontalAlignment.Center;
 
-                
+
 
                 //rb1.Content = " \n ";
 
@@ -297,9 +338,15 @@ namespace NavigationBar
                 Grid.SetColumn(rb2, 3);
                 Grid.SetRow(rb2, y);
 
+
+                Grid.SetColumn(rb3, 4);
+                Grid.SetRow(rb3, y);
+
+
                 mainGridPanel.Children.Add(rb1);
                 mainGridPanel.Children.Add(rb2);
-                }
+                mainGridPanel.Children.Add(rb3);
+            }
             
 
 
@@ -366,19 +413,156 @@ namespace NavigationBar
 
             }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void SerializeDataToXML()
         {
+
             var list = this.mainGridPanel.Children.OfType<RadioButton>().Where(x => x.IsChecked == true);
+            if (!list.Any())
+            {
+                MessageBox.Show("Nie wprowadzono żadnych zmian, zapis nie przyniósł żadnych efektów.");
+            }
             RadioButton rb = new RadioButton();
+            XDocument xdoc = new XDocument();
+            string path = templatePath + nameOfXMLFile;
+            //XDocument xd = new XDocument();
+
+            //xd.Add(new XElement("ABC"));
+            //xd.Save("C:\\copy_sodim\\blabla.xml");
+
+            if (!File.Exists(path))
+            {
+                XDocument xd = new XDocument();
+                xd = new XDocument();
+                xd.Add(new XElement("ListaWpisow"));
+                //xd.Save(templatePath + nameOfXMLFile);
+                xd.Save(path); //
+            }
+
+
+
+            //// xdoc = XDocument.Load(templatePath + nameOfXMLFile);
+
 
             foreach (var item in list)
             {
 
                 // group name -> y -> nr wiersza w kolumnie
                 rb = item;
-                var a = czynnosc.ElementAt(int.Parse(rb.GroupName)-1);
-                MessageBox.Show("Zaznaczono"+ a.duty.ToString()+"Z kolumny: "+rb.Name.ToString());
+                var a = czynnosc.ElementAt(int.Parse(rb.GroupName) - 1);
+                xdoc = XDocument.Load(path);
+                try
+                {
+                   // MessageBox.Show(a.duty.ToString());
+                    xdoc.Element("ListaWpisow").Add(
+                    new XElement("Wpis",
+                    new XElement("data", Convert.ToString(System.DateTime.Now.Date.ToString("dd/MM/yyyy"))),
+                    new XElement("modul", Convert.ToString(a.module)),
+                    new XElement("czynnosc", Convert.ToString(a.duty)),
+                    new XElement("status", Convert.ToString(rb.Name.ToString()))
+                    ));
+                   // xdoc.Save(templatePath + nameOfXMLFile);
+                    xdoc.Save(path);
+                }
+                catch { MessageBox.Show("Podczas próby zapisu obiekt do zapisu nie został wykryty"); }
+
             }
+
+
+
+            //    else
+            //    {
+            //        xdoc = new XDocument();
+            //        xdoc.Add(new XElement("ListaWpisow"));
+
+            //        MessageBox.Show("Hello");
+            //        xdoc.Element("ListaWpisow").Add(
+            //        new XElement("Wpis",
+            //        new XElement("data", Convert.ToString(System.DateTime.Now.ToLongDateString()),
+            //        new XElement("modul", Convert.ToString(a.module)),
+            //        new XElement("czynnosc", Convert.ToString(a.duty)),
+            //        new XElement("status", Convert.ToString(rb.Name.ToString()))
+            //        )));
+            //        xdoc.Save(templatePath + nameOfXMLFile);
+            //    }
+            //    xdoc.Save(templatePath + nameOfXMLFile);
+
+            //}
+            //}
+
+            //else
+            //{
+
+            //    foreach (var item in list)
+            //    {
+            //        rb = item;
+            //        var a = czynnosc.ElementAt(int.Parse(rb.GroupName) - 1);
+
+
+            //XDocument xdoc = new XDocument();
+            //xdoc.Add(new XElement("ListaWpisow"));
+
+            //xdoc.Element("ListaWpisow").Add(
+            //new XElement("Wpis",
+            //new XElement("data", Convert.ToString(System.DateTime.Now.ToLongDateString()),
+            //new XElement("modul", Convert.ToString(a.module)),
+            //new XElement("czynnosc", Convert.ToString(a.duty)),
+            //new XElement("status", Convert.ToString(rb.Name.ToString()))
+            //)));
+            //xdoc.Save(templatePath + nameOfXMLFile);
+            ////    }
+
+
+            //    ;
+            //}
+            //else
+            //{
+            //    XmlSerializer serializer = new XmlSerializer(typeof(ListaWpisow));
+            //    TextWriter writer = new StreamWriter(templatePath + nameOfXMLFile);
+            //    ListaWpisow wc = new ListaWpisow();
+
+            //    //   List<WpisCzynnosci> wpis = new List<WpisCzynnosci>();
+
+            //    foreach (var item in list)
+            //    {
+            //        // group name -> y -> nr wiersza w kolumnie
+            //        rb = item;
+            //      
+            //         MessageBox.Show("Zaznaczono" + a.duty.ToString() + "Z kolumny: " + rb.Name.ToString());
+            //        wc.data = System.DateTime.Now.ToLongDateString();
+            //        wc.module = a.module;
+            //        wc.duty = a.duty;
+            //        wc.status = rb.Name.ToString();
+            //        // wpis.Add(wc);
+            //    }
+
+            //    serializer.Serialize(writer, wc);
+            //    writer.Close();
+            //}
+
+
+
+            //// Serialize the purchase order, and close the TextWriter.
+            //serializer.Serialize(writer, po);
+
+        }
+
+       
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SerializeDataToXML();
+            //   SerializeDataToXMLNEW();
+            GC.Collect();
+            this.Close();
+            GC.Collect();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            GC.Collect();
+            this.Close();
+            GC.Collect();
         }
     }
 }

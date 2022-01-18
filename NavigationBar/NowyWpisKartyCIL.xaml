@@ -45,7 +45,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Background="Red"  FontWeight="Bold"  FontSize="30" Content="Anuluj" Margin="0,0,20,0" Width="100" Height="50"/>
+            <Button Grid.Column="0" Background="Red"  FontWeight="Bold"  FontSize="30" Content="Anuluj" Margin="0,0,20,0" Width="100" Height="50" Click="Button_Click_1"/>
             <Button Grid.Column="1" Content="Zapisz" Background="Green" FontWeight="Bold" FontSize="30" Margin="0,0,20,0" Width="100" Height="50" Click="Button_Click"/>
         </Grid>
 
