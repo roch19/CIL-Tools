@@ -66,8 +66,9 @@ namespace NavigationBar
         }
 
 
-        void getValuesOnStart()
+        public void getValuesOnStart()
         {
+            List<string> lines = null;
             try
             {
                 lines = File.ReadAllLines(locationTxtWithLocationOfSavePAth).ToList();
@@ -113,13 +114,14 @@ namespace NavigationBar
 
             }
    
-
+            // 
             //get numcig from history
             string numcigPath = strSodimFolder + "HISTORY\\NUMCIG.TXT";
-
+         
             lines.Clear();
+            //lines = File.ReadAllLines(System.IO.Path.Combine(strSodimFolder, "HISTORY\\NUMCIG.TXT")).ToList();
             lines = File.ReadAllLines(numcigPath).ToList();
-     
+
             string abc = "";
         
             string tmp1 = lines[0];
@@ -136,6 +138,7 @@ namespace NavigationBar
                 k++;
             }
             aktualnyNumcig = abc;
+            ZmienneGlobalne.numCig = int.Parse(aktualnyNumcig);
 
 
 
@@ -160,6 +163,7 @@ namespace NavigationBar
                 k++;
             }
             aktualnyNumcycle = abc;
+            ZmienneGlobalne.numCycle = int.Parse(aktualnyNumcycle);
 
         }
 

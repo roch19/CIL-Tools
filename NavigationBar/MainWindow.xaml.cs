@@ -55,12 +55,15 @@ namespace NavigationBar
             MainWindow2_Loaded();
             ChceckIfAnyCalibrationWasTodayMaken();
             SearchForExecutionFileToShutDownProgram();
+           
     
             //App_Deactivated_LostFocus();
             this.Focus();
             ShittyFunctionToChceckIfAppIsOnTopOnWinows7();
             MidnightNotifier.DayChanged += (s, e) => { OnTimedEvent(); };
         }
+
+                
 
         public void ShittyFunctionToChceckIfAppIsOnTopOnWinows7()
         {
@@ -80,6 +83,18 @@ namespace NavigationBar
 
         private void GetPathOfAutoDestructFolder()
         {
+
+            Load_config_data lcd = new Load_config_data();
+            lcd.load();
+
+            //CIL cl = new CIL();
+            //cl.getValues();
+
+            WymianaGum wg = new WymianaGum();
+            //wg.getValuesOnStart();
+            wg = null;
+            lcd = null;
+            GC.Collect();
             calibrationsList = File.ReadAllLines(locationTxtWithLocationOfSavePAth).ToList();
             shutDownProgramFilePath = calibrationsList[26];
             shutDownProgramContent = calibrationsList[28];
@@ -165,6 +180,11 @@ namespace NavigationBar
                     {
                         statusPD = true;
                         Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
+
+                    WpisKalibracjiDoKartyCIL cIL = new WpisKalibracjiDoKartyCIL();
+                    cIL.WpisKalibracjiToXML();
+                    cIL = null;
+                    GC.Collect();
                     }
                 }
                   

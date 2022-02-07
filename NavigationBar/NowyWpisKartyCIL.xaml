@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:NavigationBar"
         mc:Ignorable="d"
          Topmost="True"
+            ShowInTaskbar="False"
+        WindowStyle="ToolWindow"
+        ResizeMode="NoResize"
         Title="NowyWpisKartyCIL" Height="450" Width="800">
     <StackPanel>
         <StackPanel.Background>

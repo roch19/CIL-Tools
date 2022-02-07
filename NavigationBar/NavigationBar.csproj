@@ -40,6 +40,12 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=19.4400.0.43, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.Licensing.19.4.0.43\lib\net40\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfChart.WPF, Version=19.4400.0.43, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syncfusion.SfChart.WPF.19.4.0.43\lib\net40\Syncfusion.SfChart.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -76,6 +82,7 @@
     <Compile Include="EdycjaCzasu.xaml.cs">
       <DependentUpon>EdycjaCzasu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Load_config_data.cs" />
     <Compile Include="NowyWpisKartyCIL.xaml.cs">
       <DependentUpon>NowyWpisKartyCIL.xaml</DependentUpon>
     </Compile>
@@ -99,6 +106,7 @@
     <Compile Include="WpisAwari.xaml.cs">
       <DependentUpon>WpisAwari.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WpisKalibracjiDoKartyCIL.cs" />
     <Compile Include="WymianaGum.xaml.cs">
       <DependentUpon>WymianaGum.xaml</DependentUpon>
     </Compile>

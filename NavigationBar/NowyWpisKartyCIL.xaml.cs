@@ -370,6 +370,7 @@ namespace NavigationBar
                         rocznaButton.Foreground = hide;
                         dziennaButton.Foreground = top;
                         GetModulesInfo(1);
+                        GC.Collect();
                         break;
 
                     case "Tygodniowa":
@@ -379,6 +380,7 @@ namespace NavigationBar
                         rocznaButton.Foreground = hide;
                         dziennaButton.Foreground = hide;
                         GetModulesInfo(7);
+                        GC.Collect();
                         break;
                     case "2 Tygodniowa":
                         miesiecznaButton.Foreground = hide;
@@ -387,6 +389,7 @@ namespace NavigationBar
                         rocznaButton.Foreground = hide;
                         dziennaButton.Foreground = hide;
                         GetModulesInfo(14);
+                        GC.Collect();
                         break;
                     case "Miesięczna":
                         miesiecznaButton.Foreground = top;
@@ -395,6 +398,7 @@ namespace NavigationBar
                         rocznaButton.Foreground = hide;
                         dziennaButton.Foreground = hide;
                         GetModulesInfo(30);
+                        GC.Collect();
                         break;
                     case "Roczna":
                         miesiecznaButton.Foreground = hide;
@@ -403,6 +407,7 @@ namespace NavigationBar
                         rocznaButton.Foreground = top;
                         dziennaButton.Foreground = hide;
                         GetModulesInfo(0);
+                        GC.Collect();
                         break;
 
                     default:
@@ -412,6 +417,8 @@ namespace NavigationBar
             catch { MessageBox.Show("Wykryto bład podczas próby wykonywania operacji."); }         
 
             }
+
+    
 
         public void SerializeDataToXML()
         {
@@ -553,13 +560,20 @@ namespace NavigationBar
         {
             SerializeDataToXML();
             //   SerializeDataToXMLNEW();
+            
+            czynnosc.Clear();
+            toSave.Clear();
             GC.Collect();
             this.Close();
             GC.Collect();
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+     
+            czynnosc.Clear();
+            toSave.Clear();
             GC.Collect();
             this.Close();
             GC.Collect();
