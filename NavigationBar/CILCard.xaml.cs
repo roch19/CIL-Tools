@@ -305,12 +305,12 @@ namespace NavigationBar
                     konsProgBar.Foreground = Brushes.Yellow; // żółć
                 }
 
-                else if (avrg >= 80 && avrg < 90)
+                else if (avrg >= 80 && avrg < 97)
                 {
                     konsProgBar.Foreground = Brushes.Orange; // pomarańcz
                 }
 
-                else if (avrg >= 99) //czerwo
+                else if (avrg >= 97) //czerwo
                 {
                     konsProgBar.Foreground = Brushes.Red;
                 }
@@ -362,7 +362,7 @@ namespace NavigationBar
                 }
 
 
-                if(int.Parse(cilTextBlock.Text)<5 && int.Parse(cilTextBlock.Text)>=1 )
+                if(int.Parse(cilTextBlock.Text)<= 6 && int.Parse(cilTextBlock.Text)>=1 )
                 {
                     cilTextBlock.Background = Brushes.Yellow;
                     cilTextBlock.Text += " dni";
@@ -373,7 +373,7 @@ namespace NavigationBar
                     cilTextBlock.Text += " dni";
                 }
 
-                if (int.Parse(gumkiTextBlock.Text) < 5 && int.Parse(gumkiTextBlock.Text) >= 1)
+                if (int.Parse(gumkiTextBlock.Text) <= 5 && int.Parse(gumkiTextBlock.Text) >= 1)
                 {
                     gumkiTextBlock.Background = Brushes.Yellow;
                     gumkiTextBlock.Text += " dni";
@@ -412,6 +412,262 @@ namespace NavigationBar
                 //gumContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_wymiany_g).ToString() + " / " + ZmienneGlobalne.przebieg_KS_papierosowy.ToString();
 
             }
+        }
+
+
+        internal bool LoadSodimDataBool()
+        {
+            var xdoc = XDocument.Load(XMLSodimData);
+            var soidm = xdoc.Root.Descendants("Sodimat")  // trzeba załadować w listę obiektów 
+                .Select(x => new Sodim(x.Element("nazwa_sodimatu").Value,
+                x.Element("lokalizacja").Value,
+                x.Element("wlasciciel").Value,
+                x.Element("typ_sodimatu_karta_CIL").Value,
+                x.Element("typ_sodimatu_gumka").Value,
+                x.Element("data_wymiany_gumki").Value,
+                x.Element("format_gumki").Value,
+                int.Parse(x.Element("numcig_z_wymiany_g").Value),
+                int.Parse(x.Element("numcycle_z_wymiany_g").Value),
+                x.Element("data_wykonanego_cila").Value,
+                int.Parse(x.Element("numcig_z_cila").Value),
+                int.Parse(x.Element("numcycle_z_cila").Value),
+                x.Element("data_wykonanej_konserwacji").Value,
+                int.Parse(x.Element("numcig_z_konserwacji").Value),
+                int.Parse(x.Element("numcycle_z_konserwacji").Value)));
+
+            foreach (var item in soidm)
+            {
+                sodimatNametextBlock.Text = item.nazwa_sodimatu.ToString();
+                lokalizacjaTextBlock.Text = item.lokalizacja.ToString();
+                ownerTextBlock.Text = item.wlasciciel.ToString();
+
+
+
+                switch (item.typ_sodimatu_gumka)
+                {
+                    case "KS_papierosowy":
+                        gumProgBar.Maximum = ZmienneGlobalne.przebieg_KS_papierosowy;
+                        var a = ZmienneGlobalne.numCig - item.numcig_z_wymiany_g;
+                        gumProgBar.Value = a;
+                        gumContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_wymiany_g).ToString() + " / " + ZmienneGlobalne.przebieg_KS_papierosowy.ToString();
+
+                        konsProgBar.Maximum = ZmienneGlobalne.przebieg_Konserwacja_papierosowy;
+                        var b = ZmienneGlobalne.numCig - item.numcig_z_konserwacji;
+                        konsProgBar.Value = b;
+                        konsContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_konserwacji).ToString() + " / " + ZmienneGlobalne.przebieg_Konserwacja_filtrowy.ToString();
+
+                        cilProgBar.Maximum = ZmienneGlobalne.przebieg_CIL_papierosowy;
+                        var c = ZmienneGlobalne.numCig - item.numcig_z_cila;
+                        cilProgBar.Value = c;
+                        cilContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_cila).ToString() + " / " + ZmienneGlobalne.przebieg_CIL_papierosowy.ToString();
+
+                        gumkiTextBlock.Text = (ZmienneGlobalne.termin_KS_papierosowy - ((DateTime.Now - DateTime.Parse(item.data_wymiany_gumki)).Days)).ToString();
+                        cilTextBlock.Text = (ZmienneGlobalne.termin_CIL_papierosowy - ((DateTime.Now - DateTime.Parse(item.data_wykonanego_cila)).Days)).ToString();
+                        konserwacjaTextBlock.Text = (ZmienneGlobalne.termin_Konserwacja_papierosowy - ((DateTime.Now - DateTime.Parse(item.data_wykonanej_konserwacji)).Days)).ToString();
+
+
+
+                        break;
+                    case "DS_papierosowy":
+                        gumProgBar.Maximum = ZmienneGlobalne.przebieg_DS_papierosowy;
+                        gumProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_wymiany_g;
+                        gumContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_wymiany_g).ToString() + " / " + ZmienneGlobalne.przebieg_DS_papierosowy.ToString();
+
+                        konsProgBar.Maximum = ZmienneGlobalne.przebieg_Konserwacja_papierosowy;
+                        konsProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_konserwacji;
+                        konsContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_konserwacji).ToString() + " / " + ZmienneGlobalne.przebieg_Konserwacja_filtrowy.ToString();
+
+
+                        cilProgBar.Maximum = ZmienneGlobalne.przebieg_CIL_papierosowy;
+                        cilProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_cila;
+                        cilContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_cila).ToString() + " / " + ZmienneGlobalne.przebieg_CIL_papierosowy.ToString();
+
+                        gumkiTextBlock.Text = (ZmienneGlobalne.termin_DS_papierosowy - ((DateTime.Now - DateTime.Parse(item.data_wymiany_gumki)).Days)).ToString();
+                        cilTextBlock.Text = (ZmienneGlobalne.termin_CIL_papierosowy - ((DateTime.Now - DateTime.Parse(item.data_wykonanego_cila)).Days)).ToString();
+                        konserwacjaTextBlock.Text = (ZmienneGlobalne.termin_Konserwacja_papierosowy - ((DateTime.Now - DateTime.Parse(item.data_wykonanej_konserwacji)).Days)).ToString();
+
+                        break;
+                    case "SS_papierosowy":
+                        gumProgBar.Maximum = ZmienneGlobalne.przebieg_SS_papierosowy;
+                        gumProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_wymiany_g;
+                        gumContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_wymiany_g).ToString() + " / " + ZmienneGlobalne.przebieg_SS_papierosowy.ToString();
+
+                        konsProgBar.Maximum = ZmienneGlobalne.przebieg_Konserwacja_papierosowy;
+                        konsProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_konserwacji;
+                        konsContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_konserwacji).ToString() + " / " + ZmienneGlobalne.przebieg_Konserwacja_filtrowy.ToString();
+
+
+                        cilProgBar.Maximum = ZmienneGlobalne.przebieg_CIL_papierosowy;
+                        cilProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_cila;
+                        cilContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_cila).ToString() + " / " + ZmienneGlobalne.przebieg_CIL_papierosowy.ToString();
+
+                        gumkiTextBlock.Text = (ZmienneGlobalne.termin_SS_papierosowy - ((DateTime.Now - DateTime.Parse(item.data_wymiany_gumki)).Days)).ToString();
+                        cilTextBlock.Text = (ZmienneGlobalne.termin_CIL_papierosowy - ((DateTime.Now - DateTime.Parse(item.data_wykonanego_cila)).Days)).ToString();
+                        konserwacjaTextBlock.Text = (ZmienneGlobalne.termin_Konserwacja_papierosowy - ((DateTime.Now - DateTime.Parse(item.data_wykonanej_konserwacji)).Days)).ToString();
+                        break;
+                    case "KS_filtrowy":
+                        gumProgBar.Maximum = ZmienneGlobalne.przebieg_KS_filtrowy;
+                        gumProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_wymiany_g;
+                        gumContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_wymiany_g).ToString() + " / " + ZmienneGlobalne.przebieg_KS_filtrowy.ToString();
+
+                        konsProgBar.Maximum = ZmienneGlobalne.przebieg_Konserwacja_filtrowy;
+                        konsProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_konserwacji;
+                        konsContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_konserwacji).ToString() + " / " + ZmienneGlobalne.przebieg_Konserwacja_filtrowy.ToString();
+
+
+                        cilProgBar.Maximum = ZmienneGlobalne.przebieg_CIL_filtrowy;
+                        cilProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_cila;
+                        cilContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_cila).ToString() + " / " + ZmienneGlobalne.przebieg_CIL_filtrowy.ToString();
+
+                        gumkiTextBlock.Text = (ZmienneGlobalne.termin_KS_filtrowy - ((DateTime.Now - DateTime.Parse(item.data_wymiany_gumki)).Days)).ToString();
+                        cilTextBlock.Text = (ZmienneGlobalne.przebieg_CIL_filtrowy - ((DateTime.Now - DateTime.Parse(item.data_wykonanego_cila)).Days)).ToString();
+                        konserwacjaTextBlock.Text = (ZmienneGlobalne.termin_Konserwacja_filtrowy - ((DateTime.Now - DateTime.Parse(item.data_wykonanej_konserwacji)).Days)).ToString();
+                        break;
+                    case "DS_filtrowy":
+                        gumProgBar.Maximum = ZmienneGlobalne.przebieg_DS_filtrowy;
+                        gumProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_wymiany_g;
+                        gumContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_wymiany_g).ToString() + " / " + ZmienneGlobalne.przebieg_DS_filtrowy.ToString();
+
+                        konsProgBar.Maximum = ZmienneGlobalne.przebieg_Konserwacja_filtrowy;
+                        konsProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_konserwacji;
+                        konsContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_konserwacji).ToString() + " / " + ZmienneGlobalne.przebieg_Konserwacja_filtrowy.ToString();
+
+                        cilProgBar.Maximum = ZmienneGlobalne.przebieg_CIL_filtrowy;
+                        cilProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_cila;
+                        cilContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_cila).ToString() + " / " + ZmienneGlobalne.przebieg_CIL_filtrowy.ToString();
+
+                        gumkiTextBlock.Text = (ZmienneGlobalne.termin_DS_filtrowy - ((DateTime.Now - DateTime.Parse(item.data_wymiany_gumki)).Days)).ToString();
+                        cilTextBlock.Text = (ZmienneGlobalne.przebieg_CIL_filtrowy - ((DateTime.Now - DateTime.Parse(item.data_wykonanego_cila)).Days)).ToString();
+                        konserwacjaTextBlock.Text = (ZmienneGlobalne.termin_Konserwacja_filtrowy - ((DateTime.Now - DateTime.Parse(item.data_wykonanej_konserwacji)).Days)).ToString();
+
+                        break;
+                    case "SS_filtrowy":
+                        gumProgBar.Maximum = ZmienneGlobalne.przebieg_SS_filtrowy;
+                        gumProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_wymiany_g;
+                        gumContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_wymiany_g).ToString() + " / " + ZmienneGlobalne.przebieg_SS_filtrowy.ToString();
+
+                        konsProgBar.Maximum = ZmienneGlobalne.przebieg_Konserwacja_filtrowy;
+                        konsProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_konserwacji;
+                        konsContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_konserwacji).ToString() + " / " + ZmienneGlobalne.przebieg_Konserwacja_filtrowy.ToString();
+
+                        cilProgBar.Maximum = ZmienneGlobalne.przebieg_CIL_filtrowy;
+                        cilProgBar.Value = ZmienneGlobalne.numCig - item.numcig_z_cila;
+                        cilContent.Content = (ZmienneGlobalne.numCig - item.numcig_z_cila).ToString() + " / " + ZmienneGlobalne.przebieg_CIL_filtrowy.ToString();
+
+                        gumkiTextBlock.Text = (ZmienneGlobalne.termin_SS_filtrowy - ((DateTime.Now - DateTime.Parse(item.data_wymiany_gumki)).Days)).ToString();
+                        cilTextBlock.Text = (ZmienneGlobalne.przebieg_CIL_filtrowy - ((DateTime.Now - DateTime.Parse(item.data_wykonanego_cila)).Days)).ToString();
+                        konserwacjaTextBlock.Text = (ZmienneGlobalne.termin_Konserwacja_filtrowy - ((DateTime.Now - DateTime.Parse(item.data_wykonanej_konserwacji)).Days)).ToString();
+                        break;
+
+                    default:
+                        break;
+                }
+
+                var avrg = (konsProgBar.Value * 100) / konsProgBar.Maximum;
+
+                if (avrg >= 0 && avrg < 50)
+                {
+                }
+
+                else if (avrg >= 91 && avrg < 98)
+                {
+                
+                    return true;
+                }
+
+                else if (avrg >= 99) //czerwo
+                {
+                   
+                    return true;
+                }
+
+
+                avrg = (cilProgBar.Value * 100) / cilProgBar.Maximum;
+
+                if (avrg >= 0 && avrg < 50)
+                {
+             
+                }
+
+                else if (avrg >= 50 && avrg < 80)
+                {
+                 
+                }
+
+                else if (avrg >= 80 && avrg < 95)
+                {
+                  
+                    return true;
+                }
+
+                else if (avrg >= 99)
+                {
+               
+                    return true;
+                }
+
+
+                avrg = (gumProgBar.Value * 100) / gumProgBar.Maximum;
+
+                if (avrg >= 0 && avrg < 50)
+                {
+  
+                }
+
+                else if (avrg >= 50 && avrg < 80)
+                {
+           
+                    
+                }
+
+                else if (avrg >= 80 && avrg < 95)
+                {
+                
+                    return true;
+                }
+
+                else if (avrg > 99)
+                {
+              
+                    return true;
+                }
+
+
+                if (int.Parse(cilTextBlock.Text) < 5 && int.Parse(cilTextBlock.Text) >= 1)
+                {
+
+                    return true;
+                }
+                else if (int.Parse(cilTextBlock.Text) < 1)
+                { 
+
+                    return true;
+                }
+
+                if (int.Parse(gumkiTextBlock.Text) < 5 && int.Parse(gumkiTextBlock.Text) >= 1)
+                {
+         
+                    return true;
+                }
+                else if (int.Parse(gumkiTextBlock.Text) < 1)
+                {
+ 
+                    return true;
+                }
+
+                if (int.Parse(konserwacjaTextBlock.Text) < 15 && int.Parse(konserwacjaTextBlock.Text) >= 1)
+                {
+ 
+                    return true;
+                }
+                else if (int.Parse(konserwacjaTextBlock.Text) < 1)
+                {
+  
+                    return true;
+                }
+                return false;
+            }
+            return false;
         }
 
         public void GetModulesInfo()
@@ -816,20 +1072,20 @@ namespace NavigationBar
 
         private void gumkiButt_Click(object sender, RoutedEventArgs e)
         {
-            //WymianaGum wg = new WymianaGum();
-            //wg.ShowDialog();
-
-            //if(wg.wpisWymiany() == true)
-            //{
-
-            //}
-
-
+            WymianaGum wg = new WymianaGum();
+            wg.ShowDialog();
+            wg = null;
+            GC.Collect();
+            LoadSodimData();
         }
 
         private void konsButt_Click(object sender, RoutedEventArgs e)
         {
-
+            WpisKonserwacji wpis = new WpisKonserwacji();
+            wpis.ShowDialog();
+            wpis = null;
+            GC.Collect();
+            LoadSodimData();
         }
 
         private void cilButt_Click(object sender, RoutedEventArgs e)
@@ -837,6 +1093,7 @@ namespace NavigationBar
             CIL cil = new CIL();
             cil.ShowDialog();
             GC.Collect();
+            LoadSodimData();
         }
     }
 }

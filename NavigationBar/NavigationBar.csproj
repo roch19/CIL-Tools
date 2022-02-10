@@ -107,6 +107,9 @@
       <DependentUpon>WpisAwari.xaml</DependentUpon>
     </Compile>
     <Compile Include="WpisKalibracjiDoKartyCIL.cs" />
+    <Compile Include="WpisKonserwacji.xaml.cs">
+      <DependentUpon>WpisKonserwacji.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WymianaGum.xaml.cs">
       <DependentUpon>WymianaGum.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WpisAwari.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WpisKonserwacji.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

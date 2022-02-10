@@ -1,0 +1,54 @@
+﻿<Window x:Class="NavigationBar.WpisKonserwacji"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NavigationBar"
+        mc:Ignorable="d"
+          ShowInTaskbar="False"
+        WindowStyle="ToolWindow"
+        Topmost="True"
+        ResizeMode="NoResize"
+        WindowStartupLocation="Manual"
+        Title="Wpis Konserwacji" Height="184.534" Width="400">
+
+    <StackPanel Background="#B6B6B6" Margin="2,2,1.6,2">
+
+        <TextBlock HorizontalAlignment="Center" TextDecorations="Underline" FontSize="12" Margin="10,0,10,0" ><Run Text=" STATYSTYKI"/></TextBlock>
+        <Grid Margin="10,10,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock FontSize="9">Data ostatniej konserwacji</TextBlock>
+                <TextBlock Margin="0,0,0,5" HorizontalAlignment="Left" Width="100"  Background="WhiteSmoke" x:Name="dataOstatniejKonserwacji">NULL</TextBlock>
+                <TextBlock  FontSize="9">Ilość dni od ostatniej konserwacji</TextBlock>
+                <TextBlock  Margin="0,0,0,5"  HorizontalAlignment="Left" Width="100"  Background="WhiteSmoke" x:Name="iloscDniOdKonserwacji">NULL</TextBlock>
+
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <TextBlock FontSize="9">Ilość zainicjowanych badań</TextBlock>
+                <TextBlock Margin="0,0,0,5"  HorizontalAlignment="Left"   Width="100" Background="WhiteSmoke" x:Name="iloscCykli">NULL</TextBlock>
+                <TextBlock  FontSize="9">Ilość zmierzonych próbek</TextBlock>
+                <TextBlock  HorizontalAlignment="Left" Width="100"  Background="WhiteSmoke" x:Name="iloscProbek">NULL</TextBlock>
+            </StackPanel>
+        </Grid>
+
+
+
+
+        <Grid Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="185*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="195*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="WpisCIL" Click="WpisCIL_Click"  Grid.Column="1"  Height="40" Margin="21.467,0,50.2,36.8" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#0F0" Content="Dodaj Wpis"/>
+            <Button x:Name="Anuluj" Click="Anuluj_Click"  Grid.Column="3"  Height="40" Margin="30.8,0,50.4,36.8" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#FF0000" Content="Anuluj"/>
+        </Grid>
+
+    </StackPanel>
+</Window>

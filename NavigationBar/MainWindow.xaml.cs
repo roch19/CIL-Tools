@@ -56,14 +56,24 @@ namespace NavigationBar
             ChceckIfAnyCalibrationWasTodayMaken();
             SearchForExecutionFileToShutDownProgram();
            
-    
+            
             //App_Deactivated_LostFocus();
             this.Focus();
             ShittyFunctionToChceckIfAppIsOnTopOnWinows7();
             MidnightNotifier.DayChanged += (s, e) => { OnTimedEvent(); };
         }
 
-                
+        void AlertCheck()
+        {
+            CILCard cILCard = new CILCard();
+            if (cILCard.LoadSodimDataBool())
+            {
+               AlertBlock.Visibility = Visibility.Visible;
+            }
+            else AlertBlock.Visibility = Visibility.Hidden;
+            cILCard = null;
+            GC.Collect();
+        }
 
         public void ShittyFunctionToChceckIfAppIsOnTopOnWinows7()
         {
@@ -174,6 +184,7 @@ namespace NavigationBar
         // Define the event handlers.
         private void OnChanged(object source, FileSystemEventArgs e)
         {
+            AlertCheck();
                 if (e.FullPath.ToString().Contains("PD"))
                 {
                     if(statusPD == false)
@@ -200,6 +211,8 @@ namespace NavigationBar
 
         void ChceckIfAnyCalibrationWasTodayMaken()
         {
+
+            AlertCheck();
             try
             {
 
@@ -266,8 +279,11 @@ namespace NavigationBar
         //    GC.Collect();
         //}
 
+       
         private void OnTimedEvent()
         {
+            AlertCheck();
+
             statusPD = false;
             statusDIA = false;
             if (DateTime.Now.DayOfWeek.ToString() == theDIADay)
@@ -288,6 +304,7 @@ namespace NavigationBar
 
         private void VisibilityButton_Click(object sender, RoutedEventArgs e)
         {
+            AlertCheck();
             ChangeVisibilityBar();
         }
 
@@ -462,7 +479,8 @@ namespace NavigationBar
         {
             CIL cil = new CIL();
             cil.ShowDialog();
-            GC.Collect();           
+            GC.Collect();
+            AlertCheck();
         }
 
         private void WymianaGumButton_Click(object sender, RoutedEventArgs e)
@@ -471,6 +489,7 @@ namespace NavigationBar
             wg.ShowDialog();
             wg = null;
             GC.Collect();
+            AlertCheck();
         }
 
         private void BlokowanieEkranuButton_Click(object sender, RoutedEventArgs e)
@@ -521,6 +540,7 @@ namespace NavigationBar
             cc.ShowDialog();
             cc = null;
             GC.Collect();
+            AlertCheck();
         }
 
         private void RemoteDesktopButton_Click(object sender, RoutedEventArgs e)

@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace NavigationBar
 {
@@ -293,15 +295,46 @@ namespace NavigationBar
             {
                 abc += DateTime.Now.ToString();
             }
-       
-
-            //zapisywanie danych tymczasowych (data_wymiany_gumki + numcig + numcycle)
 
 
+         
+
+            string path = "C:\\copy_sodim\\data_" + ZmienneGlobalne.numer_sodimatu + ".xml";
+
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(path);
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("data/Sodimat/data_wymiany_gumki");
+            xmlNode.InnerText = DateTime.Now.ToString();
+            XmlNode xmlNode1 = xmlDocument.SelectSingleNode("data/Sodimat/format_gumki");
+            xmlNode1.InnerText = format;
+            xmlNode = xmlDocument.SelectSingleNode("data/Sodimat/numcig_z_wymiany_g");
+            xmlNode.InnerText = ZmienneGlobalne.numCig.ToString();
+
+            xmlNode = xmlDocument.SelectSingleNode("data/Sodimat/numcycle_z_wymiany_g");
+            xmlNode.InnerText = ZmienneGlobalne.numCycle.ToString();
+
+            xmlDocument.Save(path);
+
+            XDocument xdoc = new XDocument();
+            xdoc = XDocument.Load(path);
             try
             {
-                
+                xdoc.Element("data").Element("Gumki").Add(
+                    new XElement("wymiana",
+                    new XElement("data", Convert.ToString(System.DateTime.Now.Date.ToString("dd/MM/yyyy"))),
+                    //new XElement("data", Convert.ToString(System.DateTime.Now.Date.ToString())),
+                    new XElement("przebieg", ZmienneGlobalne.numCig),
+                    new XElement("format", format)));
+                xdoc.Save(path);
 
+            }
+            catch { MessageBox.Show("Podczas próby zapisu obiekt do zapisu nie został wykryty"); }
+
+
+
+            //zapisywanie danych tymczasowych (data_wymiany_gumki + numcig + numcycle)
+            try
+            {
                 StreamWriter writer = new StreamWriter(savePath, true);
                 abc += ";" + format +";"+ reason;
                 writer.WriteLine(abc);

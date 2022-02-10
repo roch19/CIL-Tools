@@ -343,9 +343,10 @@ namespace NavigationBar
                 abc += DateTime.Now.ToString();
             }
 
-            string path = "C:\\copy_sodim\\data_" + ZmienneGlobalne.numer_sodimatu + ".xml";
 
-            MessageBox.Show(path);
+            //MessageBox.Show(path);
+
+            string path = "C:\\copy_sodim\\data_" + ZmienneGlobalne.numer_sodimatu + ".xml";
 
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(path);
@@ -358,8 +359,21 @@ namespace NavigationBar
 
             xmlDocument.Save(path);
 
-
             XDocument xdoc = new XDocument();
+            xdoc = XDocument.Load(path);
+            try
+            {
+                xdoc.Element("data").Element("CILe").Add(
+                    new XElement("cil",
+                    new XElement("data", Convert.ToString(System.DateTime.Now.Date.ToString("dd/MM/yyyy"))),
+                    //new XElement("data", Convert.ToString(System.DateTime.Now.Date.ToString())),
+                    new XElement("przebieg", ZmienneGlobalne.numCig)));
+                xdoc.Save(path);
+
+            }
+            catch { MessageBox.Show("Podczas próby zapisu obiekt do zapisu nie został wykryty"); }
+
+
             //string path = "C:\\copy_sodim\\data_"+ZmienneGlobalne.numer_sodimatu+".xml";
             //XDocument xd = new XDocument();
 
@@ -379,22 +393,9 @@ namespace NavigationBar
 
             //// xdoc = XDocument.Load(templatePath + nameOfXMLFile);
 
-          
 
-                xdoc = XDocument.Load(path);
-                try
-                {
-                    // MessageBox.Show(a.duty.ToString());
-                    xdoc.Element("data/CILe").Add(
-                    new XElement("cil",
-                    new XElement("data", Convert.ToString(System.DateTime.Now.Date.ToString("dd/MM/yyyy"))),
-                    new XElement("przebieg", ZmienneGlobalne.numCig)));
-                    // xdoc.Save(templatePath + nameOfXMLFile);
-                    xdoc.Save(path);
-                }
-                catch { MessageBox.Show("Podczas próby zapisu obiekt do zapisu nie został wykryty"); }
 
-            
+
             //zapisywanie danych tymczasowych (data_wymiany_gumki + numcig + numcycle)
 
             try
