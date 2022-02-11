@@ -105,11 +105,11 @@ namespace NavigationBar
 
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(path);
-            XmlNode xmlNode = xmlDocument.SelectSingleNode("data/Sodimat/data_wykonanego_cila");
+            XmlNode xmlNode = xmlDocument.SelectSingleNode("data/Sodimat/data_wykonanej_konserwacji");
             xmlNode.InnerText = DateTime.Now.ToString();
-            XmlNode xmlNode1 = xmlDocument.SelectSingleNode("data/Sodimat/numcig_z_cila");
+            XmlNode xmlNode1 = xmlDocument.SelectSingleNode("data/Sodimat/numcig_z_konserwacji");
             xmlNode1.InnerText = ZmienneGlobalne.numCig.ToString();
-            xmlNode = xmlDocument.SelectSingleNode("data/Sodimat/numcycle_z_cila");
+            xmlNode = xmlDocument.SelectSingleNode("data/Sodimat/numcycle_z_konserwacji");
             xmlNode.InnerText = ZmienneGlobalne.numCycle.ToString();
 
             xmlDocument.Save(path);
@@ -118,8 +118,8 @@ namespace NavigationBar
             xdoc = XDocument.Load(path);
             try
             {
-                xdoc.Element("data").Element("CILe").Add(
-                    new XElement("cil",
+                xdoc.Element("data").Element("Konserwacje").Add(
+                    new XElement("konserwacja",
                     new XElement("data", Convert.ToString(System.DateTime.Now.Date.ToString("dd/MM/yyyy"))),
                     //new XElement("data", Convert.ToString(System.DateTime.Now.Date.ToString())),
                     new XElement("przebieg", ZmienneGlobalne.numCig)));
@@ -146,6 +146,8 @@ namespace NavigationBar
             if (statment == true)
             {
                 wpisKonserwacji();
+                this.Close();
+                GC.Collect();
             }
         }
 
