@@ -38,6 +38,7 @@ namespace NavigationBar
         public bool ifWXP = false;
         bool awariaButtonStatus = false;
         bool statusPD = false;
+        int ifModulePD = 1;
         bool statusDIA = false;
         
         private string watchedFolder = "";
@@ -71,6 +72,11 @@ namespace NavigationBar
                AlertBlock.Visibility = Visibility.Visible;
             }
             else AlertBlock.Visibility = Visibility.Hidden;
+            ifModulePD = cILCard.ChceckIfPD();
+            if (ifModulePD == 0)
+            {
+                PDTextBlock.Visibility = Visibility.Hidden;
+            }
             cILCard = null;
             GC.Collect();
         }
@@ -184,7 +190,7 @@ namespace NavigationBar
         // Define the event handlers.
         private void OnChanged(object source, FileSystemEventArgs e)
         {
-            AlertCheck();
+       
                 if (e.FullPath.ToString().Contains("PD"))
                 {
                     if(statusPD == false)
@@ -192,10 +198,14 @@ namespace NavigationBar
                         statusPD = true;
                         Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Green; ; }));
 
-                    WpisKalibracjiDoKartyCIL cIL = new WpisKalibracjiDoKartyCIL();
-                    cIL.WpisKalibracjiToXML();
-                    cIL = null;
-                    GC.Collect();
+                    if (ifModulePD != 0)
+                    {
+                        WpisKalibracjiDoKartyCIL cIL = new WpisKalibracjiDoKartyCIL();
+                        cIL.WpisKalibracjiToXML();
+                        cIL = null;
+                        GC.Collect();
+                    }
+                  
                     }
                 }
                   

@@ -351,7 +351,7 @@ namespace NavigationBar
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(path);
             XmlNode xmlNode = xmlDocument.SelectSingleNode("data/Sodimat/data_wykonanego_cila");
-            xmlNode.InnerText = DateTime.Now.ToString();
+            xmlNode.InnerText = Convert.ToString(System.DateTime.Now.Date.ToString("dd/MM/yyyy"));
             XmlNode xmlNode1 = xmlDocument.SelectSingleNode("data/Sodimat/numcig_z_cila");
             xmlNode1.InnerText = ZmienneGlobalne.numCig.ToString();
             xmlNode = xmlDocument.SelectSingleNode("data/Sodimat/numcycle_z_cila");

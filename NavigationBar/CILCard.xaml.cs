@@ -34,10 +34,11 @@ namespace NavigationBar
 
 
             InitializeComponent();
+            LoadSodimData();
             GetModulesInfo();
             DrawDataGrid(0);
             LoadData(0);
-            LoadSodimData();
+     
 
        
             //load();
@@ -45,9 +46,9 @@ namespace NavigationBar
 
         
        
-        string TMPlocationModule = "C:\\copy_sodim\\hollow.txt";
+        //string TMPlocationModule = "C:\\copy_sodim\\hollow.txt";
 
-        string XMLCILTemplatePath = "C:\\Users\\Maciek\\Desktop\\E-Cil\\CIL_Template.xml";
+        string XMLCILTemplatePath = ZmienneGlobalne.path_template_CIL;
         string XMLSodimData = "C:\\copy_sodim\\data_"+ZmienneGlobalne.numer_sodimatu+".xml";
 
 
@@ -145,6 +146,25 @@ namespace NavigationBar
             }
         }
 
+      
+        internal int ChceckIfPD()
+        {
+            var xdoc = XDocument.Load(XMLCILTemplatePath);
+            var templates = xdoc.Root.Descendants("kalibracje")  // trzeba załadować w listę obiektów 
+                .Select(x => new Kalibracje(int.Parse(x.Element("PD").Value),
+                int.Parse(x.Element("CIR").Value),
+                int.Parse(x.Element("HAR").Value),
+                int.Parse(x.Element("WG").Value),
+                int.Parse(x.Element("VI").Value)));
+            int pd=0; 
+            foreach (var item in templates)
+            {
+                pd = int.Parse(item.PD.ToString());
+            }
+            return pd;
+        }
+
+
         public void LoadSodimData()
         {
             var xdoc = XDocument.Load(XMLSodimData);
@@ -172,8 +192,9 @@ namespace NavigationBar
                 typSodimatuTextBlock.Text = "Typ: " + item.typ_sodimatu_karta_CIL.ToString().ToUpper();
                 formatTextBlock.Text = item.format_gumki.ToString();
                 ownerTextBlock.Text = item.wlasciciel.ToString();
+                XMLCILTemplatePath += "template_"+ item.typ_sodimatu_karta_CIL.ToString() + ".xml";
 
-                if(item.typ_sodimatu_karta_CIL.ToString().Contains("hollow"))
+                if (item.typ_sodimatu_karta_CIL.ToString().Contains("hollow"))
                 {
                     gumkiButt.Visibility = Visibility.Hidden;
                     gumProgBar.Visibility = Visibility.Hidden;

@@ -304,7 +304,7 @@ namespace NavigationBar
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(path);
             XmlNode xmlNode = xmlDocument.SelectSingleNode("data/Sodimat/data_wymiany_gumki");
-            xmlNode.InnerText = DateTime.Now.ToString();
+            xmlNode.InnerText = Convert.ToString(System.DateTime.Now.Date.ToString("dd/MM/yyyy"));
             XmlNode xmlNode1 = xmlDocument.SelectSingleNode("data/Sodimat/format_gumki");
             xmlNode1.InnerText = format;
             xmlNode = xmlDocument.SelectSingleNode("data/Sodimat/numcig_z_wymiany_g");
