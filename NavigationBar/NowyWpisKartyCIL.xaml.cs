@@ -34,9 +34,10 @@ namespace NavigationBar
 
         string[] arrLine;
         string TMPlocationModule = "C:\\copy_sodim\\hollow.txt";
-        string XMLCILTemplatePath = "C:\\Users\\Maciek\\Desktop\\E-Cil\\CIL_Template.xml";
-        string templatePath = "C:\\copy_sodim\\";
-        string nameOfXMLFile = ZmienneGlobalne.numer_sodimatu.ToString() + "_wpisKartyCIL_" + System.DateTime.Now.Year.ToString()+".r.xml";
+
+        string XMLCILTemplatePath = ZmienneGlobalne.template;
+        //string templatePath = "C:\\copy_sodim\\";
+       // string nameOfXMLFile = ZmienneGlobalne.numer_sodimatu.ToString() + "_wpisKartyCIL_" + System.DateTime.Now.Year.ToString()+".r.xml";
 
 
         public class Kalibracje
@@ -72,8 +73,6 @@ namespace NavigationBar
                 interwal = _interwal;
             }
         }
-
-        
         public class ListaWpisow
         {
             
@@ -430,20 +429,20 @@ namespace NavigationBar
             }
             RadioButton rb = new RadioButton();
             XDocument xdoc = new XDocument();
-            string path = templatePath + nameOfXMLFile;
+           // string path = "C:\\copy_sodim\\" + ZmienneGlobalne.numer_sodimatu + "_WKE-C_";
             //XDocument xd = new XDocument();
 
             //xd.Add(new XElement("ABC"));
             //xd.Save("C:\\copy_sodim\\blabla.xml");
 
-            if (!File.Exists(path))
-            {
-                XDocument xd = new XDocument();
-                xd = new XDocument();
-                xd.Add(new XElement("ListaWpisow"));
-                //xd.Save(templatePath + nameOfXMLFile);
-                xd.Save(path); //
-            }
+            //if (!File.Exists( ZmienneGlobalne.path_zapis_Wpisow_Karty_E ))
+            //{
+            //    XDocument xd = new XDocument();
+            //    xd = new XDocument();
+            //    xd.Add(new XElement("ListaWpisow"));
+            //    //xd.Save(templatePath + nameOfXMLFile);
+            //    xd.Save(ZmienneGlobalne.path_zapis_Wpisow_Karty_E); //
+            //}
 
 
 
@@ -456,7 +455,7 @@ namespace NavigationBar
                 // group name -> y -> nr wiersza w kolumnie
                 rb = item;
                 var a = czynnosc.ElementAt(int.Parse(rb.GroupName) - 1);
-                xdoc = XDocument.Load(path);
+                xdoc = XDocument.Load(ZmienneGlobalne.path_zapis_Wpisow_Karty_E);
                 try
                 {
                    // MessageBox.Show(a.duty.ToString());
@@ -468,7 +467,7 @@ namespace NavigationBar
                     new XElement("status", Convert.ToString(rb.Name.ToString()))
                     ));
                    // xdoc.Save(templatePath + nameOfXMLFile);
-                    xdoc.Save(path);
+                    xdoc.Save(ZmienneGlobalne.path_zapis_Wpisow_Karty_E);
                 }
                 catch { MessageBox.Show("Podczas próby zapisu obiekt do zapisu nie został wykryty"); }
 

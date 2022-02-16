@@ -88,7 +88,7 @@
 
                 <ColumnDefinition Width="97*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="OK_LoginButton" Click="OK_LoginButton_Click"  Grid.Column="0"  Height="40" Margin="28,0,57,0" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#0F0" Content="OK"/>
+            <Button x:Name="OK_LoginButton" Click="OK_LoginButton_Click"  Grid.Column="0"  Height="40" Margin="28,0,57,0" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#0F0" Content="Zapisz"/>
             <Button x:Name="Anuluj_LoginButton" Click="Anuluj_LoginButton_Click"  Grid.Column="2"  Height="40" Margin="31,0,58,0" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#FF0000" Content="Anuluj"/>
         </Grid>
 

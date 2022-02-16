@@ -48,11 +48,19 @@ namespace NavigationBar
        
         //string TMPlocationModule = "C:\\copy_sodim\\hollow.txt";
 
-        string XMLCILTemplatePath = ZmienneGlobalne.path_template_CIL;
+       string XMLCILTemplatePath = ZmienneGlobalne.path_template_CIL;
         string XMLSodimData = "C:\\copy_sodim\\data_"+ZmienneGlobalne.numer_sodimatu+".xml";
 
 
-        string dataPath = "C:\\copy_sodim\\201_70_wpisKartyCIL_2022.r.xml";
+
+        //  string dataPath = "C:\\copy_sodim\\201_70_wpisKartyCIL_2022.r.xml";
+        string dataPath = "C:\\copy_sodim\\" + ZmienneGlobalne.numer_sodimatu + "_WKE-C_";
+        string dataPathWithoutYear = "";
+
+
+        int actualYearToSee = DateTime.Now.Year;
+
+
         public List<string> czynnosc = new List<string>();
         int templatesNumb = 0;
         int numberOfChildren = 0;
@@ -147,22 +155,7 @@ namespace NavigationBar
         }
 
       
-        internal int ChceckIfPD()
-        {
-            var xdoc = XDocument.Load(XMLCILTemplatePath);
-            var templates = xdoc.Root.Descendants("kalibracje")  // trzeba załadować w listę obiektów 
-                .Select(x => new Kalibracje(int.Parse(x.Element("PD").Value),
-                int.Parse(x.Element("CIR").Value),
-                int.Parse(x.Element("HAR").Value),
-                int.Parse(x.Element("WG").Value),
-                int.Parse(x.Element("VI").Value)));
-            int pd=0; 
-            foreach (var item in templates)
-            {
-                pd = int.Parse(item.PD.ToString());
-            }
-            return pd;
-        }
+      
 
 
         public void LoadSodimData()
@@ -192,7 +185,19 @@ namespace NavigationBar
                 typSodimatuTextBlock.Text = "Typ: " + item.typ_sodimatu_karta_CIL.ToString().ToUpper();
                 formatTextBlock.Text = item.format_gumki.ToString();
                 ownerTextBlock.Text = item.wlasciciel.ToString();
-                XMLCILTemplatePath += "template_"+ item.typ_sodimatu_karta_CIL.ToString() + ".xml";
+
+                ZmienneGlobalne.template = XMLCILTemplatePath += "template_"+ item.typ_sodimatu_karta_CIL.ToString() + ".xml";
+
+                ZmienneGlobalne.rodzajSodimatu = item.typ_sodimatu_karta_CIL.ToString();
+                
+                
+
+                dataPath += ZmienneGlobalne.rodzajSodimatu ;
+                ZmienneGlobalne.path_zapis_Wpisow_Karty_E_Bez_Roku_XML = dataPath;
+            
+                dataPath +="_" + DateTime.Now.Year.ToString() + ".xml";
+                dataPathWithoutYear = dataPath;
+                ZmienneGlobalne.path_zapis_Wpisow_Karty_E = dataPath;
 
                 if (item.typ_sodimatu_karta_CIL.ToString().Contains("hollow"))
                 {
@@ -446,6 +451,22 @@ namespace NavigationBar
             }
         }
 
+        internal int ChceckIfPD()
+        {
+            var xdoc = XDocument.Load(XMLCILTemplatePath);
+            var templates = xdoc.Root.Descendants("kalibracje")  // trzeba załadować w listę obiektów 
+                .Select(x => new Kalibracje(int.Parse(x.Element("PD").Value),
+                int.Parse(x.Element("CIR").Value),
+                int.Parse(x.Element("HAR").Value),
+                int.Parse(x.Element("WG").Value),
+                int.Parse(x.Element("VI").Value)));
+            int pd = 0;
+            foreach (var item in templates)
+            {
+                pd = int.Parse(item.PD.ToString());
+            }
+            return pd;
+        }
 
         internal bool LoadSodimDataBool()
         {
@@ -821,9 +842,11 @@ namespace NavigationBar
             tb1.FontSize = 15;
             tb2.FontSize = 15;
 
-            tb2.FontWeight = FontWeights.Bold;
+            tb1.FontWeight = FontWeights.Bold;
             tb2.FontWeight = FontWeights.Bold;
 
+            tb1.TextAlignment = TextAlignment.Center;
+            tb2.TextAlignment = TextAlignment.Center;
 
             RowDefinition gridRow1 = new RowDefinition();
             RowDefinition gridRow2 = new RowDefinition();
@@ -954,9 +977,10 @@ namespace NavigationBar
         {
             DateTime tmp;
             tmp = DateTime.Parse(dataTextBlock.Text);
-           // dataTextBlock.Text = tmp.AddMonths(way).ToString("Y");
+            // dataTextBlock.Text = tmp.AddMonths(way).ToString("Y");
             // Tworzenie komórek dat
-           
+          
+
             int days = DateTime.DaysInMonth(tmp.Year, tmp.Month);
             int widthOfDataBox = 670 / days; 
 
@@ -1044,74 +1068,170 @@ namespace NavigationBar
         {
             //Get actual data month + year np maj 2022
             DateTime tmp;
-            tmp = DateTime.Parse(dataTextBlock.Text); 
+            tmp = DateTime.Parse(dataTextBlock.Text);
+            DateTime tmp2 = tmp;
             tmp = tmp.AddMonths(way);
-        
-            try
+
+            //dataPathWithoutYear = dataPath;
+
+            if (!tmp2.Year.Equals(actualYearToSee))
             {
-                var xdoc = XDocument.Load(dataPath);
-                var wpisy = xdoc.Root.Descendants("Wpis")  // trzeba załadować w listę obiektów 
-                    .Select(x => new Wpis(x.Element("data").Value,
-                    x.Element("modul").Value,
-                    x.Element("czynnosc").Value,
-                    x.Element("status").Value));
-                
-                foreach (var item in wpisy)
+                dataPathWithoutYear = ZmienneGlobalne.path_zapis_Wpisow_Karty_E_Bez_Roku_XML + "_" + tmp2.Year.ToString() + ".xml";
+                actualYearToSee = tmp2.Year;
+            }
+
+           
+       //     dataPathWithoutYear += "_" + tmp.Year.ToString() + ".xml";
+            //if (tmp2.Year < DateTime.Now.Year)
+            //{
+            //    dataPathWithoutYear += tmp.Year.ToString() + ".xml";
+            //    dataPath = dataPathWithoutYear;
+            //}
+            ZmienneGlobalne.path_zapis_Wpisow_Karty_E = dataPathWithoutYear;
+
+
+            if (!File.Exists(dataPathWithoutYear) && tmp2.Year.Equals(DateTime.Now.Year))
+            {
+               // dataPathWithoutYear += tmp.Year.ToString() + ".xml";
+                XDocument xd = new XDocument();
+                xd = new XDocument();
+                xd.Add(new XElement("ListaWpisow"));
+                //xd.Save(templatePath + nameOfXMLFile);
+                xd.Save(dataPathWithoutYear); //
+            }
+
+            else if(tmp2.Year.Equals(DateTime.Now.Year))
+            {
+                try
                 {
-                   // MessageBox.Show(item.date.ToString());
+                    var xdoc = XDocument.Load(dataPathWithoutYear);
+                    var wpisy = xdoc.Root.Descendants("Wpis")  // trzeba załadować w listę obiektów 
+                        .Select(x => new Wpis(x.Element("data").Value,
+                        x.Element("modul").Value,
+                        x.Element("czynnosc").Value,
+                        x.Element("status").Value));
 
-                    if(DateTime.Parse(item.date).Month == DateTime.Parse(dataTextBlock.Text).Month &&
-                        DateTime.Parse(item.date).Year == DateTime.Parse(dataTextBlock.Text).Year)
+                    foreach (var item in wpisy)
                     {
-                        int IDdzien;
-                        int IDmod;
-                        //if(czynnosc.Contains(item.czynnosc))
-                        //{
-                        //    MessageBox.Show("HERE IS JOHNY!");
-                        //}
-                      //  IDmod = czynnosc.Contains(item.czynnosc); // 
-                        IDmod = czynnosc.IndexOf(item.czynnosc) +1; // 
-                        IDdzien = int.Parse(DateTime.Parse(item.date).Day.ToString())+1;
-                        TextBlock tb = new TextBlock();
-                        switch (item.status.ToString())
+                        // MessageBox.Show(item.date.ToString());
+
+                        if (DateTime.Parse(item.date).Month == DateTime.Parse(dataTextBlock.Text).Month &&
+                            DateTime.Parse(item.date).Year == DateTime.Parse(dataTextBlock.Text).Year)
                         {
-                            case "A":
-                                tb.Text = "V";
-                                break;
-                            case "B":
-                                tb.Text = "X";
-                                break;
-                            case "C":
-                                tb.Text = "-";
-                                break;
-                            default:
-                                break;
+                            int IDdzien;
+                            int IDmod;
+                            //if(czynnosc.Contains(item.czynnosc))
+                            //{
+                            //    MessageBox.Show("HERE IS JOHNY!");
+                            //}
+                            //  IDmod = czynnosc.Contains(item.czynnosc); // 
+                            IDmod = czynnosc.IndexOf(item.czynnosc) + 1; // 
+                            IDdzien = int.Parse(DateTime.Parse(item.date).Day.ToString()) + 1;
+                            TextBlock tb = new TextBlock();
+                            switch (item.status.ToString())
+                            {
+                                case "A":
+                                    tb.Text = "V";
+                                    break;
+                                case "B":
+                                    tb.Text = "X";
+                                    break;
+                                case "C":
+                                    tb.Text = "-";
+                                    break;
+                                default:
+                                    break;
+                            }
+
+
+                            tb.VerticalAlignment = VerticalAlignment.Center;
+                            tb.HorizontalAlignment = HorizontalAlignment.Center;
+                            tb.FontSize = 15;
+                            tb.FontWeight = FontWeights.Bold;
+                            tb.Foreground = new SolidColorBrush(Color.FromRgb(0, 176, 31));
+                            Grid.SetColumn(tb, IDdzien);
+                            Grid.SetRow(tb, IDmod);
+
+                            mainGridPanel.Children.Add(tb);
                         }
-                
-
-                        tb.VerticalAlignment = VerticalAlignment.Center; 
-                        tb.HorizontalAlignment = HorizontalAlignment.Center;
-                        tb.FontSize = 15;
-                        tb.FontWeight = FontWeights.Bold;
-                        tb.Foreground = new SolidColorBrush(Color.FromRgb(0, 176, 31));
-                        Grid.SetColumn(tb, IDdzien);
-                        Grid.SetRow(tb, IDmod);
-
-                        mainGridPanel.Children.Add(tb);
                     }
                 }
 
-                    
+                catch
+                {
+                    MessageBox.Show("Błąd podczas próby ładowania danych do karty CIL \\n" + "DataPath: " + dataPath + "\\n XMLSodimData: " + XMLSodimData);
+                }
             }
 
-            catch
+            else if (!tmp2.Year.Equals(DateTime.Now.Year) && File.Exists(dataPathWithoutYear)) // kiedy rok NADANY nie jest równy roku teraźniejszego && jeżeli istnieje plik z datą NADANĄ
             {
-                MessageBox.Show("Błąd podczas próby ładowania danych do karty CIL");
+                try
+                {
+                        var xdoc = XDocument.Load(dataPathWithoutYear);
+                    var wpisy = xdoc.Root.Descendants("Wpis")  // trzeba załadować w listę obiektów 
+                        .Select(x => new Wpis(x.Element("data").Value,
+                        x.Element("modul").Value,
+                        x.Element("czynnosc").Value,
+                        x.Element("status").Value));
+
+                    foreach (var item in wpisy)
+                    {
+                        // MessageBox.Show(item.date.ToString());
+
+                        if (DateTime.Parse(item.date).Month == DateTime.Parse(dataTextBlock.Text).Month &&
+                            DateTime.Parse(item.date).Year == DateTime.Parse(dataTextBlock.Text).Year)
+                        {
+                            int IDdzien;
+                            int IDmod;
+                            //if(czynnosc.Contains(item.czynnosc))
+                            //{
+                            //    MessageBox.Show("HERE IS JOHNY!");
+                            //}
+                            //  IDmod = czynnosc.Contains(item.czynnosc); // 
+                            IDmod = czynnosc.IndexOf(item.czynnosc) + 1; // 
+                            IDdzien = int.Parse(DateTime.Parse(item.date).Day.ToString()) + 1;
+                            TextBlock tb = new TextBlock();
+                            switch (item.status.ToString())
+                            {
+                                case "A":
+                                    tb.Text = "V";
+                                    break;
+                                case "B":
+                                    tb.Text = "X";
+                                    break;
+                                case "C":
+                                    tb.Text = "-";
+                                    break;
+                                default:
+                                    break;
+                            }
+
+
+                            tb.VerticalAlignment = VerticalAlignment.Center;
+                            tb.HorizontalAlignment = HorizontalAlignment.Center;
+                            tb.FontSize = 15;
+                            tb.FontWeight = FontWeights.Bold;
+                            tb.Foreground = new SolidColorBrush(Color.FromRgb(0, 176, 31));
+                            Grid.SetColumn(tb, IDdzien);
+                            Grid.SetRow(tb, IDmod);
+
+                            mainGridPanel.Children.Add(tb);
+                        }
+                    }
+                }
+
+                catch
+                {
+                    MessageBox.Show("Błąd podczas próby ładowania danych do karty CIL \\n" + "DataPath: " + dataPath + "\\n XMLSodimData: " + XMLSodimData);
+                }
             }
+
+            else { MessageBox.Show("Brak wpisów z roku " + tmp2.Year.ToString()); }
         }
 
         private void newDataPutButton_Click(object sender, RoutedEventArgs e)
         {
+            ZmienneGlobalne.path_zapis_Wpisow_Karty_E = dataPath;
             NowyWpisKartyCIL nowyWpis = new NowyWpisKartyCIL();
             nowyWpis.ShowDialog();
             GC.Collect();
@@ -1119,6 +1239,7 @@ namespace NavigationBar
             DrawDataGrid(0);
             LoadData(0);
             GC.Collect();
+
             
         }
 

@@ -11,32 +11,33 @@ namespace NavigationBar
     class WpisKalibracjiDoKartyCIL
     {
         string[] arrLine;
-        string TMPlocationModule = "C:\\copy_sodim\\hollow.txt";
-        string XMLCILTemplatePath = "C:\\Users\\Maciek\\Desktop\\E-Cil\\CIL_Template.xml";
+
         string templatePath = "C:\\copy_sodim\\";
-        string nameOfXMLFile = ZmienneGlobalne.numer_sodimatu.ToString() + "_wpisKartyCIL_" + System.DateTime.Now.Year.ToString() + ".r.xml";
+        //string nameOfXMLFile = ZmienneGlobalne.numer_sodimatu.ToString() + "_wpisKartyCIL_" + System.DateTime.Now.Year.ToString() + ".r.xml";
+        string nameOfXMLFile = ZmienneGlobalne.path_zapis_Wpisow_Karty_E;
+
 
         public void WpisKalibracjiToXML()
         {
 
        
             XDocument xdoc = new XDocument();
-            string path = templatePath + nameOfXMLFile;
+           // string path = templatePath + nameOfXMLFile;
 
-            if (!File.Exists(path))
+            if (!File.Exists(ZmienneGlobalne.path_zapis_Wpisow_Karty_E))
             {
                 XDocument xd = new XDocument();
                 xd = new XDocument();
                 xd.Add(new XElement("ListaWpisow"));
                 //xd.Save(templatePath + nameOfXMLFile);
-                xd.Save(path); //
+                xd.Save(ZmienneGlobalne.path_zapis_Wpisow_Karty_E); //
             }
 
 
 
             //// xdoc = XDocument.Load(templatePath + nameOfXMLFile);
 
-            xdoc = XDocument.Load(path);
+            xdoc = XDocument.Load(ZmienneGlobalne.path_zapis_Wpisow_Karty_E);
             try
             {
                 // MessageBox.Show(a.duty.ToString());
@@ -48,10 +49,10 @@ namespace NavigationBar
                 new XElement("status", "A")
                 ));
                 // xdoc.Save(templatePath + nameOfXMLFile);
-                xdoc.Save(path);
+                xdoc.Save(ZmienneGlobalne.path_zapis_Wpisow_Karty_E);
             }
             catch { /*MessageBox.Show("Podczas próby zapisu obiekt do zapisu nie został wykryty");*/ }
-            xdoc = XDocument.Load(path);
+            xdoc = XDocument.Load(ZmienneGlobalne.path_zapis_Wpisow_Karty_E);
 
             try
             {
@@ -64,7 +65,7 @@ namespace NavigationBar
                 new XElement("status", "A")
                 ));
                 // xdoc.Save(templatePath + nameOfXMLFile);
-                xdoc.Save(path);
+                xdoc.Save(ZmienneGlobalne.path_zapis_Wpisow_Karty_E);
             }
 
             catch { /*MessageBox.Show("Podczas próby zapisu obiekt do zapisu nie został wykryty");*/ }

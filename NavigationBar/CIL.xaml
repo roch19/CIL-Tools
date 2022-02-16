@@ -54,7 +54,7 @@
                 <ColumnDefinition Width="97*"/>
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="WpisCIL" Click="WpisCIL_Click"  Grid.Column="0"  Height="40" Margin="28,0,50,37" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#0F0" Content="CIL"/>
+            <Button x:Name="WpisCIL" Click="WpisCIL_Click"  Grid.Column="0"  Height="40" Margin="28,0,50,37" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#0F0" Content="Zapisz"/>
             <Button x:Name="Anuluj" Click="Anuluj_Click"  Grid.Column="2"  Height="40" Margin="31,0,50,37" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#FF0000" Content="Anuluj"/>
         </Grid>
 

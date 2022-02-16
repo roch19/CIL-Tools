@@ -10,6 +10,18 @@ namespace NavigationBar
         public static string numer_sodimatu = "";
 
 
+        //typ sodimatu 
+        public static string rodzajSodimatu = "";
+
+        //zapis danych Karta CIL
+        public static string template = "";
+
+        //Nazwa pliku SOdimData 
+
+        //template aktualny 
+
+
+
         //aktualny przebieg
         public static int numCig = 0;
         public static int numCycle = 0;
@@ -46,5 +58,8 @@ namespace NavigationBar
         public static string path_remoteDesktop;
         public static string path_template_CIL;
         public static string path_saveBackup;
+
+        public static string path_zapis_Wpisow_Karty_E;
+        public static string path_zapis_Wpisow_Karty_E_Bez_Roku_XML;
     }
 }
