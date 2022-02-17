@@ -43,6 +43,7 @@ namespace NavigationBar
         
         private string watchedFolder = "";
         System.Timers.Timer aTimer;
+        System.Timers.Timer statisticTimer;
         DateTime startAwaria;
         List<string> calibrationsList = new List<string>();
   
@@ -56,13 +57,61 @@ namespace NavigationBar
             MainWindow2_Loaded();
             ChceckIfAnyCalibrationWasTodayMaken();
             SearchForExecutionFileToShutDownProgram();
-           
-            
+
+            TimerToGetRaportByEvery8h();
             //App_Deactivated_LostFocus();
             this.Focus();
             ShittyFunctionToChceckIfAppIsOnTopOnWinows7();
             MidnightNotifier.DayChanged += (s, e) => { OnTimedEvent(); };
         }
+
+        public void TimerToGetRaportByEvery8h()
+        {
+            var aktualnaGodzina = DateTime.Now;
+            int tmpHOur;
+            int tmpMinutes;
+            int tmpTime =0;
+            if(aktualnaGodzina.Hour >= 22 || aktualnaGodzina.Hour < 6)
+            {
+                if(aktualnaGodzina.Hour < 24)
+                {
+                    tmpHOur = (24 - aktualnaGodzina.Hour) +6;
+                    tmpTime = (tmpHOur*3600000) - (aktualnaGodzina.Minute * 60000);
+                }
+                else if (aktualnaGodzina.Hour >= 0)
+                {
+                    tmpHOur =6 - aktualnaGodzina.Hour;
+                    tmpTime = (tmpHOur * 3600000) - (aktualnaGodzina.Minute * 60000);
+                }
+           
+            }
+            else if(aktualnaGodzina.Hour >= 6 && aktualnaGodzina.Hour < 14)
+            {
+                tmpHOur = 14 - aktualnaGodzina.Hour;
+             
+                tmpTime = (tmpHOur * 3600000) - (aktualnaGodzina.Minute * 60000);
+            }
+            else if(aktualnaGodzina.Hour >= 14 && aktualnaGodzina.Hour < 22)
+            {
+                tmpHOur = 22 - aktualnaGodzina.Hour;
+                tmpTime = (tmpHOur * 3600000) - (aktualnaGodzina.Minute * 60000);
+            }
+            statisticTimer = new System.Timers.Timer(tmpTime); //One second, (use less to add precision, use more to consume less processor time
+            //int lastHour = DateTime.Now.Hour;
+            statisticTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            statisticTimer.Start();
+        }
+
+
+ 
+            public void OnTimedEvent(object source, ElapsedEventArgs e)
+            {
+            WpisDoRaportu wpisDoRaportu = new WpisDoRaportu();
+            wpisDoRaportu.WykonajWpis();
+            wpisDoRaportu = null;
+            GC.Collect();
+            TimerToGetRaportByEvery8h();
+            }
 
         void AlertCheck()
         {
@@ -274,21 +323,7 @@ namespace NavigationBar
 
         }
 
-        //void timeToReset()
-        //{
-        //    var now = DateTime.Now;   // pobieranie daty dzisiejszej (data + godzina)
-        //    var remaining = TimeSpan.FromHours(24) - now.TimeOfDay; // czas do następnego dnia, tzn. ile pozostało do końca obecnego
-        //    MessageBox.Show(remaining.ToString("hh\\:mm\\:ss\\.fff"));
-        //    GC.Collect();
-        //    aTimer = new System.Timers.Timer();
-        //    aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-        //    aTimer.Interval = remaining.TotalMilliseconds;
-        //    aTimer.AutoReset = true;
-        //    aTimer.Enabled = true;
-            
-        //    GC.Collect();
-        //}
-
+      
        
         private void OnTimedEvent()
         {
@@ -546,6 +581,7 @@ namespace NavigationBar
 
         private void CILcardViewButton_Click(object sender, RoutedEventArgs e)
         {
+            
             CILCard cc = new CILCard();
             cc.ShowDialog();
             cc = null;
@@ -555,9 +591,13 @@ namespace NavigationBar
 
         private void RemoteDesktopButton_Click(object sender, RoutedEventArgs e)
         {
-            PDFChooser pDFChooser = new PDFChooser("remote");
-            pDFChooser.ShowDialog();
-            GC.Collect();
+            WpisDoRaportu wpisDoRaportu = new WpisDoRaportu();
+
+            wpisDoRaportu.WykonajWpis();
+
+            //PDFChooser pDFChooser = new PDFChooser("remote");
+            //pDFChooser.ShowDialog();
+            //GC.Collect();
         }
     }
 }

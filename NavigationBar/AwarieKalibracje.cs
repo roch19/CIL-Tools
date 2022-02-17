@@ -206,6 +206,7 @@ namespace NavigationBar
             }
             relaseTheMemory();
             //get numcycle from history
+            ZmienneGlobalne.path_To_STAT_Folder = strSodimFolder+"STAT\\";
             return strSodimFolder + "HISTORY.ARCH\\";
         }
 

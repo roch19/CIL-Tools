@@ -61,5 +61,7 @@ namespace NavigationBar
 
         public static string path_zapis_Wpisow_Karty_E;
         public static string path_zapis_Wpisow_Karty_E_Bez_Roku_XML;
+
+        public static string path_To_STAT_Folder;
     }
 }

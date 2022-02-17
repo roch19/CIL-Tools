@@ -95,9 +95,6 @@
     <Compile Include="PDFChooser.xaml.cs">
       <DependentUpon>PDFChooser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RaportCIL.cs" />
-    <Compile Include="RaportWymianaGum.cs" />
-    <Compile Include="Raport_IlośćPrzerwanychBadan.cs" />
     <Compile Include="SpisAwarii.xaml.cs">
       <DependentUpon>SpisAwarii.xaml</DependentUpon>
     </Compile>
@@ -109,6 +106,7 @@
     <Compile Include="WpisAwari.xaml.cs">
       <DependentUpon>WpisAwari.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WpisDoRaportu.cs" />
     <Compile Include="WpisKalibracjiDoKartyCIL.cs" />
     <Compile Include="WpisKonserwacji.xaml.cs">
       <DependentUpon>WpisKonserwacji.xaml</DependentUpon>
