@@ -66,51 +66,7 @@ namespace NavigationBar
         {
 
             relaseTheMemory();
-            //lines = File.ReadAllLines(pathCopySodim).ToList();
 
-            //string tmp = lines[1];
-            //bool flag = true;
-
-            ////extract sodimat name
-            //for (int i = 0; i < tmp.Length; i++)
-            //{
-            //    if (tmp[i].ToString().Equals("\"") && flag)
-            //    {
-            //        flag = false;
-            //    }
-            //    else if (!tmp[i].ToString().Equals("\"") && flag.Equals(false))
-            //    {
-            //        sodimat_name += tmp[i];
-            //    }
-
-            //}
-            //Console.WriteLine("Nazwa sodimatu: " + sodimat_name);
-            //savePath += sodimat_name + ".txt";
-            //tmp = lines[2];
-            //flag = true;
-
-            ////extract start sodim folder
-            //for (int i = 0; i < tmp.Length; i++)
-            //{
-            //    if (tmp[i].ToString().Equals("\"") && flag)
-            //    {
-            //        flag = false;
-            //    }
-            //    else if (!tmp[i].ToString().Equals("\"") && flag.Equals(false))
-            //    {
-            //        strSodimFolder += tmp[i];
-            //    }
-
-            //}
-
-            ////get numcycle from history
-            //string numcigPath = strSodimFolder + "HISTORY\\NUMCIG.TXT";
-
-
-
-            //get multiple errors from ERRORLOG.ARCH 
-
-            //lines.Clear();
 
             getPaths();
 
@@ -144,12 +100,7 @@ namespace NavigationBar
 
         }
 
-        //internal string getCalibPath()
-        //{
-        //    getPaths();
 
-        //    return strSodimFolder;
-        //}
 
         internal string getPaths()
         {

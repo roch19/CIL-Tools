@@ -18,20 +18,51 @@ namespace NavigationBar
     /// </summary>
     public partial class SpisAwarii : Window
     {
-       
+
+        public class Awaria
+        {
+            public Awaria(string data, string godzina, string definicja)
+            {
+                Data = data;
+                Godzina = godzina;
+                Definicja = definicja;
+            }
+
+            public string Data { get; set; }
+            public string Godzina { get; set; }
+            public string Definicja { get; set; }
+
+            
+        }
         public SpisAwarii(List<string> listaAwarii, bool val)
         {
+           
             InitializeComponent();
-         
+            List<Awaria> awariaList = new List<Awaria>();
             if (val) Dispatcher.Invoke(new Action(() => { titleTextBox.Text = "Spis kalibracji z ostatnich 12 dni"; ; }));
             else Dispatcher.Invoke(new Action(() => { titleTextBox.Text = "Spis awarii z ostatnich 12 godzin"; ; }));
-            List<string> aa = new List<string>();
-            for(int i=0; i<100; i++)
+            //List<string> aa = new List<string>();
+            //for(int i=0; i<100; i++)
+            //{
+            //    aa.Add(i.ToString());
+            //}
+            string tmpData;
+            string tmpGodzina;
+            string tmpTresc;
+
+            foreach (var item in listaAwarii)
             {
-                aa.Add(i.ToString());
+                tmpData = item.Substring(0, 10);
+                tmpGodzina = item.Substring(11,8);
+                tmpTresc = item.Substring(20);
+                Awaria a = new Awaria(tmpData, tmpGodzina, tmpTresc);
+                awariaList.Add(a);
             }
-            TextBlockListaAwarii.Text = String.Join(Environment.NewLine, listaAwarii);
-            //TextBlockListaAwarii.Text = listaAwarii.Count().ToString();
+
+
+            dataGrid.ItemsSource = awariaList;
+            //TextBlockListaAwarii.Text = String.Join(Environment.NewLine, listaAwarii);
+       
             this.Left = 0;
             this.Top = 0;
             

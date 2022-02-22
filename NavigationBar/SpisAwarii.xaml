@@ -24,12 +24,32 @@
         <Button x:Name="CloseButton" Click="CloseButton_Click" Grid.Column="2"  Height="40" Width="60" Margin="10" FontSize="20" BorderThickness="2" BorderBrush="#530000" Background="#FF0000">Close</Button>
 
       </Grid>
-        <ScrollViewer  Background="White" 
-                      Height="300" Width="600" >
-          <TextBlock x:Name="TextBlockListaAwarii" Height="Auto" Margin="10, 0, 10, 10" Background="#FFFFFF" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                     ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="13"/>
-        </ScrollViewer>
-      
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="63*"/>
+                <ColumnDefinition Width="730*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+
+            </Grid.RowDefinitions>
+
+
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" Height="350" Grid.ColumnSpan="2">
+
+                <DataGrid x:Name="dataGrid" AlternatingRowBackground="Silver"  CanUserAddRows="False"  Width="700" >
+
+                </DataGrid>
+
+            </ScrollViewer>
+
+        </Grid>
+
     </StackPanel>
   
 </Window>

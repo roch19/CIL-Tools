@@ -396,6 +396,7 @@ namespace NavigationBar
                 Dispatcher.Invoke(new Action(() => { CILcardButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { RemoteDesktopButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { CILcardViewButton.IsEnabled = false; ; }));
+                Dispatcher.Invoke(new Action(() => { StatystykiButton.IsEnabled = false; ; }));
                 //Dispatcher.Invoke(new Action(() => { LogoutRemoteDesktopButton.IsEnabled = false; ; }));
                 zalogowany = false;
             }
@@ -418,6 +419,7 @@ namespace NavigationBar
                 Dispatcher.Invoke(new Action(() => { CILcardButton.IsEnabled = true; ; }));
                 Dispatcher.Invoke(new Action(() => { RemoteDesktopButton.IsEnabled = true; ; }));
                 Dispatcher.Invoke(new Action(() => { CILcardViewButton.IsEnabled = true; ; }));
+                Dispatcher.Invoke(new Action(() => { StatystykiButton.IsEnabled = true; ; }));
                 //    Dispatcher.Invoke(new Action(() => { LogoutRemoteDesktopButton.IsEnabled = true; ; }));
 
                 zalogowany = true;
@@ -438,6 +440,7 @@ namespace NavigationBar
                 Dispatcher.Invoke(new Action(() => { CILcardButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { RemoteDesktopButton.IsEnabled = false; ; }));
                 Dispatcher.Invoke(new Action(() => { CILcardViewButton.IsEnabled = false; ; }));
+                Dispatcher.Invoke(new Action(() => { StatystykiButton.IsEnabled = false; ; }));
                 // Dispatcher.Invoke(new Action(() => { LogoutRemoteDesktopButton.IsEnabled = false; ; }));
                 zalogowany = false;
             }
@@ -600,7 +603,7 @@ namespace NavigationBar
             //GC.Collect();
         }
 
-        private void ABC_Click(object sender, RoutedEventArgs e)
+        private void StatystykiButton_Click(object sender, RoutedEventArgs e)
         {
             Statistics st = new Statistics();
             st.ShowDialog();

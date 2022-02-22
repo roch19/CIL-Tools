@@ -72,8 +72,6 @@
     <Compile Include="CILCard.xaml.cs">
       <DependentUpon>CILCard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataTime.cs" />
-    <Compile Include="DialogResult.cs" />
     <Compile Include="EdycjaCzasu.xaml.cs">
       <DependentUpon>EdycjaCzasu.xaml</DependentUpon>
     </Compile>
@@ -82,7 +80,6 @@
       <DependentUpon>NowyWpisKartyCIL.xaml</DependentUpon>
     </Compile>
     <Compile Include="SodimModules.cs" />
-    <Compile Include="lines.cs" />
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>

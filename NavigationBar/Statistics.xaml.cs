@@ -114,6 +114,7 @@ namespace NavigationBar
 
             try
             {
+                dataToShowList.Reverse();
                 this.dataGrid.ItemsSource = dataToShowList;
             }
             catch 
