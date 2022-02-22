@@ -599,5 +599,11 @@ namespace NavigationBar
             //pDFChooser.ShowDialog();
             //GC.Collect();
         }
+
+        private void ABC_Click(object sender, RoutedEventArgs e)
+        {
+            Statistics st = new Statistics();
+            st.ShowDialog();
+        }
     }
 }

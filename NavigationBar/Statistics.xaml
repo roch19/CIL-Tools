@@ -4,15 +4,41 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NavigationBar"
-        xmlns:chart="clr-namespace:Syncfusion.UI.Xaml.Charts;assembly=Syncfusion.SfChart.WPF"
         mc:Ignorable="d"
       
         Title="Statystyki" Height="450" Width="800">
-    <Grid>
-        <chart:SfChart>
-            
-        </chart:SfChart>
-    </Grid>
+
+    <StackPanel Height="420" Margin="0,0,-0.4,0" VerticalAlignment="Top">
+        <Grid>
+            <TextBlock x:Name="sodimNameTB" FontSize="20" FontWeight="Bold" Text="Numer Sodimatu: "/>
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="63*"/>
+                <ColumnDefinition Width="730*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+
+            </Grid.RowDefinitions>
+
+
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" Height="350" Grid.ColumnSpan="2">
+
+                <DataGrid x:Name="dataGrid" AlternatingRowBackground="Silver"  CanUserAddRows="False"  Width="700" >
+
+                </DataGrid>
+
+            </ScrollViewer>
+
+        </Grid>
+    </StackPanel>
 </Window>
 
 
