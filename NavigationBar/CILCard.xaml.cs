@@ -160,6 +160,7 @@ namespace NavigationBar
 
         public void LoadSodimData()
         {
+            
             var xdoc = XDocument.Load(XMLSodimData);
             var soidm = xdoc.Root.Descendants("Sodimat")  // trzeba załadować w listę obiektów 
                 .Select(x => new Sodim(x.Element("nazwa_sodimatu").Value,

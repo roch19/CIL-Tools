@@ -58,59 +58,70 @@ namespace NavigationBar
             ChceckIfAnyCalibrationWasTodayMaken();
             SearchForExecutionFileToShutDownProgram();
 
-            TimerToGetRaportByEvery8h();
+             TimerToGetRaportByEvery8h();
             //App_Deactivated_LostFocus();
             this.Focus();
             ShittyFunctionToChceckIfAppIsOnTopOnWinows7();
             MidnightNotifier.DayChanged += (s, e) => { OnTimedEvent(); };
         }
 
+
         public void TimerToGetRaportByEvery8h()
         {
             var aktualnaGodzina = DateTime.Now;
             int tmpHOur;
             int tmpMinutes;
-            int tmpTime =0;
-            if(aktualnaGodzina.Hour >= 22 || aktualnaGodzina.Hour < 6)
+            int tmpTime = 0;
+            if (aktualnaGodzina.Hour >= 22 || aktualnaGodzina.Hour < 6)
             {
-                if(aktualnaGodzina.Hour < 24)
+                if (aktualnaGodzina.Hour < 24 && aktualnaGodzina.Hour >=22)
                 {
-                    tmpHOur = (24 - aktualnaGodzina.Hour) +6;
-                    tmpTime = (tmpHOur*3600000) - (aktualnaGodzina.Minute * 60000);
-                }
-                else if (aktualnaGodzina.Hour >= 0)
-                {
-                    tmpHOur =6 - aktualnaGodzina.Hour;
+                    tmpHOur = (24 - aktualnaGodzina.Hour) + 6;
                     tmpTime = (tmpHOur * 3600000) - (aktualnaGodzina.Minute * 60000);
                 }
-           
+                else if (aktualnaGodzina.Hour >= 0 && aktualnaGodzina.Hour <6)
+                {
+                    tmpHOur = 6 - aktualnaGodzina.Hour;
+                    tmpTime = (tmpHOur * 3600000) - (aktualnaGodzina.Minute * 60000);
+                }
+
             }
-            else if(aktualnaGodzina.Hour >= 6 && aktualnaGodzina.Hour < 14)
+            else if (aktualnaGodzina.Hour >= 6 && aktualnaGodzina.Hour < 14)
             {
                 tmpHOur = 14 - aktualnaGodzina.Hour;
-             
+
                 tmpTime = (tmpHOur * 3600000) - (aktualnaGodzina.Minute * 60000);
             }
-            else if(aktualnaGodzina.Hour >= 14 && aktualnaGodzina.Hour < 22)
+            else if (aktualnaGodzina.Hour >= 14 && aktualnaGodzina.Hour < 22)
             {
                 tmpHOur = 22 - aktualnaGodzina.Hour;
                 tmpTime = (tmpHOur * 3600000) - (aktualnaGodzina.Minute * 60000);
             }
+           // MessageBox.Show(tmpTime.ToString());
             statisticTimer = new System.Timers.Timer(tmpTime); //One second, (use less to add precision, use more to consume less processor time
             //int lastHour = DateTime.Now.Hour;
             statisticTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            statisticTimer.AutoReset = false;
             statisticTimer.Start();
         }
 
 
- 
-            public void OnTimedEvent(object source, ElapsedEventArgs e)
+        public void OnTimedEvent(object source, ElapsedEventArgs e)
             {
+
+            statisticTimer.Stop();
             WpisDoRaportu wpisDoRaportu = new WpisDoRaportu();
+       
             wpisDoRaportu.WykonajWpis();
+            //TimerToGetRaportByEvery8h();
+
+            statisticTimer = new System.Timers.Timer(28800000);
+            statisticTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            statisticTimer.Start();
+            //MessageBox.Show("mam nadzieję że działa");
             wpisDoRaportu = null;
             GC.Collect();
-            TimerToGetRaportByEvery8h();
+           
             }
 
         void AlertCheck()

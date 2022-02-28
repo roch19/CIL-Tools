@@ -101,10 +101,14 @@ namespace NavigationBar
             {
                 Raport r0 = raportList.ElementAt(i - 1);
                 Raport r1 = raportList.ElementAt(i);
+                double procent = 0;
                 int przerwane = (r1.NumCycle - r0.NumCycle) - (r1.Ilosc_Plikow_STAT - r0.Ilosc_Plikow_STAT);
                 int zainicjonowane = r1.NumCycle - r0.NumCycle;
 
-                double procent = przerwane * 100 / zainicjonowane;
+                if(zainicjonowane!=0)
+                {
+                    procent = przerwane * 100 / zainicjonowane;
+                }
 
                 DataToShow dtShow = new DataToShow(r1.Data, r1.Zmiana, r1.NumCig - r0.NumCig, r1.NumCycle - r0.NumCycle, r1.Ilosc_Plikow_STAT - r0.Ilosc_Plikow_STAT, 
                     (r1.NumCycle - r0.NumCycle) - (r1.Ilosc_Plikow_STAT - r0.Ilosc_Plikow_STAT), procent.ToString() + "%");

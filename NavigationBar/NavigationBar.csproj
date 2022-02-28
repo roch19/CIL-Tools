@@ -94,7 +94,6 @@
     <Compile Include="Statistics.xaml.cs">
       <DependentUpon>Statistics.xaml</DependentUpon>
     </Compile>
-    <Compile Include="System\Windows\Forms.cs" />
     <Compile Include="WpisAwari.xaml.cs">
       <DependentUpon>WpisAwari.xaml</DependentUpon>
     </Compile>
