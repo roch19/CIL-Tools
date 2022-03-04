@@ -50,7 +50,7 @@ namespace NavigationBar
 
        string XMLCILTemplatePath = ZmienneGlobalne.path_template_CIL;
         string XMLSodimData = "C:\\copy_sodim\\data_"+ZmienneGlobalne.numer_sodimatu+".xml";
-
+        
 
 
         //  string dataPath = "C:\\copy_sodim\\201_70_wpisKartyCIL_2022.r.xml";
@@ -160,7 +160,9 @@ namespace NavigationBar
 
         public void LoadSodimData()
         {
-            
+            ZmienneGlobalne.path_to_data_file = XMLSodimData;
+
+
             var xdoc = XDocument.Load(XMLSodimData);
             var soidm = xdoc.Root.Descendants("Sodimat")  // trzeba załadować w listę obiektów 
                 .Select(x => new Sodim(x.Element("nazwa_sodimatu").Value,

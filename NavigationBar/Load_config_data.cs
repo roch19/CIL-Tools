@@ -16,7 +16,7 @@ namespace NavigationBar
                 int termin_KS_papierosowy, int termin_DS_papierosowy, int termin_SS_papierosowy, int termin_KS_filtrowy, int termin_DS_filtrowy, int termin_SS_filtrowy, 
                 int termin_CIL_papierosowy, int termin_CIL_filtrowy, int termin_Konserwacja_papierosowy, int termin_Konserwacja_filtrowy, string path_zapis_wymian_gum, 
                 string path_zapis_awarii, string path_zapis_cila, string path_instukcje, string path_autodestruct, string path_remoteDesktop, string path_template_CIL,
-                string path_saveBackup)
+                string path_saveBackup , string path_saveRaport8h)
             {
                 this.przebieg_KS_papierosowy = przebieg_KS_papierosowy;
                 this.przebieg_DS_papierosowy = przebieg_DS_papierosowy;
@@ -46,6 +46,7 @@ namespace NavigationBar
                 this.path_remoteDesktop = path_remoteDesktop;
                 this.path_template_CIL = path_template_CIL;
                 this.path_saveBackup = path_saveBackup;
+                this.path_saveRaport8h = path_saveRaport8h;
             }
 
             public  int przebieg_KS_papierosowy { get; set; }
@@ -152,45 +153,54 @@ namespace NavigationBar
             {
                 get; set;
             }
+            public string path_saveRaport8h
+            {
+                get; set;
+            }
+            
 
         }
         public void load()
         {
+            try
+            {
+
           
-                var xdoc = XDocument.Load("C:\\Users\\Maciek\\Desktop\\E-Cil\\config_data.xml"); // na razie zmienna lokalna, później globalna
+                var xdoc = XDocument.Load(ZmienneGlobalne.path_to_Config_file); // na razie zmienna lokalna, później globalna
                 var soidm = xdoc.Root.Descendants("config")  // trzeba załadować w listę obiektów 
              .Select(x => new Config(int.Parse(x.Element("przebieg_KS_papierosowy").Value),
                     int.Parse(x.Element("przebieg_DS_papierosowy").Value),
               
                     int.Parse(x.Element("przebieg_SS_papierosowy").Value),
-                     int.Parse(x.Element("przebieg_KS_filtrowy").Value),
-              int.Parse(x.Element("przebieg_DS_filtrowy").Value),
-               int.Parse(x.Element("przebieg_SS_filtrowy").Value),
-                int.Parse(x.Element("przebieg_CIL_filtrowy").Value),
-              int.Parse(x.Element("przebieg_CIL_papierosowy").Value),
-               int.Parse(x.Element("przebieg_Konserwacja_filtrowy").Value),
-              int.Parse(x.Element("przebieg_Konserwacja_papierosowy").Value),
-              int.Parse(x.Element("termin_KS_papierosowy").Value),
-               int.Parse(x.Element("termin_DS_papierosowy").Value),
-               int.Parse(x.Element("termin_SS_papierosowy").Value),
-               int.Parse(x.Element("termin_KS_filtrowy").Value),
+            int.Parse(x.Element("przebieg_KS_filtrowy").Value),
+            int.Parse(x.Element("przebieg_DS_filtrowy").Value),
+            int.Parse(x.Element("przebieg_SS_filtrowy").Value),
+            int.Parse(x.Element("przebieg_CIL_filtrowy").Value),
+            int.Parse(x.Element("przebieg_CIL_papierosowy").Value),
+            int.Parse(x.Element("przebieg_Konserwacja_filtrowy").Value),
+            int.Parse(x.Element("przebieg_Konserwacja_papierosowy").Value),
+            int.Parse(x.Element("termin_KS_papierosowy").Value),
+            int.Parse(x.Element("termin_DS_papierosowy").Value),
+            int.Parse(x.Element("termin_SS_papierosowy").Value),
+            int.Parse(x.Element("termin_KS_filtrowy").Value),
 
-              int.Parse(x.Element("termin_DS_filtrowy").Value),
-               int.Parse(x.Element("termin_SS_filtrowy").Value),
-              int.Parse(x.Element("termin_CIL_papierosowy").Value),
-               int.Parse(x.Element("termin_CIL_filtrowy").Value),
-               int.Parse(x.Element("termin_Konserwacja_papierosowy").Value),
-             int.Parse(x.Element("termin_Konserwacja_filtrowy").Value),
+            int.Parse(x.Element("termin_DS_filtrowy").Value),
+            int.Parse(x.Element("termin_SS_filtrowy").Value),
+            int.Parse(x.Element("termin_CIL_papierosowy").Value),
+            int.Parse(x.Element("termin_CIL_filtrowy").Value),
+            int.Parse(x.Element("termin_Konserwacja_papierosowy").Value),
+            int.Parse(x.Element("termin_Konserwacja_filtrowy").Value),
 
 
-              x.Element("path_zapis_wymian_gum").Value,
+               x.Element("path_zapis_wymian_gum").Value,
                x.Element("path_zapis_awarii").Value,
                x.Element("path_zapis_cila").Value,
-              x.Element("path_instukcje").Value,
-                x.Element("path_autodestruct").Value,
-              x.Element("path_remoteDesktop").Value,
-                x.Element("path_template_CIL").Value,
-               x.Element("path_saveBackup").Value)); ;
+               x.Element("path_instukcje").Value,
+               x.Element("path_autodestruct").Value,
+               x.Element("path_remoteDesktop").Value,
+               x.Element("path_template_CIL").Value,
+               x.Element("path_saveBackup").Value,
+               x.Element("path_saveRaport8h").Value)); ;
 
                 foreach (var item in soidm)
                 {
@@ -222,11 +232,14 @@ namespace NavigationBar
                     ZmienneGlobalne.path_remoteDesktop = item.path_remoteDesktop;
                     ZmienneGlobalne.path_template_CIL = item.path_template_CIL;
                     ZmienneGlobalne.path_saveBackup = item.path_saveBackup;
+                    ZmienneGlobalne.path_saveRaport8h = item.path_saveRaport8h;
                 }
-     
+            }
+            catch { }
 
-           
-           
+
+
+
         }
        
     }

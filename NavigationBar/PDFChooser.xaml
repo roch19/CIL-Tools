@@ -12,7 +12,7 @@
         Topmost="True"
         WindowStartupLocation="Manual"
         AllowsTransparency="False"
-        Title="Instrukcje" Height="380" Width="568.967">
+        Title="Okno Multifunkcyjne" Height="380" Width="568.967">
 
     <StackPanel Background="#B6B6B6">
 

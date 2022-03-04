@@ -97,9 +97,12 @@ namespace NavigationBar
                 tmpHOur = 22 - aktualnaGodzina.Hour;
                 tmpTime = (tmpHOur * 3600000) - (aktualnaGodzina.Minute * 60000);
             }
-           // MessageBox.Show(tmpTime.ToString());
+            // MessageBox.Show(tmpTime.ToString());
+            statisticTimer = null;
+
             statisticTimer = new System.Timers.Timer(tmpTime); //One second, (use less to add precision, use more to consume less processor time
             //int lastHour = DateTime.Now.Hour;
+            
             statisticTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             statisticTimer.AutoReset = false;
             statisticTimer.Start();
@@ -115,12 +118,17 @@ namespace NavigationBar
             wpisDoRaportu.WykonajWpis();
             //TimerToGetRaportByEvery8h();
 
-            statisticTimer = new System.Timers.Timer(28800000);
-            statisticTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            statisticTimer.Start();
-            //MessageBox.Show("mam nadzieję że działa");
             wpisDoRaportu = null;
             GC.Collect();
+
+            TimerToGetRaportByEvery8h();
+
+            //statisticTimer = new System.Timers.Timer(28800000);
+            //statisticTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            //statisticTimer.Start();
+
+            //MessageBox.Show("mam nadzieję że działa");
+            
            
             }
 
@@ -160,21 +168,25 @@ namespace NavigationBar
         private void GetPathOfAutoDestructFolder()
         {
 
-            Load_config_data lcd = new Load_config_data();
-            lcd.load();
+          
 
             //CIL cl = new CIL();
             //cl.getValues();
 
             WymianaGum wg = new WymianaGum();
             //wg.getValuesOnStart();
-            wg = null;
-            lcd = null;
+         
             GC.Collect();
             calibrationsList = File.ReadAllLines(locationTxtWithLocationOfSavePAth).ToList();
             shutDownProgramFilePath = calibrationsList[26];
             shutDownProgramContent = calibrationsList[28];
             calibrationsList.Clear();
+
+            Load_config_data lcd = new Load_config_data();
+            lcd.load();
+
+            wg = null;
+            lcd = null;
             GC.Collect();
         }
 
@@ -334,11 +346,24 @@ namespace NavigationBar
 
         }
 
-      
-       
+
+
         private void OnTimedEvent()
         {
             AlertCheck();
+
+
+            //replace files, make backup "cil_cards" & "data_201.999"; 
+            string dataFileName = System.IO.Path.GetFileName(ZmienneGlobalne.path_to_data_file);
+            string CIL_CardFileName = System.IO.Path.GetFileName(ZmienneGlobalne.path_zapis_Wpisow_Karty_E);
+
+            File.Copy(ZmienneGlobalne.path_to_data_file, ZmienneGlobalne.path_saveBackup + dataFileName, true); // coppy data
+            File.Copy(ZmienneGlobalne.path_zapis_Wpisow_Karty_E, ZmienneGlobalne.path_saveBackup + CIL_CardFileName, true); // coppy data
+
+            // coppy data
+            // coppy data
+
+
 
             statusPD = false;
             statusDIA = false;
@@ -346,15 +371,17 @@ namespace NavigationBar
             {
                 Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Visible; ; }));
                 Dispatcher.Invoke(new Action(() => { DIATextBlock.Background = Brushes.Red; ; }));
-               
+
             }
             else if (DateTime.Now.DayOfWeek.ToString() != theDIADay)
             {
-                Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Hidden ; ; }));
-                
+                Dispatcher.Invoke(new Action(() => { DIATextBlock.Visibility = Visibility.Hidden; ; }));
+
             }
 
-            Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Red; ; }));          
+            Dispatcher.Invoke(new Action(() => { PDTextBlock.Background = Brushes.Red; ; }));
+
+
 
         }
 
@@ -528,6 +555,7 @@ namespace NavigationBar
         private void OPLButton_Click(object sender, RoutedEventArgs e)
         {
 
+         
             PDFChooser pDFChooser = new PDFChooser("pdf");
             pDFChooser.ShowDialog();
             GC.Collect();
@@ -605,19 +633,26 @@ namespace NavigationBar
 
         private void RemoteDesktopButton_Click(object sender, RoutedEventArgs e)
         {
-            WpisDoRaportu wpisDoRaportu = new WpisDoRaportu();
+            //WpisDoRaportu wpisDoRaportu = new WpisDoRaportu();
 
-            wpisDoRaportu.WykonajWpis();
+            //wpisDoRaportu.WykonajWpis();
+   
 
-            //PDFChooser pDFChooser = new PDFChooser("remote");
-            //pDFChooser.ShowDialog();
-            //GC.Collect();
+
+
+            PDFChooser pDFChooser = new PDFChooser("remote");
+            pDFChooser.ShowDialog();
+            GC.Collect();
         }
 
         private void StatystykiButton_Click(object sender, RoutedEventArgs e)
         {
+
             Statistics st = new Statistics();
             st.ShowDialog();
+
+            GC.Collect();
+
         }
     }
 }

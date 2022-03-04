@@ -59,8 +59,8 @@ namespace NavigationBar
                 y = Int32.Parse(arrLine[9]);
                 iloscZbadanychProbek.Text = (x - y).ToString();
                 DateTime dt = Convert.ToDateTime(arrLine[5]);
-                iloscDniBezZmianyGumki.Text = ((DateTime.Now - dt).Days).ToString(); 
-
+                iloscDniBezZmianyGumki.Text = ((DateTime.Now - dt).Days).ToString();
+                ZmienneGlobalne.path_to_Config_file = arrLine[34];
             }
             catch { }
 
@@ -339,7 +339,7 @@ namespace NavigationBar
                 abc += ";" + format +";"+ reason;
                 writer.WriteLine(abc);
                 writer.Dispose();
-             
+                
                 File.WriteAllLines(locationTxtWithLocationOfSavePAth, arrLine);
                 return true;
             }
@@ -372,7 +372,6 @@ namespace NavigationBar
             {
                 gumCheckedButton = gumRadioButtonGrid.Children.OfType<RadioButton>().First(r => r.IsChecked == true);
                 reasonCheckedButton = reasonRadioButtonGrid.Children.OfType<RadioButton>().First(r => r.IsChecked == true);
-
                 if (statment == true)
                 {
                     bool b = wpisWymiany(gumCheckedButton.Content.ToString(), reasonCheckedButton.Content.ToString());
@@ -382,61 +381,13 @@ namespace NavigationBar
                         this.Close();
                         GC.Collect();
                     }
-
                     else MessageBox.Show("Błąd podczas zapisu ", "Uwaga!");
                 }
-
             }
-
             catch
             {
                 MessageBox.Show("Należy wybrać rodzaj gumki oraz powód wymiany!", "Bład wprowadzania danych!");
             }
-
-
-           
-
-            //if (KsRB.IsChecked == true)
-            //{
-            //    if (statment == true)
-            //    {
-            //        bool b = wpisWymiany("KS");
-            //        if (b == true)
-            //        {
-            //            MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
-            //            this.Close();
-            //            GC.Collect();
-            //        }
-
-            //        else MessageBox.Show("Błąd podczas zapisu ", "Uwaga!");
-            //    }
-            //}
-            //else if (DsRB.IsChecked == true)
-            //{
-            //    bool b = wpisWymiany("DS");
-            //    if (b == true)
-            //    {
-            //        MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
-            //        this.Close();
-            //        GC.Collect();
-            //    }
-
-            //    else MessageBox.Show("Błąd podczas zapisu ", "Uwaga!");
-            //}
-            //else if (SsRB.IsChecked == true)
-            //{
-            //    bool b = wpisWymiany("SS");
-            //    if (b == true)
-            //    {
-            //        MessageBox.Show("Plik wymiany gumki zapisano w danej ścierzce: " + savePath, "Informacja");
-            //        this.Close();
-            //        GC.Collect();
-            //    }
-
-            //    else MessageBox.Show("Błąd podczas zapisu ", "Uwaga!");
-            //}
-
-            //else MessageBox.Show("Musisz określić format gumki!");
         }
 
   

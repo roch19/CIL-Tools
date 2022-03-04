@@ -7,8 +7,13 @@ namespace NavigationBar
 {
     class ZmienneGlobalne
     {
+
+        public static string path_to_Config_file = "";
+
         public static string numer_sodimatu = "";
 
+
+        public static string path_to_data_file = "";
 
         //typ sodimatu 
         public static string rodzajSodimatu = "";
@@ -63,5 +68,6 @@ namespace NavigationBar
         public static string path_zapis_Wpisow_Karty_E_Bez_Roku_XML;
 
         public static string path_To_STAT_Folder;
+        public static string path_saveRaport8h;
     }
 }

@@ -32,15 +32,16 @@ namespace NavigationBar
         string pdfFilesPath = "";
         string activatedFolder = "";
 
-        private void GetVlues(String type)
+        private void GetVlues(string type)
         {
             try
             {
                 pathList = File.ReadAllLines(locationTxtWithLocationOfSavePAth).ToList();
-                if (type.Equals("pdf")) pdfFilesPath += pathList[23];
+                if (type.Equals("pdf")) pdfFilesPath = ZmienneGlobalne.path_instukcje;
                 else if (type.Equals("remote"))
                 {
-                    pdfFilesPath += pathList[31];
+                    pdfFilesPath = ZmienneGlobalne.path_remoteDesktop;
+                  //  MessageBox.Show(ZmienneGlobalne.path_remoteDesktop);
                     titleTextBox.Text = "Remote Desktop";
 
                 }
